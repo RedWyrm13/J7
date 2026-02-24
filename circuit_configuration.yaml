@@ -1,0 +1,7 @@
+label: 'iqp'
+n_qubits: 6
+n_ops: 1000
+n_circuits: 1000
+resamples_per_circuit: 1
+shots_per_datapoint: 2000
+master_seed: 42
