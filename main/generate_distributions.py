@@ -144,8 +144,8 @@ if __name__ == "__main__":
     cluster = None
     if slurm_gpus > 0:
         try:
-            from dask_cuda import localCUDACluster # This requires pip install dask-cuda
-            cluster = localCUDACluster(
+            from dask_cuda import LocalCUDACluster # This requires pip install dask-cuda
+            cluster = LocalCUDACluster(
                 n_workers = slurm_gpus,
                 threads_per_worker=1,
             )
