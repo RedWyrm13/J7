@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../')
 
 from utils.run_circuit import build_and_transpile, run_sampler
 from utils.circuit_statistics import summarize_counts_dict, flatten_feature_dict
