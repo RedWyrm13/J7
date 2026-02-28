@@ -1,7 +1,7 @@
-label: 'iqp'
-n_qubits: 6
+qubit_range: [4,11]
+labels: ['iqp', 'clifford', 'clifford_t']
+shot_range: [8, 11] # This will be 2^8, 2^9, ...
 n_ops: 1000
 n_circuits: 1000
 resamples_per_circuit: 1
-shots_per_datapoint: 2000
 master_seed: 42
