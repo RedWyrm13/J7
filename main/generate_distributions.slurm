@@ -4,8 +4,8 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=amacieju@odu.edu
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:6
-#SBATCH --cpus-per-task=24
+#SBATCH --gres=gpu:4
+#SBATCH --cpus-per-task=12
 
 module load python3/2025.1-py312
 
