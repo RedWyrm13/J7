@@ -41,7 +41,7 @@ def load_cfg_from_yaml(path:str) -> List[cfgCircuit]:
 
 def generate_distributions(cfg: cfgCircuit = cfgCircuit()):  
 
-    
+    print("CUDA_VISIBLE_DEVICES =", os.environ.get("CUDA_VISIBLE_DEVICES"))
     # Circuit building and sampling parameters
     num_qubits = cfg.n_qubits
     num_ops = cfg.n_ops
@@ -60,6 +60,12 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
     featdict_list: List[Dict[str, Any]] = []
     
     sim = AerSimulator()
+    devices = sim.available_devices()
+    device = 'GPU' if 'GPU' in devices else 'CPU'
+    print(f"Aer Simulator is using {device}.")
+    sim.set_options(device=device)
+    print("Simulator Options:", sim.options())
+    print(f"[{cfg.label} | q={cfg.n_qubits} | shots={cfg.shots_per_datapoint}] Aer device = {device}")
     
     rng = np.random.default_rng(cfg.master_seed)
     
@@ -110,9 +116,12 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
                 y = y,
                 meta=meta,
                 featdicts=featdicts)
+    
+    return filename
 
 def run_one_cfg(cfg: cfgCircuit) -> str:
     generate_distributions(cfg=cfg)
+    return make_filename(cfg)
     
 
 if __name__ == "__main__":
@@ -122,15 +131,40 @@ if __name__ == "__main__":
     config_path = sys.argv[1]
     cfgs = load_cfg_from_yaml(config_path)
     
-    n_workers = min(8, os.cpu_count() or 1) # Change 8 to number of cpus desired
-    cluster = LocalCluster(
-        n_workers=n_workers,
-        threads_per_worker = 1,
-        processes = True,
-    )
-    client = Client(cluster)
+    os.environ.setdefault("OMP_NUM_THREADS", "1")
+    os.environ.setdefault("MKL_NUM_THREADS", "1")
+    os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
     
-    print("Dask dashboard:", client.dashboard_link) # Can be opened in a browser
+    # How many GPUs did slurm allocate for us?
+    slurm_gpus = int(os.environ.get("SLURM_GPUS_ON_NODE", "0"))
+
+    # Try GPU cluster
+    cluster = None
+    if slurm_gpus > 0:
+        try:
+            from dask_cuda import localCUDACluster # This requires pip install dask-cuda
+            cluster = localCUDACluster(
+                n_workers = slurm_gpus,
+                threads_per_worker=1,
+            )
+            print(f"Using LocalCUDACluster with {slurm_gpus} GPU workers.")
+        except Exception as e:
+            print("Could not start LocalCUDACluster (falling back to CPU Loca Cluster). Reason:", repr(e))
+            cluster = None
+    
+    # Fallback onto CPU cluster
+    
+    if cluster is None:
+        from dask.distributed import LocalCluster
+        n_workers = min(8, os.cpu_count() or 1) # Change 8 to number of cpus desired
+        cluster = LocalCluster(
+            n_workers=n_workers,
+            threads_per_worker = 1,
+            processes = True,
+        )        
+        print(f"Using CPU LocalCluster with {n_workers} workers") 
+    client = Client(cluster)
+    print("Dask dashboard:", client.dashboard_link)   
     
     futures = client.map(run_one_cfg, cfgs)
     
