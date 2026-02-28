@@ -111,9 +111,35 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
                 meta=meta,
                 featdicts=featdicts)
 
+def run_one_cfg(cfg: cfgCircuit) -> str:
+    generate_distributions(cfg=cfg)
+    
+
 if __name__ == "__main__":
+    import os
+    from dask.distributed import Client, LocalCluster, as_completed
+    
     config_path = sys.argv[1]
     cfgs = load_cfg_from_yaml(config_path)
-
-    for cfg in cfgs:
-        generate_distributions(cfg = cfg)
+    
+    n_workers = min(8, os.cpu_count() or 1) # Change 8 to number of cpus desired
+    cluster = LocalCluster(
+        n_workers=n_workers,
+        threads_per_worker = 1,
+        processes = True,
+    )
+    client = Client(cluster)
+    
+    print("Dask dashboard:", client.dashboard_link) # Can be opened in a browser
+    
+    futures = client.map(run_one_cfg, cfgs)
+    
+    for fut in as_completed(futures):
+        try:
+            out = fut.result()
+            print("DONE:", out)
+        except Exception as e:
+            print("FAILED:", repr(e))
+                  
+    client.close()
+    cluster.close()
