@@ -5,7 +5,7 @@
 #SBATCH --mail-user=amacieju@odu.edu
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:8
-#SBATCH -cpus-per-task=24
+#SBATCH --cpus-per-task=24
 
 module load python3/2025.1-py312
 
