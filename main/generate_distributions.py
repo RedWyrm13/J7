@@ -65,8 +65,8 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
     devices = sim.available_devices()
     device = 'GPU' if 'GPU' in devices else 'CPU'
     print(f"Aer Simulator is using {device}.")
-    sim.set_options(device=device)
-    print("Simulator Options:", sim.options())
+    sim.set_options(method='density_matrix', device=device)
+    print("Simulator Options:", sim.options)
     print(f"[{cfg.label} | q={cfg.n_qubits} | shots={cfg.shots_per_datapoint}] Aer device = {device}")
     
     rng = np.random.default_rng(cfg.master_seed)
