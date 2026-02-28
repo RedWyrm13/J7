@@ -51,7 +51,7 @@ def make_metadata(cfg, circuit_index, resample_index, circuit_seed):
 
 def make_filename(cfg: cfgCircuit, file_extension: str = ".npz") -> str:
     """Create a stable dataset filename based on config."""
-    return (f"./data/"
+    return (f"../data/"
         f"circuitFamily_{cfg.label}_qubits{cfg.n_qubits}_ops{cfg.n_ops}_shotsPerDatapoint{cfg.shots_per_datapoint}"
         f"_numCircuits{cfg.n_circuits}_resamplesPerCircuit{cfg.resamples_per_circuit}"
         f"_masterSeed{cfg.master_seed}{file_extension}")
