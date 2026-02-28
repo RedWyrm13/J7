@@ -9,10 +9,35 @@ from circuit_builders.builder import get_builder, CircuitFamily
 import yaml
 import sys
 
-def load_cfg_from_yaml(path:str) -> cfgCircuit:
+def load_cfg_from_yaml(path:str) -> List[cfgCircuit]:
     with open(path, "r") as f:
         data = yaml.safe_load(f)
-        return cfgCircuit(**data)
+        qubit_min = data['qubit_range'][0]
+        qubit_max = data['qubit_range'][-1]
+        labels = data['labels']
+        shot_min = data['shot_range'][0]
+        shot_max = data['shot_range'][-1]
+        
+        cfgs = []
+        i = 0
+        for num_qubits in range(qubit_min, qubit_max):
+            for label in labels:
+                for shot_exponent in range (shot_min, shot_max):
+                    shots = 2**shot_exponent
+                    cfg_dict = {
+                        'n_qubits': num_qubits,
+                        'label': label,
+                        'n_circuits': data['n_circuits'],
+                        'n_ops': data['n_ops'],
+                        'resamples_per_circuit': data['resamples_per_circuit'],
+                        'shots_per_datapoint': shots,
+                        'master_seed': data['master_seed'] + i
+                    }
+                    cfg = cfgCircuit(**cfg_dict)
+                    cfgs.append(cfg)
+                    i += 1
+
+        return cfgs
 
 def generate_distributions(cfg: cfgCircuit = cfgCircuit()):  
 
@@ -88,5 +113,7 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
 
 if __name__ == "__main__":
     config_path = sys.argv[1]
-    cfg = load_cfg_from_yaml(config_path)
-    generate_distributions(cfg = cfg)
+    cfgs = load_cfg_from_yaml(config_path)
+
+    for cfg in cfgs:
+        generate_distributions(cfg = cfg)
