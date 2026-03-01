@@ -127,6 +127,8 @@ def run_one_cfg(cfg: cfgCircuit) -> str:
     
 
 if __name__ == "__main__":
+    import time
+    start_time = time.time()
     import os
     from dask.distributed import Client, LocalCluster, as_completed
     
@@ -179,3 +181,5 @@ if __name__ == "__main__":
                   
     client.close()
     cluster.close()
+    end_time = time.time()
+    print(f"Total time is {(end_time - start_time):.2f}.")
