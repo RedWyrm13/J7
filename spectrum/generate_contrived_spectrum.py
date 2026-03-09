@@ -35,11 +35,11 @@ from utils.utils import cfgCircuit
 # ── Configuration ─────────────────────────────────────────────────────────
 
 N_SNAPSHOTS   = 1000   # Number of PSD snapshots per synthetic sensor session
-N_SESSIONS    = 100    # Number of independent 'sensor sessions' (like circuits)
+N_SESSIONS    = 1000    # Number of independent 'sensor sessions' (like circuits)
 SHOTS         = 1000   # Snapshots per session (analogous to shots_per_datapoint)
 N_QUBITS      = 4      # Frequency bins = qubit count (match your circuit data)
 SEED          = 42
-DATA_DIR      = Path("../data")
+DATA_DIR      = Path("../data/quantum")
 OUT_DIR       = Path("../data/spectrum")
 
 FAMILIES = ["iqp", "clifford", "clifford_t"]
