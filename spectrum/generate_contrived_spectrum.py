@@ -30,7 +30,6 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 import numpy as np
 from collections import Counter
 from utils.circuit_statistics import summarize_counts_dict, flatten_feature_dict
-from utils.utils import cfgCircuit
 
 # ── Configuration ─────────────────────────────────────────────────────────
 
