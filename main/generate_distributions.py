@@ -42,7 +42,7 @@ def load_cfg_from_yaml(path:str) -> List[cfgCircuit]:
         return cfgs
 
 def generate_distributions(cfg: cfgCircuit = cfgCircuit()):  
-
+    import os
     print("CUDA_VISIBLE_DEVICES =", os.environ.get("CUDA_VISIBLE_DEVICES"))
     # Circuit building and sampling parameters
     num_qubits = cfg.n_qubits
