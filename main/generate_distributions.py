@@ -60,12 +60,11 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
     y_list: List[str] = []
     meta_list: List[Dict[str, Any]] = []
     featdict_list: List[Dict[str, Any]] = []
-    
     sim = AerSimulator()
     devices = sim.available_devices()
     device = 'GPU' if 'GPU' in devices else 'CPU'
     print(f"Aer Simulator is using {device}.")
-    sim.set_options(method='density_matrix', device=device)
+    sim.set_options(method='statevector', device=device, max_memory_mb = 0)
     print("Simulator Options:", sim.options)
     print(f"[{cfg.label} | q={cfg.n_qubits} | shots={cfg.shots_per_datapoint}] Aer device = {device}")
     
