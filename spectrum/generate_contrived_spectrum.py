@@ -48,11 +48,10 @@ OUT_DIR     = Path(__file__).resolve().parent.parent / "data" / "spectrum"
 def load_cfg_from_yaml(path: str) -> dict:
     with open(path, "r") as f:
         data = yaml.safe_load(f)
-    shot_min, shot_max = data["shot_range"][0], data["shot_range"][-1]
     return {
         "families":              data["labels"],
         "qubit_range":           range(data["qubit_range"][0], data["qubit_range"][-1]),
-        "shot_values":           [2**exp for exp in range(shot_min, shot_max)],
+        "shots_base":            data["shots_base"],
         "n_sessions":            data["n_circuits"],
         "snapshots_per_session": data.get("snapshots_per_session", 50),
         "master_seed":           data["master_seed"],
@@ -62,7 +61,8 @@ def load_cfg_from_yaml(path: str) -> dict:
 
 def load_circuit_features(family: str, n_qubits: int, shots: int, data_dir: Path):
     """
-    Load X feature vectors for a given family, qubit count, and shot budget.
+    Load X feature vectors for a given family and qubit count.
+    shots is computed as shots_base * n_qubits^2.
     Returns X array of shape (n_samples, n_features).
     """
     pattern = f"circuitFamily_{family}_qubits{n_qubits}_*shotsPerDatapoint{shots}_*.npz"
@@ -167,7 +167,7 @@ def main():
     cfg = load_cfg_from_yaml(sys.argv[1])
     families              = cfg["families"]
     qubit_range           = cfg["qubit_range"]
-    shot_values           = cfg["shot_values"]
+    shots_base            = cfg["shots_base"]
     n_sessions            = cfg["n_sessions"]
     snapshots_per_session = cfg["snapshots_per_session"]
     master_seed           = cfg["master_seed"]
@@ -180,6 +180,8 @@ def main():
     generated = []
 
     for n_qubits in qubit_range:
+        shots = shots_base * n_qubits ** 2
+
         if OUT_DIR.exists():
             stale = list(OUT_DIR.glob(f"spectrum_contrived_*qubits{n_qubits}*.npz"))
             for f in stale:
@@ -187,19 +189,18 @@ def main():
                 print(f"  Removed stale file: {f.name}")
 
         for family in families:
-            for shots in shot_values:
-                path = generate_contrived_spectrum(
-                    family                = family,
-                    n_qubits              = n_qubits,
-                    shots                 = shots,
-                    n_sessions            = n_sessions,
-                    snapshots_per_session = snapshots_per_session,
-                    data_dir              = QUANTUM_DIR,
-                    out_dir               = OUT_DIR,
-                    seed                  = rng_seed,
-                )
-                generated.append(path)
-                rng_seed += 1
+            path = generate_contrived_spectrum(
+                family                = family,
+                n_qubits              = n_qubits,
+                shots                 = shots,
+                n_sessions            = n_sessions,
+                snapshots_per_session = snapshots_per_session,
+                data_dir              = QUANTUM_DIR,
+                out_dir               = OUT_DIR,
+                seed                  = rng_seed,
+            )
+            generated.append(path)
+            rng_seed += 1
 
     print("\n-- Summary ---------------------------------------------------")
     for p in generated:
