@@ -15,7 +15,7 @@ Experiments:
                         (key result for the paper)
 
 Usage (from spectrum/ directory):
-    python3 run_spectrum_experiment.py
+    python3 run_spectrum_experiment.py <config.yaml>
 """
 
 import sys
@@ -24,6 +24,7 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 import matplotlib.pyplot as plt
+import yaml
 from sklearn.model_selection import train_test_split
 
 from models.models import initialize_models, eval_model
@@ -33,10 +34,17 @@ from models.models import initialize_models, eval_model
 ROOT_DIR     = Path(__file__).resolve().parent.parent
 QUANTUM_DIR  = ROOT_DIR / "data" / "quantum"
 SPECTRUM_DIR = ROOT_DIR / "data" / "spectrum"
-OUT_DIR      = Path(__file__).resolve().parent   # save plots next to this script
+OUT_DIR      = Path(__file__).resolve().parent / "plots"
 
-N_QUBITS     = 4
-SEED         = 42
+
+def load_cfg(path: str) -> dict:
+    with open(path, "r") as f:
+        data = yaml.safe_load(f)
+    q_min, q_max = data["qubit_range"][0], data["qubit_range"][-1]
+    return {
+        "qubit_range": range(q_min, q_max),
+        "seed":        data.get("master_seed", 42),
+    }
 
 # ── Data loading ───────────────────────────────────────────────────────────
 
@@ -83,21 +91,21 @@ def run_experiment(X_train, y_train, X_test, y_test, label: str) -> dict:
     return results
 
 
-def experiment_circuit_only(n_qubits: int) -> dict:
+def experiment_circuit_only(n_qubits: int, seed: int) -> dict:
     """Baseline: train and test entirely on quantum circuit data."""
     X, y = load_quantum_data(n_qubits)
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=SEED, stratify=y
+        X, y, test_size=0.2, random_state=seed, stratify=y
     )
     return run_experiment(X_train, y_train, X_test, y_test,
                           "Experiment 1 — Circuit-only baseline")
 
 
-def experiment_spectrum_only(n_qubits: int) -> dict:
+def experiment_spectrum_only(n_qubits: int, seed: int) -> dict:
     """Train and test entirely on contrived spectrum data."""
     X, y = load_spectrum_data(n_qubits)
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=SEED, stratify=y
+        X, y, test_size=0.2, random_state=seed, stratify=y
     )
     return run_experiment(X_train, y_train, X_test, y_test,
                           "Experiment 2 — Spectrum-only")
@@ -145,6 +153,7 @@ def plot_comparison(results: dict, n_qubits: int):
     ax.legend(loc="upper right", fontsize=8)
     plt.tight_layout()
 
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
     out_path = OUT_DIR / f"spectrum_experiment_qubits{n_qubits}.png"
     plt.savefig(out_path, dpi=150)
     plt.close()
@@ -153,19 +162,19 @@ def plot_comparison(results: dict, n_qubits: int):
 
 # ── Main ───────────────────────────────────────────────────────────────────
 
-def main():
-    print(f"Spectrum Classification Experiments  |  n_qubits={N_QUBITS}")
-    print(f"  Quantum data : {QUANTUM_DIR}")
-    print(f"  Spectrum data: {SPECTRUM_DIR}\n")
+def run_for_qubits(n_qubits: int, seed: int):
+    print(f"\n{'═'*62}")
+    print(f"  n_qubits = {n_qubits}")
+    print(f"{'═'*62}")
 
     print("── Experiment 1: Circuit-only baseline ──────────────────────────")
-    circuit_results  = experiment_circuit_only(N_QUBITS)
+    circuit_results  = experiment_circuit_only(n_qubits, seed)
 
     print("\n── Experiment 2: Spectrum-only ──────────────────────────────────")
-    spectrum_results = experiment_spectrum_only(N_QUBITS)
+    spectrum_results = experiment_spectrum_only(n_qubits, seed)
 
     print("\n── Experiment 3: Cross (train=circuit, test=spectrum) ────────────")
-    cross_results    = experiment_cross(N_QUBITS)
+    cross_results    = experiment_cross(n_qubits)
 
     all_results = {
         "Circuit": circuit_results,
@@ -173,13 +182,42 @@ def main():
         "Cross":   cross_results,
     }
 
-    plot_comparison(all_results, N_QUBITS)
+    plot_comparison(all_results, n_qubits)
 
     print("\n── Summary ───────────────────────────────────────────────────────")
     for exp, res in all_results.items():
         best = max(res, key=res.get)
         print(f"  {exp:<10}  best: {best} → {res[best]:.4f}")
-    print(f"\n  Random baseline: {1/3:.4f}  (3 classes)")
+    print(f"  Random baseline: {1/3:.4f}  (3 classes)")
+
+    return all_results
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python3 run_spectrum_experiment.py <config.yaml>")
+        sys.exit(1)
+
+    cfg         = load_cfg(sys.argv[1])
+    qubit_range = cfg["qubit_range"]
+    seed        = cfg["seed"]
+
+    print(f"Spectrum Classification Experiments")
+    print(f"  Quantum data : {QUANTUM_DIR}")
+    print(f"  Spectrum data: {SPECTRUM_DIR}")
+    print(f"  Qubits       : {list(qubit_range)}")
+
+    all_qubit_results = {}
+    for n_qubits in qubit_range:
+        all_qubit_results[n_qubits] = run_for_qubits(n_qubits, seed)
+
+    print(f"\n{'═'*62}")
+    print("  OVERALL SUMMARY")
+    print(f"{'═'*62}")
+    for n_qubits, results in all_qubit_results.items():
+        cross = results["Cross"]
+        best  = max(cross, key=cross.get)
+        print(f"  qubits={n_qubits:<3}  cross best: {best} → {cross[best]:.4f}")
 
 
 if __name__ == "__main__":

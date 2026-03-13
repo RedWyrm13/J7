@@ -23,7 +23,14 @@ Output files go to data/spectrum/ and are drop-in compatible with
 models/models.py -- same X, y, meta, featdicts structure as circuit data.
 
 Usage (from spectrum/ directory):
-    python3 generate_contrived_spectrum.py
+    python3 generate_contrived_spectrum.py <config.yaml>
+
+The yaml file uses the same format as main/circuit_configuration.yaml:
+    qubit_range: [min, max]        # iterates from min to max (exclusive)
+    labels: [iqp, clifford, ...]   # circuit families to process
+    n_circuits: 1000               # used as n_sessions
+    master_seed: 42
+    snapshots_per_session: 50      # optional, defaults to 50
 """
 
 import sys
@@ -31,34 +38,39 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
-
-# -- Configuration -----------------------------------------------------------
-
-N_SESSIONS            = 1000  # Spectrum sessions to generate per family
-SNAPSHOTS_PER_SESSION = 50    # Circuit samples averaged per session
-                               # (simulates N PSD snapshots in one window)
-N_QUBITS              = 4     # Must match the circuit data you want to use
-SEED                  = 42
+import yaml
 
 QUANTUM_DIR = Path(__file__).resolve().parent.parent / "data" / "quantum"
 OUT_DIR     = Path(__file__).resolve().parent.parent / "data" / "spectrum"
 
-FAMILIES = ["iqp", "clifford", "clifford_t"]
+# -- Config loading ----------------------------------------------------------
+
+def load_cfg_from_yaml(path: str) -> dict:
+    with open(path, "r") as f:
+        data = yaml.safe_load(f)
+    shot_min, shot_max = data["shot_range"][0], data["shot_range"][-1]
+    return {
+        "families":              data["labels"],
+        "qubit_range":           range(data["qubit_range"][0], data["qubit_range"][-1]),
+        "shot_values":           [2**exp for exp in range(shot_min, shot_max)],
+        "n_sessions":            data["n_circuits"],
+        "snapshots_per_session": data.get("snapshots_per_session", 50),
+        "master_seed":           data["master_seed"],
+    }
 
 # -- Data loading ------------------------------------------------------------
 
-def load_circuit_features(family: str, n_qubits: int, data_dir: Path):
+def load_circuit_features(family: str, n_qubits: int, shots: int, data_dir: Path):
     """
-    Load all X feature vectors for a given family and qubit count.
-    Combines across all shot budgets for maximum coverage.
+    Load X feature vectors for a given family, qubit count, and shot budget.
     Returns X array of shape (n_samples, n_features).
     """
-    pattern = f"circuitFamily_{family}_qubits{n_qubits}_*.npz"
+    pattern = f"circuitFamily_{family}_qubits{n_qubits}_*shotsPerDatapoint{shots}_*.npz"
     matches = sorted(data_dir.glob(pattern))
     if not matches:
         raise FileNotFoundError(
             f"No circuit files found for family='{family}', "
-            f"n_qubits={n_qubits} in {data_dir}.\n"
+            f"n_qubits={n_qubits}, shots={shots} in {data_dir}.\n"
             f"Run generate_distributions.py first."
         )
 
@@ -68,7 +80,7 @@ def load_circuit_features(family: str, n_qubits: int, data_dir: Path):
         X_list.append(data['X'])
 
     X = np.concatenate(X_list, axis=0)
-    print(f"  {family:<12} loaded {X.shape[0]} circuit samples "
+    print(f"  {family:<12} shots={shots:<5} loaded {X.shape[0]} circuit samples "
           f"from {len(matches)} file(s)  |  feature dim: {X.shape[1]}")
     return X
 
@@ -105,6 +117,7 @@ def generate_sessions(
 def generate_contrived_spectrum(
     family: str,
     n_qubits: int,
+    shots: int,
     n_sessions: int,
     snapshots_per_session: int,
     data_dir: Path,
@@ -112,10 +125,10 @@ def generate_contrived_spectrum(
     seed: int,
 ) -> Path:
 
-    print(f"\n[{family} | {n_qubits} qubits | "
+    print(f"\n[{family} | {n_qubits} qubits | shots={shots} | "
           f"{n_sessions} sessions x {snapshots_per_session} snapshots]")
 
-    X_source = load_circuit_features(family, n_qubits, data_dir)
+    X_source = load_circuit_features(family, n_qubits, shots, data_dir)
 
     rng = np.random.default_rng(seed)
     X_sessions = generate_sessions(X_source, n_sessions, snapshots_per_session, rng)
@@ -125,22 +138,17 @@ def generate_contrived_spectrum(
     meta = np.array([{
         "family":                f"spectrum_{family}",
         "n_qubits":              n_qubits,
-        "n_frequency_bins":      n_qubits,
+        "shots_per_datapoint":   shots,
         "session_index":         i,
         "snapshots_per_session": snapshots_per_session,
         "seed":                  seed,
-        "note": (
-            f"Contrived spectrum session. Each session is the mean of "
-            f"{snapshots_per_session} bootstrap-resampled feature vectors "
-            f"from real {family} circuit data. Preserves full statistical "
-            f"structure including entropy, collision prob, and parity bias."
-        ),
     } for i in range(n_sessions)])
 
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / (
         f"spectrum_contrived_{family}"
         f"_qubits{n_qubits}"
+        f"_shots{shots}"
         f"_sessions{n_sessions}"
         f"_snapshots{snapshots_per_session}"
         f"_seed{seed}.npz"
@@ -152,31 +160,46 @@ def generate_contrived_spectrum(
 
 
 def main():
+    if len(sys.argv) < 2:
+        print("Usage: python3 generate_contrived_spectrum.py <config.yaml>")
+        sys.exit(1)
+
+    cfg = load_cfg_from_yaml(sys.argv[1])
+    families              = cfg["families"]
+    qubit_range           = cfg["qubit_range"]
+    shot_values           = cfg["shot_values"]
+    n_sessions            = cfg["n_sessions"]
+    snapshots_per_session = cfg["snapshots_per_session"]
+    master_seed           = cfg["master_seed"]
+
     print(f"Generating contrived spectrum data")
     print(f"  Source: {QUANTUM_DIR}")
     print(f"  Output: {OUT_DIR}")
 
-    if OUT_DIR.exists():
-        stale = list(OUT_DIR.glob(f"spectrum_contrived_*qubits{N_QUBITS}*.npz"))
-        for f in stale:
-            f.unlink()
-            print(f"  Removed stale file: {f.name}")
-
-    rng_seed = SEED
+    rng_seed = master_seed
     generated = []
 
-    for family in FAMILIES:
-        path = generate_contrived_spectrum(
-            family                = family,
-            n_qubits              = N_QUBITS,
-            n_sessions            = N_SESSIONS,
-            snapshots_per_session = SNAPSHOTS_PER_SESSION,
-            data_dir              = QUANTUM_DIR,
-            out_dir               = OUT_DIR,
-            seed                  = rng_seed,
-        )
-        generated.append(path)
-        rng_seed += 1
+    for n_qubits in qubit_range:
+        if OUT_DIR.exists():
+            stale = list(OUT_DIR.glob(f"spectrum_contrived_*qubits{n_qubits}*.npz"))
+            for f in stale:
+                f.unlink()
+                print(f"  Removed stale file: {f.name}")
+
+        for family in families:
+            for shots in shot_values:
+                path = generate_contrived_spectrum(
+                    family                = family,
+                    n_qubits              = n_qubits,
+                    shots                 = shots,
+                    n_sessions            = n_sessions,
+                    snapshots_per_session = snapshots_per_session,
+                    data_dir              = QUANTUM_DIR,
+                    out_dir               = OUT_DIR,
+                    seed                  = rng_seed,
+                )
+                generated.append(path)
+                rng_seed += 1
 
     print("\n-- Summary ---------------------------------------------------")
     for p in generated:
