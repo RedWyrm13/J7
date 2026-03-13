@@ -1,17 +1,24 @@
 
-# # Test
-# qubit_range: [4,6]
-# labels: ['iqp']
-# shot_range: [8,9]
-# n_ops: 50
-# n_circuits: 5
-# resamples_per_circuit: 1
-# master_seed: 42
-
-qubit_range: [11,20]
+# ── Full sweep: 4 to 20 qubits ──────────────────────────────────────────────
+qubit_range: [4, 21]          # range(4, 21) → qubits 4..20 inclusive
 labels: ['iqp', 'clifford', 'clifford_t']
-shot_range: [8, 11] # This will be 2^8, 2^9, ...
+
+# shots = shots_base * n_qubits^2  (quadratic scaling)
+# n=4  →  256 shots
+# n=10 → 1600 shots
+# n=20 → 6400 shots
+shots_base: 16
+
 n_ops: 1000
 n_circuits: 1000
 resamples_per_circuit: 1
 master_seed: 42
+
+# ── Test config (uncomment to sanity-check before HPC launch) ────────────────
+# qubit_range: [4, 6]
+# labels: ['iqp']
+# shots_base: 16
+# n_ops: 50
+# n_circuits: 5
+# resamples_per_circuit: 1
+# master_seed: 42

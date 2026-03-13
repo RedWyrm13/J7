@@ -17,27 +17,25 @@ def load_cfg_from_yaml(path:str) -> List[cfgCircuit]:
         qubit_min = data['qubit_range'][0]
         qubit_max = data['qubit_range'][-1]
         labels = data['labels']
-        shot_min = data['shot_range'][0]
-        shot_max = data['shot_range'][-1]
-        
+        shots_base = data['shots_base']
+
         cfgs = []
         i = 0
         for num_qubits in range(qubit_min, qubit_max):
+            shots = shots_base * num_qubits ** 2
             for label in labels:
-                for shot_exponent in range (shot_min, shot_max):
-                    shots = 2**shot_exponent
-                    cfg_dict = {
-                        'n_qubits': num_qubits,
-                        'label': label,
-                        'n_circuits': data['n_circuits'],
-                        'n_ops': data['n_ops'],
-                        'resamples_per_circuit': data['resamples_per_circuit'],
-                        'shots_per_datapoint': shots,
-                        'master_seed': data['master_seed'] + i
-                    }
-                    cfg = cfgCircuit(**cfg_dict)
-                    cfgs.append(cfg)
-                    i += 1
+                cfg_dict = {
+                    'n_qubits': num_qubits,
+                    'label': label,
+                    'n_circuits': data['n_circuits'],
+                    'n_ops': data['n_ops'],
+                    'resamples_per_circuit': data['resamples_per_circuit'],
+                    'shots_per_datapoint': shots,
+                    'master_seed': data['master_seed'] + i
+                }
+                cfg = cfgCircuit(**cfg_dict)
+                cfgs.append(cfg)
+                i += 1
 
         return cfgs
 
@@ -86,7 +84,7 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
                                  sim=sim, 
                                  shots = cfg.shots_per_datapoint)
             
-            featdict = summarize_counts_dict(counts)
+            featdict = summarize_counts_dict(counts, zz_pairs=cfg.zz_pairs)
             
             
             flattened_feature_dict =flatten_feature_dict(feat=featdict)
