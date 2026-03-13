@@ -208,8 +208,6 @@ def summarize_counts_dict(
         },
         "qubit_marginals": marg.tolist(),
         "parity_bias": parity_bias(counts),
-        "entropy_bits": shannon_entropy_bits(counts),
-        "collision_prob": collision_probability(counts),
     }
 
     if zz_pairs is not None:
@@ -238,7 +236,7 @@ def flatten_feature_dict(
     hw = np.array(feat["hamming_weight"]["hist"], dtype=np.float64)
     marg = np.array(feat["qubit_marginals"], dtype=np.float64)
     scalars = np.array(
-        [feat["parity_bias"], feat["entropy_bits"], feat["collision_prob"]],
+        [feat["parity_bias"]],
         dtype=np.float64
     )
 
@@ -249,6 +247,8 @@ def flatten_feature_dict(
         parts.append(zz)
 
     return np.concatenate(parts)
+
+
 
 def prettyprint_features(data: dict, width: int = 60, bar_width: int = 40, decimals: int = 4) -> None:
     """

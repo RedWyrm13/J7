@@ -23,7 +23,7 @@ class cfgCircuit:
     
     def __post_init__(self):
         n = self.n_qubits
-        pairs = [(i,i+1) if i < n else None for i in range(n)]
+        pairs = [(i, i + 1) for i in range(n - 1)]
         object.__setattr__(self, 'zz_pairs', pairs)
 
 def make_rng(master_seed: int) -> np.random.Generator:
