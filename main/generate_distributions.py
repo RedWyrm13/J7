@@ -177,6 +177,6 @@ if __name__ == "__main__":
             print("FAILED:", repr(e))
                   
     client.close()
-    cluster.close()
+    cluster.close(timeout = 60)
     end_time = time.time()
     print(f"Total time is {(end_time - start_time):.2f}.")
