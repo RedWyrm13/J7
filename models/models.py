@@ -1,6 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import GradientBoostingClassifier, ExtraTreesClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 import numpy as np
 from sklearn.model_selection import train_test_split
 from pathlib import Path
@@ -33,17 +34,19 @@ def make_filename(circuit_family = '_',
 # Initialize 4 basic models for testing
 def initialize_models():
     models = {
-    "Logistic Regression":LogisticRegression(
+    "Logistic Regression": LogisticRegression(
         max_iter=1000,
         solver='lbfgs'
     ),
-    "DecisionTreeClassifier": DecisionTreeClassifier(
-        max_depth= None,
+    "Decision Tree": DecisionTreeClassifier(
+        max_depth=None,
         random_state=42
     ),
-    "Gradient Boosting CLassifier" : GradientBoostingClassifier(),
-    
-    "Extra Trees Classifier" : ExtraTreesClassifier(n_estimators=200)
+    "Random Forest": RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    ),
+    "SVM": SVC(kernel='rbf')
     }
     
     return models
