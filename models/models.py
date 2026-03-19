@@ -10,25 +10,24 @@ def load_npz(filename, allow_pickle = False):
     data = np.load(filename, allow_pickle = allow_pickle)
     return data
 
-# This returns a filename that can be used in conjunction with the folder.glob(filename) function to pull all relevant files.
-# Specify parameters you are interested in, leave the others blank.
-def make_filename(circuit_family = '_',
-                  num_qubits = '_',
-                  num_ops = '_',
-                  shots_per_datapoint = '_',
-                  num_circuits = '_',
-                  resamples_per_circuit = '_',
+# This returns a glob pattern that can be used with folder.glob() to pull all relevant files.
+# Specify parameters you are interested in, leave others as '*' (wildcard).
+def make_filename(circuit_family='*',
+                  num_qubits='*',
+                  num_ops='*',
+                  shots_per_datapoint='*',
+                  num_circuits='*',
+                  resamples_per_circuit='*',
                   ):
-    
     filename = (
-        f"*circuitFamily*{circuit_family}"
-        f"*qubits*{num_qubits}"
-        f"*ops*{num_ops}"
-        f"*shotsPer*{shots_per_datapoint}"
-        f"*numCir*{num_circuits}"
-        f"*resamples*{resamples_per_circuit}"
-        "*.npz"
-)
+        f"circuitFamily_{circuit_family}"
+        f"_qubits{num_qubits}"
+        f"_ops{num_ops}"
+        f"_shotsPerDatapoint{shots_per_datapoint}"
+        f"_numCircuits{num_circuits}"
+        f"_resamplesPerCircuit{resamples_per_circuit}"
+        "_masterSeed*.npz"
+    )
     return filename
 
 # Initialize 4 basic models for testing
@@ -167,29 +166,26 @@ def plot_qubits_dict(qubits_dict, filename=None):
 
 
 def main():
-    folder = Path("../data")
+    folder = Path("../data/quantum")
     models = initialize_models()
-    shots = (256, 512, 1024)
-    qubits = list(range(4, 11))
+    shots_base = 16
+    qubits = list(range(4, 21))
 
-    shots_dict = build_average_dict(
-        models=models,
-        folder=folder,
-        outer_values=shots,
-        inner_values=qubits,
-        outer_name="shots"
-    )
+    # Shots scale quadratically with qubit count: shots = shots_base * n_qubits^2
+    qubits_dict = {}
+    for qubit in qubits:
+        shots = shots_base * qubit ** 2
+        filename = make_filename(num_qubits=qubit, shots_per_datapoint=shots)
+        try:
+            X_train, y_train, X_test, y_test = prepare_data(filename=filename, folder=folder)
+            results = {}
+            for model_name, model in models.items():
+                results[model_name] = eval_model(model, X_train, y_train, X_test, y_test)
+            qubits_dict[qubit] = results
+        except Exception as e:
+            print(f"Skipping qubits={qubit}: {e}")
 
-    qubits_dict = build_average_dict(
-        models=models,
-        folder=folder,
-        outer_values=qubits,
-        inner_values=shots,
-        outer_name="qubits"
-    )
-
-    plot_shots_dict(shots_dict=shots_dict, filename="shots_test.png")
-    plot_qubits_dict(qubits_dict=qubits_dict, filename="qubit_test.png")
+    plot_qubits_dict(qubits_dict=qubits_dict, filename="qubit_accuracy.png")
             
 if __name__ == '__main__':
     main()
