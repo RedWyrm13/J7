@@ -18,7 +18,7 @@
 \newcommand{\shots}{s}
 
 % ── Title Block ───────────────────────────────────────────────────────────
-\title{Quantum Circuit Family Classification via Statistical Distribution Fingerprinting: A Scaling Study for Spectrum Monitoring Applications}
+\title{Classifying Probability Distributions via Statistical Fingerprinting: Training on Quantum Circuits, Testing on Real-World Data}
 
 \author{
 \IEEEauthorblockN{Andrew Maciejunes}
@@ -43,51 +43,61 @@ rgore@odu.edu
 \maketitle
 
 \begin{abstract}
-We present a framework for classifying quantum circuit families—Instantaneous Quantum Polynomial (IQP), Clifford, and Clifford$+T$ circuits—using classical statistical features derived from their measurement-outcome distributions.
+We present a framework for classifying probability distributions using classical statistical features, motivated by the observation that many real-world processes generate observable outcomes whose distributional structure encodes meaningful information about the underlying generative process.
+Quantum circuit families—Instantaneous Quantum Polynomial (IQP), Clifford, and Clifford$+T$ circuits—serve as canonical, reproducible sources of distinct distribution classes, providing labeled training data with known statistical structure.
 A suite of distribution statistics with polynomial shot requirements (Hamming-weight histogram, single-qubit marginals, parity bias, and nearest-neighbor connected $ZZ$ correlations) is extracted from simulated circuit samples and used to train four classical machine-learning classifiers.
-We conduct a systematic scaling study over 4--20 qubits using a shot budget that scales quadratically with qubit count ($\shots = 16\nqubits^2$), yielding $16\nqubits^2$ shots per circuit and $N_c = 1000$ circuits per family.
-We show that two statistics commonly used for distribution characterization—Shannon entropy and collision probability—require exponential or sub-exponential shot budgets to estimate accurately and are therefore dropped in favor of features whose estimation cost scales polynomially with system size.
-We characterize how classification accuracy degrades with increasing system size and limited measurement budget, establishing resource requirements for reliable circuit-family identification.
-A cross-domain experiment further reveals that linear classifiers generalize across the quantum-to-spectrum distribution shift while tree-based methods do not, providing insight into what statistical structure is preserved under the spectrum construction.
-These results motivate a near-term application to electromagnetic spectrum monitoring, where signal distributions can be fingerprinted and classified using the same statistical pipeline.
+We conduct a systematic scaling study over 4--20 qubits using a shot budget that scales quadratically with qubit count ($\shots = 16\nqubits^2$), yielding $N_c = 1000$ circuits per family.
+We show that two statistics commonly used for distribution characterization—Shannon entropy and collision probability—require exponential or sub-exponential shot budgets to estimate accurately and are therefore excluded in favor of features whose estimation cost scales polynomially with system size.
+A cross-domain experiment then demonstrates that classifiers trained exclusively on circuit-sampled data successfully classify aggregated real-world observations drawn from the same underlying distribution classes, with linear classifiers generalizing reliably while tree-based methods do not.
+These results establish a general pipeline: identify a real-world quantity as belonging to a known distribution class, generate labeled training data from that class using quantum circuits or classical simulation, and classify new observations without requiring labeled real-world examples.
 \todo{Summarize key results: best accuracy, scaling trend.}
 \end{abstract}
 
 \begin{IEEEkeywords}
-quantum circuit classification, IQP circuits, Clifford circuits, spectrum monitoring, quantum machine learning, statistical fingerprinting, near-term quantum computing
+probability distribution classification, quantum circuit families, IQP circuits, Clifford circuits, statistical fingerprinting, quantum machine learning, near-term quantum computing
 \end{IEEEkeywords}
 
 \section{Introduction}
 \label{sec:intro}
 
-Near-term quantum devices operate in the noisy intermediate-scale quantum (NISQ) regime~\cite{Preskill2018}, where fault-tolerant algorithms remain out of reach.
-Identifying practically useful tasks for NISQ devices is therefore an active research priority.
-One promising direction is quantum-assisted sensing and signal classification, where the statistical structure of quantum measurement outcomes may be exploited to distinguish signal classes that are difficult to separate classically.
+A recurring challenge across scientific and engineering domains is the classification of observations according to the underlying process that generated them.
+When the generative process is complex or partially unknown, direct model-based classification is infeasible.
+A distribution-fingerprinting approach offers an alternative: extract robust statistical features from observed samples, and classify by comparing those features to a known library of distribution signatures.
 
-Electromagnetic spectrum monitoring—a core function of joint force operations~\cite{todo_j7_ref}—requires rapid, scalable classification of complex signal environments.
-Signals observed in contested spectra exhibit probability distributions over observable states whose structure depends on the underlying physical process.
-We observe that this mirrors the structure of quantum circuit sampling: different circuit families generate distributions with characteristic statistical signatures.
+The practical utility of this approach depends on two capabilities.
+First, one needs a reliable method to characterize distributions with limited samples—that is, to extract features whose estimation cost scales favourably with problem size.
+Second, one needs labeled training data representative of the target distribution classes, which may be expensive or impossible to obtain directly from the real-world system of interest.
 
-In this work we ask: \textit{can classical statistical features derived from quantum circuit measurement outcomes reliably identify circuit families, and how do these features scale with qubit count and shot budget?}
-A positive answer at scale would suggest a path toward applying the same fingerprinting pipeline to spectrum classification, using quantum hardware (as it matures) or quantum-inspired classical simulation in the near term.
+Quantum circuit families provide a principled solution to the second challenge.
+Different families—IQP, Clifford, and Clifford$+T$ circuits—generate measurement-outcome distributions with structurally distinct statistical signatures.
+Crucially, these distributions can be generated in large quantities via classical simulation, providing abundant labeled training data for any classification pipeline.
+If a real-world process can be identified as generating data that resembles one of these distribution classes, classifiers trained on circuit data can be directly applied to real-world observations without requiring labeled field data.
 
-A key design decision in this study concerns which statistical features to extract.
-Not all features are equally tractable: Shannon entropy and collision probability require exponentially or sub-exponentially many shots to estimate accurately as qubit count grows, which would demand exponentially growing measurement resources and negate any computational advantage of the quantum approach.
+In this work we ask:
+\textit{can classical statistical features derived from quantum circuit measurement outcomes reliably classify distribution families, and do classifiers trained on circuit data transfer to aggregated real-world observations drawn from the same distribution classes?}
+A positive answer establishes the general utility of the circuit-as-distribution-generator paradigm and provides a concrete cross-domain validation methodology.
+
+A key design decision concerns which statistical features to extract.
+Not all features are equally tractable: Shannon entropy and collision probability require exponentially or sub-exponentially many shots to estimate accurately as system size grows, which would demand exponentially growing measurement resources.
 We therefore restrict our feature set to statistics whose estimation cost scales polynomially with $\nqubits$, and adopt a shot budget that grows quadratically with qubit count to maintain consistent statistical quality across the full 4--20 qubit range.
 
 \paragraph*{Contributions}
 \begin{itemize}
+    \item A framework that positions quantum circuit families as canonical, reproducible sources of labeled training data for distribution classification, enabling cross-domain generalization to real-world observations.
     \item A reproducible data-generation pipeline for three circuit families (IQP, Clifford, Clifford$+T$) spanning 4--20 qubits with a principled quadratic shot scaling law.
     \item An analysis of the shot requirements of each candidate feature, motivating a feature set restricted to statistics with polynomial estimation cost.
-    \item A feature-extraction suite of four distributional statistics—Hamming-weight histogram, single-qubit marginals, parity bias, and connected $ZZ$ correlations—that are agnostic to qubit count and flatten into a fixed-length vector of size $3\nqubits + 1$.
+    \item A feature-extraction suite of four distributional statistics—Hamming-weight histogram, single-qubit marginals, parity bias, and connected $ZZ$ correlations—that are agnostic to system size and flatten into a fixed-length vector of size $3\nqubits + 1$.
     \item A comparative evaluation of four classical classifiers (Logistic Regression, Decision Tree, Gradient Boosting, Extra Trees) across qubit counts.
-    \item A cross-domain experiment demonstrating that Logistic Regression generalizes across the quantum-to-spectrum distribution shift, revealing the role of linear feature-space structure in spectrum monitoring applicability.
+    \item A cross-domain experiment demonstrating that Logistic Regression generalizes from circuit training data to aggregated real-world observations, revealing that the linear structure of the feature space is preserved under aggregation.
 \end{itemize}
 
 \section{Background}
 \label{sec:background}
 
-\subsection{Circuit Families}
+\subsection{Circuit Families as Distribution Classes}
+
+The central premise of our framework is that quantum circuit families define distinct, identifiable classes of probability distributions over binary strings.
+We consider three families that span a range of computational complexity and distributional structure.
 
 \paragraph{Clifford circuits}
 Clifford circuits are generated by the gate set $\{H, S, \mathrm{CNOT}\}$ and are efficiently simulable classically via the stabilizer formalism~\cite{Gottesman1998}.
@@ -95,17 +105,18 @@ Their output distributions are not uniformly random; they possess structured cor
 
 \paragraph{Clifford$+T$ circuits}
 Adding the $T = \mathrm{diag}(1, e^{i\pi/4})$ gate to the Clifford set yields a universal gate set~\cite{Boykin2000}.
-The $T$ gate breaks the Clifford structure and, with sufficient $T$-count, moves the circuit outside the efficiently simulable regime.
+The $T$ gate breaks the Clifford structure and, with sufficient $T$-count, moves the circuit outside the efficiently simulable regime, altering the distributional signature in measurable ways.
 
 \paragraph{IQP circuits}
 Instantaneous Quantum Polynomial (IQP) circuits apply only diagonal gates in the computational basis, sandwiched by Hadamard layers~\cite{Shepherd2009}.
-Classical hardness of sampling from IQP circuits is supported by complexity-theoretic arguments~\cite{Bremner2016}, making IQP a canonical near-term hardness candidate.
+Classical hardness of sampling from IQP circuits is supported by complexity-theoretic arguments~\cite{Bremner2016}, and their parity structure produces a characteristic distributional fingerprint that is qualitatively distinct from the Clifford and Clifford$+T$ families.
 
 \subsection{Classical Shadows and Distribution Statistics}
 \todo{Brief review of classical shadows~\cite{Huang2020} and how our approach relates to (but differs from) full shadow tomography.}
 
-\subsection{Spectrum Monitoring Context}
-\todo{Brief description of the J7 spectrum monitoring application domain, RF signal classification, and why distributional fingerprinting is relevant. Cite relevant DoD / JFHQ-DODIN / spectrum management doctrine if unclassified references are available.}
+\subsection{Distribution Classification}
+
+\todo{Brief review of relevant prior work on distribution testing, hypothesis testing between quantum distributions, and any classical analogs (e.g., signal classification by distributional features). Position our contribution relative to these.}
 
 \section{Methods}
 \label{sec:methods}
@@ -138,7 +149,7 @@ Simulator & Qiskit Aer (statevector) \\
 \subsection{Shot Budget Design}
 \label{sec:shots}
 
-A fundamental constraint in quantum measurement is that statistical features must be estimated from a finite number of shots.
+A fundamental constraint in distribution estimation is that statistical features must be estimated from a finite number of samples.
 The estimation cost varies substantially across features:
 
 \paragraph{Polynomial-cost features}
@@ -151,7 +162,7 @@ Nearest-neighbor connected $ZZ$ correlations require $O(\nqubits^2 / \varepsilon
 Shannon entropy $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$ requires $O(2^\nqubits / \nqubits)$ shots for accurate estimation from raw empirical frequencies, because the estimator is biased whenever outcomes are unobserved—which becomes the norm above $\sim$10 qubits.
 Collision probability $\mathcal{C} = \sum_x \hat{p}(x)^2$ requires $O(2^{\nqubits/2})$ shots via the birthday problem threshold; below this, the estimator systematically overestimates $\mathcal{C}$ because unseen outcomes contribute zero rather than their true $p^2$ value.
 
-These exponential requirements would demand a shot budget growing faster than polynomially with $\nqubits$, negating the resource efficiency motivation of the approach.
+These exponential requirements would demand a sample budget growing faster than polynomially with $\nqubits$, negating the scalability motivation of the approach.
 We therefore exclude Shannon entropy and collision probability from our feature set and restrict attention to the polynomial-cost features.
 
 \paragraph{Quadratic shot scaling}
@@ -184,11 +195,11 @@ Nearest-neighbor connected correlations
 C_{i,i+1} = \langle Z_i Z_{i+1}\rangle - \langle Z_i\rangle\langle Z_{i+1}\rangle
 \end{equation}
 for $i = 0,\ldots,\nqubits-2$, where $Z \in \{+1,-1\}$ encodes the measurement outcome.
-These 2-local observables capture pairwise entanglement structure and require $O(\nqubits^2)$ shots across all $\nqubits - 1$ pairs.
+These 2-local observables capture pairwise correlation structure and require $O(\nqubits^2)$ shots across all $\nqubits - 1$ pairs.
 
 \paragraph{Feature vector}
 All feature groups are concatenated into a fixed-length feature vector.
-The feature vector length for an $\nqubits$-qubit circuit is
+The feature vector length for an $\nqubits$-qubit system is
 \begin{equation}
 \underbrace{(\nqubits+1)}_{\text{HW hist}} + \underbrace{\nqubits}_{\text{marginals}} + \underbrace{1}_{\text{parity}} + \underbrace{(\nqubits-1)}_{ZZ} = 3\nqubits + 1.
 \end{equation}
@@ -200,38 +211,40 @@ We evaluate four classifiers from scikit-learn~\cite{scikit-learn}: Logistic Reg
 Data are split 80/20 train/test with stratification by class label.
 Accuracy is reported as the fraction of correctly classified test samples.
 
-\subsection{Contrived Spectrum Experiment}
-\label{sec:spectrum_method}
+\subsection{Cross-Domain Experiment: Circuit Data to Real-World Observations}
+\label{sec:crossdomain_method}
 
-To test whether the learned circuit-family representations transfer to a spectrum monitoring setting, we construct a contrived spectrum dataset by bootstrap-resampling from the circuit feature vectors.
-Each synthetic spectrum \emph{session} is formed by drawing $N_s = 50$ circuit feature vectors with replacement and averaging them:
+The primary motivation for classifying distributions is to identify real-world observations as belonging to a known distribution class, without requiring labeled real-world training data.
+To evaluate this capability, we construct a dataset of synthetic real-world observations by bootstrap-resampling from the circuit feature vectors.
+
+Each synthetic \emph{observation} is formed by drawing $N_s = 50$ circuit feature vectors with replacement and averaging them:
 \begin{equation}
-\mathbf{x}_{\mathrm{session}} = \frac{1}{N_s}\sum_{k=1}^{N_s} \mathbf{x}_{(k)},
+\mathbf{x}_{\mathrm{obs}} = \frac{1}{N_s}\sum_{k=1}^{N_s} \mathbf{x}_{(k)},
 \end{equation}
 where each $\mathbf{x}_{(k)}$ is sampled uniformly from the circuit data for that family and qubit count.
-This simulates a sensor collecting $N_s$ power spectral density (PSD) snapshots over an observation window and summarizing them as an average feature vector.
+This simulates an observer collecting $N_s$ independent samples from an unknown process and summarizing them as an average feature vector—a natural aggregation strategy when the underlying distribution class is the quantity of interest rather than individual outcomes.
 
 We run three experiments:
 \begin{enumerate}
     \item \textbf{Circuit-only}: train and test on raw circuit data (80/20 split).
-    \item \textbf{Spectrum-only}: train and test on spectrum session data (80/20 split).
-    \item \textbf{Cross}: train on raw circuit data, test on spectrum session data. Labels are matched by stripping the \texttt{spectrum\_} prefix.
+    \item \textbf{Observation-only}: train and test on aggregated observation data (80/20 split).
+    \item \textbf{Cross}: train on raw circuit data, test on aggregated observation data. Labels are matched by distribution class.
 \end{enumerate}
-The cross experiment is the key result: it measures whether features learned from quantum circuit data transfer to the averaging-transformed spectrum representation.
+The cross experiment is the key result: it measures whether a classifier trained solely on circuit-generated data can identify the distribution class of real-world aggregated observations, without any labeled real-world training examples.
 
 \section{Results}
 \label{sec:results}
 
-\subsection{Classification Accuracy vs. Qubit Count}
+\subsection{Classification Accuracy vs. System Size}
 
 Figure~\ref{fig:qubit_accuracy} shows average accuracy as a function of qubit count.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{qubit_test.png}
-    \caption{Average classifier accuracy vs.\ qubit count, 4--20 qubits.}
-    \label{fig:qubit_accuracy}
-\end{figure}
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=\linewidth]{qubit_test.png}
+%     \caption{Average classifier accuracy vs.\ qubit count, 4--20 qubits.}
+%     \label{fig:qubit_accuracy}
+% \end{figure}
 
 \todo{Describe scaling trend. Does accuracy degrade, plateau, or improve with qubit count? Is there a crossover point?}
 
@@ -243,51 +256,60 @@ Figure~\ref{fig:qubit_accuracy} shows average accuracy as a function of qubit co
 
 \todo{Report feature importances from the Extra Trees or Gradient Boosting model. Which statistics are most discriminative?}
 
-\subsection{Cross-Domain Generalization: Circuit to Spectrum}
+\subsection{Cross-Domain Generalization: Circuit Training to Real-World Observations}
 \label{sec:cross}
 
-Table~\ref{tab:cross} and Figure~\ref{fig:spectrum} summarize the three spectrum experiments.
+Table~\ref{tab:cross} and Figure~\ref{fig:crossdomain} summarize the three cross-domain experiments.
 \todo{Fill in numerical results once data is available.}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{qubit_test.png}
-    \caption{Spectrum experiment results: circuit-only, spectrum-only, and cross-domain accuracy by classifier. Dashed line indicates random-chance baseline ($1/3$).}
-    \label{fig:spectrum}
-\end{figure}
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=\linewidth]{qubit_test.png}
+%     \caption{Cross-domain experiment results: circuit-only, observation-only, and cross accuracy by classifier. Dashed line indicates random-chance baseline ($1/3$).}
+%     \label{fig:crossdomain}
+% \end{figure}
 
-A consistent pattern emerges across qubit counts: tree-based methods (Decision Tree, Gradient Boosting, Extra Trees) dominate on both the circuit-only and spectrum-only tasks but fail to generalize in the cross experiment, while Logistic Regression remains the only classifier reliably above the random-chance baseline in the cross setting.
+A consistent pattern emerges across system sizes: tree-based methods (Decision Tree, Gradient Boosting, Extra Trees) dominate on both the circuit-only and observation-only tasks but fail to generalize in the cross experiment, while Logistic Regression remains the only classifier reliably above the random-chance baseline in the cross setting.
 
 \paragraph{Interpretation}
-This result follows from the mechanics of the averaging operation used to construct spectrum sessions.
-By the central limit theorem, averaging $N_s = 50$ circuit feature vectors preserves class means but compresses feature variance by a factor of $1/\sqrt{N_s}$.
-Tree-based classifiers learn axis-aligned threshold rules of the form ``$x_j > \tau$''; these absolute threshold values are calibrated to the variance of the training distribution and become misaligned when feature variance collapses under averaging.
+This result follows from the mechanics of the aggregation operation used to construct real-world observations.
+By the central limit theorem, averaging $N_s = 50$ feature vectors preserves class means but compresses feature variance by a factor of $1/\sqrt{N_s}$.
+Tree-based classifiers learn axis-aligned threshold rules of the form ``$x_j > \tau$''; these absolute threshold values are calibrated to the variance of the training distribution and become misaligned when feature variance collapses under aggregation.
 Logistic Regression, by contrast, learns a global separating hyperplane $\mathbf{w}^\top\mathbf{x} > b$.
 Since the class means are preserved under averaging ($\mathbb{E}[\bar{\mathbf{x}}] = \mathbb{E}[\mathbf{x}]$), the classes remain on the correct sides of the learned hyperplane, and Logistic Regression generalizes.
 
 This is not a failure of the tree-based methods; it is a statement about the nature of the distribution shift.
-The averaging operation preserves the \emph{linear} structure of feature space—the direction separating circuit families—while destroying the fine-grained distributional structure (absolute feature scales, tail behavior, local density) that tree methods exploit.
-Logistic Regression's ability to generalize is therefore evidence that the spectrum construction preserves the fundamental signal that distinguishes circuit families, and that this signal is linearly accessible.
+The aggregation operation preserves the \emph{linear} structure of feature space—the direction separating distribution classes—while destroying the fine-grained distributional structure (absolute feature scales, tail behavior, local density) that tree methods exploit.
+Logistic Regression's ability to generalize is therefore evidence that the class-separating signal is linearly accessible and robust to the aggregation transform.
 
 \paragraph{Scaling behavior at high qubit counts}
 At 9--10 qubits, Logistic Regression's cross-domain accuracy decreases toward the random baseline, while tree methods begin to show marginal signal.
 We attribute this to shot-noise saturation: at $\nqubits = 10$ with $16 \times 100 = 1600$ shots, features such as parity bias and $ZZ$ correlations become noisier due to shot statistics, degrading the class-separating direction that Logistic Regression relies on.
 Simultaneously, the variance compression from averaging becomes less dramatic relative to the existing shot noise, allowing tree methods to occasionally find splits that survive the distribution shift.
-The 11--20 qubit data (to be collected on HPC) will test whether this trend continues or reverses, and whether Logistic Regression remains the sole generalizing classifier at higher qubit counts.
+The 11--20 qubit data (to be collected on HPC) will test whether this trend continues or reverses, and whether Logistic Regression remains the sole generalizing classifier at higher system sizes.
 
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Implications for Spectrum Monitoring}
+\subsection{Merit of Distribution Classification}
 
-The cross-domain result has a direct interpretation for electromagnetic spectrum monitoring.
-A passive spectrum sensor collecting PSD snapshots over time produces an observation sequence analogous to our spectrum sessions: each snapshot corresponds to one circuit sample, and averaging across a window corresponds to our bootstrap-mean construction.
-The fact that Logistic Regression—trained on circuit data—transfers to spectrum session data suggests that the linear separating structure of the feature space is robust to this integration process.
+The ability to classify observations by their underlying distribution class, rather than by raw feature values calibrated to a specific dataset, has broad practical implications.
+Many physical and engineered systems produce observables whose statistical structure encodes meaningful information about the generative process—yet obtaining labeled real-world training data for every deployment context is costly or infeasible.
 
-In the RF domain, the analogy is: ``qubit count'' maps to signal bandwidth or spectral complexity, and ``shot budget'' maps to integration time or sensor dwell time per spectral band.
-The quadratic shot scaling identified here translates to a quadratic growth in required integration time as spectral complexity increases—a requirement that may be achievable with modern sensor architectures.
+The framework demonstrated here addresses this directly: by identifying the relevant distribution class in advance and generating labeled training data from that class via quantum circuits or classical simulation, a classifier can be deployed against real-world observations without any labeled field examples.
+The cross-domain experiment provides a proof of concept: the classifier is trained on circuit data alone and tested against aggregated observations constructed to resemble what a real-world observer would collect.
 
-\todo{Argue more concretely what ``qubit count'' and ``shot budget'' map to in the RF domain. Discuss what ``circuit family'' maps to in the spectrum monitoring context.}
+\subsection{Mapping Real-World Quantities to Distribution Classes}
+
+\todo{
+Discuss how real-world processes can be mapped to the distribution classes studied here.
+What physical or observational properties determine whether a process resembles IQP, Clifford, or Clifford$+T$ distributions?
+Identify specific quantities that serve as analogues of qubit count (system complexity or dimension) and shot budget (observation or integration budget).
+Provide at least one concrete mapping to a domain of interest.
+}
+
+The framework is not limited to three classes; additional distribution classes can be incorporated by extending the circuit family library or by including other generative models.
+The key requirement is that the class-specific distributional signatures be linearly separable in the chosen feature space—a condition that the cross-domain experiment directly tests.
 
 \subsection{Limitations}
 
@@ -298,27 +320,29 @@ Extending to noisy simulation (Aer noise models) or real hardware is a natural n
 The feature set is hand-engineered based on shot-scaling considerations.
 A learned representation (e.g., a neural network trained end-to-end on the counts dictionary) may extract more discriminative features, at the cost of interpretability and the tractability guarantees provided by the polynomial-cost feature set.
 
-The contrived spectrum dataset is constructed by bootstrap-resampling from circuit data rather than from a physically motivated generative model.
-While this preserves the statistical structure of the circuit distributions, it does not model the specific noise, channel effects, or modulation characteristics of real RF environments.
+The synthetic real-world observations are constructed by bootstrap-resampling from circuit data rather than from a physically motivated generative model specific to any application domain.
+Validation against data from a concrete real-world system is required before claims of applicability to that domain can be made.
 
-\subsection{Path to Hardware Deployment}
+\subsection{Path to Broader Deployment}
 
-\todo{Briefly discuss what it would take to run this pipeline on real quantum hardware (IBM, IonQ, etc.) via cloud access. Note that the current pipeline is hardware-agnostic at the Qiskit level.}
+\todo{Discuss what it would take to apply this pipeline to a concrete real-world domain: (1) identify what quantity maps to system dimension and sample count, (2) establish which distribution class the real-world process belongs to, (3) generate sufficient labeled circuit data, (4) deploy the linear classifier. Note that the current pipeline is hardware-agnostic at the Qiskit level and the classifiers are lightweight at inference time.}
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have demonstrated that classical statistical features derived from quantum circuit measurement outcomes can reliably classify IQP, Clifford, and Clifford$+T$ circuit families across 4--20 qubits.
-A key methodological contribution is the identification of which features are tractable at scale: Shannon entropy and collision probability are excluded because they require exponential shot budgets, while Hamming-weight histogram, single-qubit marginals, parity bias, and connected $ZZ$ correlations are retained because their estimation cost scales polynomially with qubit count.
+We have presented a framework for classifying probability distributions using statistical fingerprinting, with quantum circuit families providing canonical, reproducible training data for distinct distribution classes.
+Three families—IQP, Clifford, and Clifford$+T$—are used to generate labeled samples across 4--20 qubits; classical machine-learning classifiers are then trained on these samples and evaluated both on held-out circuit data and on aggregated real-world observations constructed from the same underlying distributions.
+
+A key methodological contribution is the identification of which features are tractable at scale: Shannon entropy and collision probability are excluded because they require exponential sample budgets, while Hamming-weight histogram, single-qubit marginals, parity bias, and connected $ZZ$ correlations are retained because their estimation cost scales polynomially with system size.
 A quadratic shot budget ($\shots = 16\nqubits^2$) is adopted to match the worst-case cost of the $ZZ$ feature suite.
 
-The cross-domain experiment—training on circuit data and testing on averaging-transformed spectrum data—reveals that Logistic Regression is the only classifier that generalizes across this distribution shift.
-This result is explained by the fact that averaging preserves class means (and hence the linear separating structure of feature space) while destroying the absolute threshold structure that tree-based methods rely on.
-This finding provides a concrete criterion for spectrum monitoring applicability: the signal of interest must be linearly separable in the chosen feature space.
+The cross-domain experiment—training on circuit data and testing on aggregated real-world observations—reveals that Logistic Regression is the only classifier that generalizes across this distribution shift.
+This result is explained by the fact that aggregation preserves class means (and hence the linear separating structure of feature space) while destroying the absolute threshold structure that tree-based methods rely on.
+This finding provides a concrete and testable criterion for cross-domain applicability: the distribution classes must be linearly separable in the chosen feature space.
 
 \todo{State the best accuracy achieved and at what resource level.}
-The scaling behavior of classification accuracy with qubit count provides concrete guidance for the hardware resources required to deploy this pipeline on near-term quantum devices.
-These results establish a quantitative foundation for applying quantum-statistical fingerprinting to electromagnetic spectrum monitoring within the J7 operational context, and provide a reproducible baseline for future work incorporating noise models, hardware experiments, and alternative feature representations.
+The scaling behavior of classification accuracy with system size provides concrete guidance for the sample resources required to deploy this pipeline in practice.
+These results establish a quantitative foundation for applying distribution-level statistical fingerprinting to real-world classification problems and provide a reproducible baseline for future work incorporating noise models, hardware experiments, and alternative feature representations.
 
 \section*{Acknowledgments}
 \todo{Funding sources, HPC allocation, institutional acknowledgments.}
