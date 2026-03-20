@@ -40,8 +40,13 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 import numpy as np
 import yaml
 
-QUANTUM_DIR = Path(__file__).resolve().parent.parent / "data" / "quantum"
-OUT_DIR     = Path(__file__).resolve().parent.parent / "data" / "spectrum"
+_DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
+
+_MODE_DIRS = {
+    "z_only":      (_DATA_ROOT / "quantum",          _DATA_ROOT / "spectrum"),
+    "multi_basis": (_DATA_ROOT / "quantum_mb",        _DATA_ROOT / "spectrum_mb"),
+    "shadows":     (_DATA_ROOT / "quantum_shadows",   _DATA_ROOT / "spectrum_shadows"),
+}
 
 # -- Config loading ----------------------------------------------------------
 
@@ -161,8 +166,17 @@ def generate_contrived_spectrum(
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 generate_contrived_spectrum.py <config.yaml>")
+        print("Usage: python3 generate_contrived_spectrum.py <config.yaml> [mode]")
+        print("  mode: z_only (default) | multi_basis | shadows")
         sys.exit(1)
+
+    mode = sys.argv[2] if len(sys.argv) >= 3 else "z_only"
+    if mode not in _MODE_DIRS:
+        print(f"Unknown mode '{mode}'. Choose from: {list(_MODE_DIRS)}")
+        sys.exit(1)
+
+    QUANTUM_DIR, OUT_DIR = _MODE_DIRS[mode]
+    print(f"Mode: {mode}")
 
     cfg = load_cfg_from_yaml(sys.argv[1])
     families              = cfg["families"]

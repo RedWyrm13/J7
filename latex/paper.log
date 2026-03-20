@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  13 MAR 2026 16:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  19 MAR 2026 14:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -441,6 +441,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 41.
+ (./paper.out) (./paper.out)
 \@outlinefile=\write3
 \openout3 = `paper.out'.
 
@@ -453,47 +454,21 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 46.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-LaTeX Warning: Citation `Preskill2018' on page 1 undefined on input line 63.
+LaTeX Warning: Citation `Huang2020' on page 1 undefined on input line 47.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 63--66
-[]\OT1/ptm/m/n/10 Near-term quan-tum de-vices op-er-ate in the noisy
- []
+LaTeX Warning: Citation `Bremner2016' on page 1 undefined on input line 67.
 
 
-Underfull \hbox (badness 6380) in paragraph at lines 63--66
-\OT1/ptm/m/n/10 intermediate-scale quan-tum (NISQ) regime [\OT1/ptm/b/n/10 ?\OT1/ptm/m/n/10 ], where
- []
-
-
-Underfull \hbox (badness 3199) in paragraph at lines 63--66
-\OT1/ptm/m/n/10 prac-ti-cally use-ful tasks for NISQ de-vices is there-fore
- []
-
-
-Underfull \hbox (badness 2326) in paragraph at lines 63--66
-\OT1/ptm/m/n/10 an ac-tive re-search pri-or-ity. One promis-ing di-rec-tion is
- []
-
-
-LaTeX Warning: Citation `todo_j7_ref' on page 1 undefined on input line 67.
+LaTeX Warning: Citation `Huang2020' on page 1 undefined on input line 73.
 
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
-[]\OT1/ptm/m/n/10 A feature-extraction suite of four dis-tri-bu-tional
- []
+LaTeX Warning: Citation `Gottesman1998' on page 1 undefined on input line 91.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
-\OT1/ptm/m/n/10 statistics|Hamming-weight his-togram, single-
- []
-
-
-Underfull \hbox (badness 6708) in paragraph at lines 82--83
-\OT1/ptm/m/n/10 qubit marginals, par-ity bias, and con-nected $\OML/cmm/m/it/10 ZZ$
- []
+LaTeX Warning: Citation `Boykin2000' on page 1 undefined on input line 95.
 
 
 
@@ -502,99 +477,54 @@ Underfull \hbox (badness 6708) in paragraph at lines 82--83
 
 ]
 
-LaTeX Warning: Citation `Gottesman1998' on page 2 undefined on input line 93.
+LaTeX Warning: Citation `Shepherd2009' on page 2 undefined on input line 99.
 
 
-LaTeX Warning: Citation `Boykin2000' on page 2 undefined on input line 97.
+LaTeX Warning: Citation `Bremner2016' on page 2 undefined on input line 100.
 
 
-LaTeX Warning: Citation `Shepherd2009' on page 2 undefined on input line 101.
+LaTeX Warning: Citation `Huang2020' on page 2 undefined on input line 104.
 
 
-LaTeX Warning: Citation `Bremner2016' on page 2 undefined on input line 102.
+LaTeX Warning: Citation `Huang2020' on page 2 undefined on input line 116.
 
 
-Underfull \hbox (badness 1762) in paragraph at lines 101--103
- \OT1/ptm/m/it/10 c) IQP cir-cuits: [][] \OT1/ptm/m/n/10 In-stan-ta-neous Quan-tum Poly-no-mial
- []
+LaTeX Warning: Citation `Qiskit' on page 2 undefined on input line 128.
 
 
-LaTeX Warning: Citation `Huang2020' on page 2 undefined on input line 105.
+LaTeX Warning: Citation `Huang2020' on page 2 undefined on input line 162.
 
 
-LaTeX Warning: Citation `Qiskit' on page 2 undefined on input line 115.
-
-
-LaTeX Warning: Reference `tab:sweep' on page 2 undefined on input line 118.
-
-
-
-
-Underfull \hbox (badness 1377) in paragraph at lines 168--170
- \OT1/ptm/m/it/10 a) Hamming-weight his-togram: [][] \OT1/ptm/m/n/10 The nor-mal-ized his-
- []
 
 
 
 [2]
 
-LaTeX Warning: Citation `scikit-learn' on page 3 undefined on input line 199.
+LaTeX Warning: Citation `scikit-learn' on page 3 undefined on input line 220.
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 218.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 220.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-
-LaTeX Warning: Reference `fig:qubit_accuracy' on page 3 undefined on input line 227.
-
-
-LaTeX Warning: File `qubit_test.png' not found on input line 231.
-
-
-/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex:231: Package pdftex.def Error: File `qubit_test.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.231 ...raphics[width=\linewidth]{qubit_test.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Underfull \hbox (badness 2521) in paragraph at lines 228--230
+[]\OT1/ptm/m/n/10 To val-i-date that the poly-no-mial fea-ture set cap-tures
+ []
 
 
 
 
-LaTeX Warning: Reference `tab:cross' on page 3 undefined on input line 249.
+LaTeX Warning: Reference `fig:qubit_accuracy' on page 3 undefined on input line 254.
 
 
-LaTeX Warning: Reference `fig:spectrum' on page 3 undefined on input line 249.
+LaTeX Warning: Reference `tab:cross' on page 3 undefined on input line 272.
 
 
-LaTeX Warning: File `qubit_test.png' not found on input line 254.
-
-
-/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex:254: Package pdftex.def Error: File `qubit_test.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.254 ...raphics[width=\linewidth]{qubit_test.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: Reference `fig:crossdomain' on page 3 undefined on input line 272.
 
 
 
 [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-
-
-
-[4]
 No file paper.bbl.
 
 ** Conference Paper **
@@ -609,11 +539,7 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-
-
-[5
-
-] (./paper.aux)
+[4] (./paper.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -622,31 +548,22 @@ L3 programming layer <2025-01-18>
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `paper.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  AEFB6ADF6E560593E914F4F1DD9AFC16;3508.
+Package rerunfilecheck Info: File `paper.out' has not changed.
+(rerunfilecheck)             Checksum: CF34F759E54E227F271D8F99172A87CF;4325.
  ) 
 Here is how much of TeX's memory you used:
- 12582 strings out of 473197
- 199039 string characters out of 5718605
- 618986 words of memory out of 5000000
- 35615 multiletter control sequences out of 15000+600000
+ 12578 strings out of 473197
+ 198674 string characters out of 5718605
+ 622596 words of memory out of 5000000
+ 35606 multiletter control sequences out of 15000+600000
  601627 words of font info for 122 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,454b,525s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (5 pages, 239111 bytes).
+ 75i,9n,79p,532b,444s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (4 pages, 256054 bytes).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
- 142 compressed objects within 2 object streams
- 52 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 219 compressed objects within 3 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

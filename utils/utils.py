@@ -18,12 +18,13 @@ class cfgCircuit:
     master_seed: int = 12345
     label: str = "configuration not defined"
 
-    # flattening options (keep here so you can standardize across families)
     include_zz_in_flatten: bool = True
-    
+    # "z_only" | "multi_basis" | "shadows"
+    measurement_mode: str = "z_only"
+
     def __post_init__(self):
         n = self.n_qubits
-        pairs = [(i, i + 1) for i in range(n - 1)]
+        pairs = [(i, j) for i in range(n) for j in range(i + 1, n)]
         object.__setattr__(self, 'zz_pairs', pairs)
 
 def make_rng(master_seed: int) -> np.random.Generator:
@@ -49,9 +50,16 @@ def make_metadata(cfg, circuit_index, resample_index, circuit_seed):
     
     return meta_data
 
+_MODE_FOLDER = {
+    "z_only":      "../data/quantum",
+    "multi_basis": "../data/quantum_mb",
+    "shadows":     "../data/quantum_shadows",
+}
+
 def make_filename(cfg: cfgCircuit, file_extension: str = ".npz") -> str:
     """Create a stable dataset filename based on config."""
-    return (f"../data/quantum/"
+    folder = _MODE_FOLDER.get(cfg.measurement_mode, "../data/quantum")
+    return (f"{folder}/"
         f"circuitFamily_{cfg.label}_qubits{cfg.n_qubits}_ops{cfg.n_ops}_shotsPerDatapoint{cfg.shots_per_datapoint}"
         f"_numCircuits{cfg.n_circuits}_resamplesPerCircuit{cfg.resamples_per_circuit}"
         f"_masterSeed{cfg.master_seed}{file_extension}")

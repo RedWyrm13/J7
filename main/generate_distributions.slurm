@@ -13,4 +13,9 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 
+# Create output directories for all three measurement modes
+mkdir -p ../data/quantum
+mkdir -p ../data/quantum_mb
+mkdir -p ../data/quantum_shadows
+
 crun -p /home/amaci003/envs/J7_sampling python -u generate_distributions.py circuit_configuration.yaml

@@ -31,7 +31,15 @@ from models.models import initialize_models, eval_model
 
 # ── Configuration ──────────────────────────────────────────────────────────
 
-ROOT_DIR     = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
+_MODE_DIRS = {
+    "z_only":      (ROOT_DIR / "data" / "quantum",         ROOT_DIR / "data" / "spectrum"),
+    "multi_basis": (ROOT_DIR / "data" / "quantum_mb",       ROOT_DIR / "data" / "spectrum_mb"),
+    "shadows":     (ROOT_DIR / "data" / "quantum_shadows",  ROOT_DIR / "data" / "spectrum_shadows"),
+}
+
+# Set by main() based on CLI argument
 QUANTUM_DIR  = ROOT_DIR / "data" / "quantum"
 SPECTRUM_DIR = ROOT_DIR / "data" / "spectrum"
 OUT_DIR      = Path(__file__).resolve().parent / "plots"
@@ -194,9 +202,21 @@ def run_for_qubits(n_qubits: int, seed: int):
 
 
 def main():
+    global QUANTUM_DIR, SPECTRUM_DIR, OUT_DIR
+
     if len(sys.argv) < 2:
-        print("Usage: python3 run_spectrum_experiment.py <config.yaml>")
+        print("Usage: python3 run_spectrum_experiment.py <config.yaml> [mode]")
+        print("  mode: z_only (default) | multi_basis | shadows")
         sys.exit(1)
+
+    mode = sys.argv[2] if len(sys.argv) >= 3 else "z_only"
+    if mode not in _MODE_DIRS:
+        print(f"Unknown mode '{mode}'. Choose from: {list(_MODE_DIRS)}")
+        sys.exit(1)
+
+    QUANTUM_DIR, SPECTRUM_DIR = _MODE_DIRS[mode]
+    OUT_DIR = Path(__file__).resolve().parent / "plots" / mode
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     cfg         = load_cfg(sys.argv[1])
     qubit_range = cfg["qubit_range"]

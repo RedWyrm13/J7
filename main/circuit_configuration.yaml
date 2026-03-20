@@ -14,6 +14,14 @@ n_circuits: 1000
 resamples_per_circuit: 1
 master_seed: 42
 
+# ── Measurement modes ────────────────────────────────────────────────────────
+# z_only:      computational basis only, ZZ all-pairs  → data/quantum/
+# multi_basis: Z + X + Y global bases (shots/3 each),  → data/quantum_mb/
+#              gives ZZ + XX + YY all-pairs
+# shadows:     random per-qubit basis each shot,        → data/quantum_shadows/
+#              gives all 6 Pauli pair correlators
+measurement_modes: ['z_only', 'multi_basis', 'shadows']
+
 # ── Test config (uncomment to sanity-check before HPC launch) ────────────────
 # qubit_range: [4, 6]
 # labels: ['iqp']
@@ -22,3 +30,4 @@ master_seed: 42
 # n_circuits: 5
 # resamples_per_circuit: 1
 # master_seed: 42
+# measurement_modes: ['z_only']

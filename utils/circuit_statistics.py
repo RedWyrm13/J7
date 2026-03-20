@@ -124,6 +124,88 @@ def shannon_entropy_bits(counts: Counts) -> float:
     return float(ent)
 
 
+def pauli_marginals_from_counts(counts: Counts, n_qubits: int) -> np.ndarray:
+    """
+    Estimate <P_i> = 3 * mean((-1)^b_i) for a globally-rotated measurement.
+    Works for any single global basis: the caller rotated the circuit, so
+    computational-basis outcomes already encode the chosen Pauli.
+    Returns array of length n_qubits.
+    """
+    shots = total_shots(counts)
+    expectation = np.zeros(n_qubits, dtype=np.float64)
+    for bitstring, c in counts.items():
+        b = bitstring[::-1]  # qubit-0 first
+        for i, ch in enumerate(b):
+            expectation[i] += c * (1.0 if ch == "0" else -1.0)
+    return expectation / shots
+
+
+def pauli_connected_correlators(counts: Counts, n_qubits: int,
+                                 pairs: Sequence[Tuple[int, int]]) -> np.ndarray:
+    """
+    Connected correlator <P_i P_j> - <P_i><P_j> for a globally-rotated measurement.
+    """
+    shots = total_shots(counts)
+    exp1 = pauli_marginals_from_counts(counts, n_qubits)
+    exp2 = np.zeros(len(pairs), dtype=np.float64)
+    for bitstring, c in counts.items():
+        b = bitstring[::-1]
+        z = np.array([1.0 if ch == "0" else -1.0 for ch in b])
+        for k, (i, j) in enumerate(pairs):
+            exp2[k] += c * z[i] * z[j]
+    exp2 /= shots
+    corr = np.array([exp2[k] - exp1[i] * exp1[j]
+                     for k, (i, j) in enumerate(pairs)], dtype=np.float64)
+    return corr
+
+
+def shadow_pauli_expectations(rotations: np.ndarray, outcomes: np.ndarray,
+                               n_qubits: int) -> np.ndarray:
+    """
+    Estimate single-qubit Pauli expectations from shadow data.
+    rotations: (S, n) int array  0=Z  1=X  2=Y
+    outcomes:  (S, n) int array  0/1
+    Returns (3, n) array: row 0=Z, 1=X, 2=Y expectations.
+    """
+    result = np.zeros((3, n_qubits), dtype=np.float64)
+    counts = np.zeros((3, n_qubits), dtype=np.int64)
+    signs = 1 - 2 * outcomes.astype(np.float64)  # (S, n): +1 if 0, -1 if 1
+    for basis in range(3):
+        mask = (rotations == basis)           # (S, n) bool
+        for q in range(n_qubits):
+            col_mask = mask[:, q]
+            n_match = col_mask.sum()
+            if n_match > 0:
+                result[basis, q] = 3.0 * signs[col_mask, q].mean()
+                counts[basis, q] = n_match
+    return result
+
+
+def shadow_pauli_correlators(rotations: np.ndarray, outcomes: np.ndarray,
+                              n_qubits: int,
+                              pairs: Sequence[Tuple[int, int]]) -> np.ndarray:
+    """
+    Estimate all 6 connected two-qubit Pauli correlators from shadow data.
+    Returns array of shape (6, len(pairs)):
+      rows: ZZ, XX, YY, XY, XZ, YZ
+    """
+    exp1 = shadow_pauli_expectations(rotations, outcomes, n_qubits)
+    signs = 1 - 2 * outcomes.astype(np.float64)  # (S, n)
+
+    pauli_pairs = [(0, 0), (1, 1), (2, 2), (1, 2), (0, 2), (0, 1)]  # ZZ XX YY XY XZ YZ
+    result = np.zeros((6, len(pairs)), dtype=np.float64)
+
+    for row, (pa, pb) in enumerate(pauli_pairs):
+        for col, (i, j) in enumerate(pairs):
+            mask = (rotations[:, i] == pa) & (rotations[:, j] == pb)
+            n_match = mask.sum()
+            if n_match > 0:
+                exp2 = 9.0 * (signs[mask, i] * signs[mask, j]).mean()
+                result[row, col] = exp2 - exp1[pa, i] * exp1[pb, j]
+
+    return result
+
+
 def collision_probability(counts: Counts) -> float:
     """
     Collision probability sum_x p(x)^2.
@@ -225,28 +307,68 @@ def flatten_feature_dict(
     include_zz: bool = True,
 ) -> np.ndarray:
     """
-    Deterministically flatten the dict into a fixed feature vector.
-
-    Order:
-      1) hamming_weight.hist
-      2) qubit_marginals
-      3) parity_bias, entropy_bits, collision_prob
-      4) (optional) zz_connected.values
+    Flatten z_only feature dict into a fixed feature vector.
+    Order: hw_hist | z_marginals | parity_bias | zz_connected
     """
     hw = np.array(feat["hamming_weight"]["hist"], dtype=np.float64)
     marg = np.array(feat["qubit_marginals"], dtype=np.float64)
-    scalars = np.array(
-        [feat["parity_bias"]],
-        dtype=np.float64
-    )
-
+    scalars = np.array([feat["parity_bias"]], dtype=np.float64)
     parts = [hw, marg, scalars]
-
     if include_zz and "zz_connected" in feat:
         zz = np.array(feat["zz_connected"]["values"], dtype=np.float64)
         parts.append(zz)
-
     return np.concatenate(parts)
+
+
+def summarize_multi_basis(
+    z_counts: Counts,
+    x_counts: Counts,
+    y_counts: Counts,
+    n_qubits: int,
+    pairs: Sequence[Tuple[int, int]],
+) -> np.ndarray:
+    """
+    Build feature vector from three global-basis measurement runs.
+    Order: hw_hist | z_marg | parity_bias | zz_corr | x_marg | xx_corr | y_marg | yy_corr
+    """
+    n = n_qubits
+    hw_hist = hamming_weight_histogram(z_counts, n)
+    hw_mom  = hamming_weight_moments(hw_hist)
+    z_marg  = single_qubit_marginals(z_counts, n)
+    pb      = parity_bias(z_counts)
+    zz_corr = pauli_connected_correlators(z_counts, n, pairs)
+    x_marg  = pauli_marginals_from_counts(x_counts, n)
+    xx_corr = pauli_connected_correlators(x_counts, n, pairs)
+    y_marg  = pauli_marginals_from_counts(y_counts, n)
+    yy_corr = pauli_connected_correlators(y_counts, n, pairs)
+
+    return np.concatenate([
+        hw_hist,
+        np.array([hw_mom["mean"], hw_mom["var"]]),
+        z_marg, np.array([pb]), zz_corr,
+        x_marg, xx_corr,
+        y_marg, yy_corr,
+    ])
+
+
+def summarize_shadows(
+    rotations: np.ndarray,
+    outcomes: np.ndarray,
+    n_qubits: int,
+    pairs: Sequence[Tuple[int, int]],
+) -> np.ndarray:
+    """
+    Build feature vector from classical shadow measurements.
+    Order: z_marg | x_marg | y_marg | zz_corr | xx_corr | yy_corr | xy_corr | xz_corr | yz_corr
+    """
+    exp1 = shadow_pauli_expectations(rotations, outcomes, n_qubits)   # (3, n)
+    corr = shadow_pauli_correlators(rotations, outcomes, n_qubits, pairs)  # (6, P)
+
+    return np.concatenate([
+        exp1[0], exp1[1], exp1[2],   # Z, X, Y single-qubit expectations
+        corr[0], corr[1], corr[2],   # ZZ, XX, YY
+        corr[3], corr[4], corr[5],   # XY, XZ, YZ
+    ])
 
 
 

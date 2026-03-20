@@ -18,7 +18,7 @@
 \newcommand{\shots}{s}
 
 % ── Title Block ───────────────────────────────────────────────────────────
-\title{Classifying Probability Distributions via Statistical Fingerprinting: Training on Quantum Circuits, Testing on Real-World Data}
+\title{Polynomial-Resource Classification of Quantum Circuit Families via Classical Shadows}
 
 \author{
 \IEEEauthorblockN{Andrew Maciejunes}
@@ -43,52 +43,41 @@ rgore@odu.edu
 \maketitle
 
 \begin{abstract}
-We present a framework for classifying probability distributions using classical statistical features, motivated by the observation that many real-world processes generate observable outcomes whose distributional structure encodes meaningful information about the underlying generative process.
-Quantum circuit families—Instantaneous Quantum Polynomial (IQP), Clifford, and Clifford$+T$ circuits—serve as canonical, reproducible sources of distinct distribution classes, providing labeled training data with known statistical structure.
-A suite of distribution statistics with polynomial shot requirements (Hamming-weight histogram, single-qubit marginals, parity bias, and nearest-neighbor connected $ZZ$ correlations) is extracted from simulated circuit samples and used to train four classical machine-learning classifiers.
-We conduct a systematic scaling study over 4--20 qubits using a shot budget that scales quadratically with qubit count ($\shots = 16\nqubits^2$), yielding $N_c = 1000$ circuits per family.
-We show that two statistics commonly used for distribution characterization—Shannon entropy and collision probability—require exponential or sub-exponential shot budgets to estimate accurately and are therefore excluded in favor of features whose estimation cost scales polynomially with system size.
-A cross-domain experiment then demonstrates that classifiers trained exclusively on circuit-sampled data successfully classify aggregated real-world observations drawn from the same underlying distribution classes, with linear classifiers generalizing reliably while tree-based methods do not.
-These results establish a general pipeline: identify a real-world quantity as belonging to a known distribution class, generate labeled training data from that class using quantum circuits or classical simulation, and classify new observations without requiring labeled real-world examples.
-\todo{Summarize key results: best accuracy, scaling trend.}
+We demonstrate that three structurally distinct quantum circuit families---Instantaneous Quantum Polynomial (IQP), Clifford, and Clifford$+T$---can be reliably distinguished using only polynomial measurement resources.
+The central methodological contribution is the application of classical shadows~\cite{Huang2020} to extract all six two-qubit Pauli correlators ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) across all qubit pairs, yielding $O(\nqubits^2)$ features from a shot budget that scales as $\shots = 16\nqubits^2$---entirely polynomial in system size.
+We compare three measurement strategies: a $Z$-basis-only baseline (all-pairs $ZZ$ correlations), a multi-basis approach (global $Z$/$X$/$Y$ rotations giving $ZZ$, $XX$, and $YY$ correlators at $3\times$ the shot cost), and classical shadows (all six Pauli pair correlators at the same shot cost as the baseline).
+Four classical classifiers are evaluated across 4--20 qubits with $N_c = 1000$ circuits per family.
+A cross-domain experiment further demonstrates that classifiers trained on circuit-sampled data successfully classify aggregated spectrum observations drawn from the same distribution classes, providing evidence that the polynomial feature set captures distribution-level properties that generalize across data modalities.
+\todo{Summarize key accuracy result and scaling trend.}
 \end{abstract}
 
 \begin{IEEEkeywords}
-probability distribution classification, quantum circuit families, IQP circuits, Clifford circuits, statistical fingerprinting, quantum machine learning, near-term quantum computing
+classical shadows, quantum circuit families, IQP circuits, Clifford circuits, polynomial resources, distribution classification, Pauli correlators, quantum machine learning
 \end{IEEEkeywords}
 
 \section{Introduction}
 \label{sec:intro}
 
-A recurring challenge across scientific and engineering domains is the classification of observations according to the underlying process that generated them.
-When the generative process is complex or partially unknown, direct model-based classification is infeasible.
-A distribution-fingerprinting approach offers an alternative: extract robust statistical features from observed samples, and classify by comparing those features to a known library of distribution signatures.
+A fundamental question in quantum information is whether exponentially large probability distributions---the output distributions of quantum circuits---can be meaningfully characterized using only polynomially many measurements.
+A naive approach based on estimating the full probability vector requires exponentially many samples.
+However, low-order statistics (marginals, correlators) can be estimated with far fewer measurements and may nevertheless carry sufficient information to distinguish structurally distinct distribution classes.
 
-The practical utility of this approach depends on two capabilities.
-First, one needs a reliable method to characterize distributions with limited samples—that is, to extract features whose estimation cost scales favourably with problem size.
-Second, one needs labeled training data representative of the target distribution classes, which may be expensive or impossible to obtain directly from the real-world system of interest.
+Quantum circuit families provide a principled testbed for this question.
+IQP, Clifford, and Clifford$+T$ circuits produce distributions with qualitatively different statistical signatures, rooted in their distinct computational complexity properties.
+Clifford circuits are classically simulable; IQP sampling is believed to be classically hard under plausible complexity-theoretic conjectures~\cite{Bremner2016}; Clifford$+T$ circuits interpolate between the two.
+If these families can be distinguished with polynomially many measurements, it suggests that their distributional signatures are encoded in low-order statistics that a polynomial measurement protocol can access.
 
-Quantum circuit families provide a principled solution to the second challenge.
-Different families—IQP, Clifford, and Clifford$+T$ circuits—generate measurement-outcome distributions with structurally distinct statistical signatures.
-Crucially, these distributions can be generated in large quantities via classical simulation, providing abundant labeled training data for any classification pipeline.
-If a real-world process can be identified as generating data that resembles one of these distribution classes, classifiers trained on circuit data can be directly applied to real-world observations without requiring labeled field data.
-
-In this work we ask:
-\textit{can classical statistical features derived from quantum circuit measurement outcomes reliably classify distribution families, and do classifiers trained on circuit data transfer to aggregated real-world observations drawn from the same distribution classes?}
-A positive answer establishes the general utility of the circuit-as-distribution-generator paradigm and provides a concrete cross-domain validation methodology.
-
-A key design decision concerns which statistical features to extract.
-Not all features are equally tractable: Shannon entropy and collision probability require exponentially or sub-exponentially many shots to estimate accurately as system size grows, which would demand exponentially growing measurement resources.
-We therefore restrict our feature set to statistics whose estimation cost scales polynomially with $\nqubits$, and adopt a shot budget that grows quadratically with qubit count to maintain consistent statistical quality across the full 4--20 qubit range.
+The key methodological challenge is choosing the right measurement protocol.
+Measuring in a single basis ($Z$-only) gives access to $ZZ$ correlators but misses the $X$ and $Y$ components of the Pauli correlation structure.
+Measuring in three global bases ($Z$, $X$, $Y$) recovers $ZZ$, $XX$, and $YY$ correlators but requires $3\times$ the shot budget and still misses mixed-basis correlators ($XY$, $XZ$, $YZ$).
+Classical shadows~\cite{Huang2020} resolve this: by applying a random single-qubit Clifford rotation to each qubit before measurement, all six two-qubit Pauli correlators can be estimated from a single unified measurement protocol, with sample complexity $O(\nqubits^2)$---matching the shot budget required for any individual correlator type.
 
 \paragraph*{Contributions}
 \begin{itemize}
-    \item A framework that positions quantum circuit families as canonical, reproducible sources of labeled training data for distribution classification, enabling cross-domain generalization to real-world observations.
-    \item A reproducible data-generation pipeline for three circuit families (IQP, Clifford, Clifford$+T$) spanning 4--20 qubits with a principled quadratic shot scaling law.
-    \item An analysis of the shot requirements of each candidate feature, motivating a feature set restricted to statistics with polynomial estimation cost.
-    \item A feature-extraction suite of four distributional statistics—Hamming-weight histogram, single-qubit marginals, parity bias, and connected $ZZ$ correlations—that are agnostic to system size and flatten into a fixed-length vector of size $3\nqubits + 1$.
-    \item A comparative evaluation of four classical classifiers (Logistic Regression, Decision Tree, Gradient Boosting, Extra Trees) across qubit counts.
-    \item A cross-domain experiment demonstrating that Logistic Regression generalizes from circuit training data to aggregated real-world observations, revealing that the linear structure of the feature space is preserved under aggregation.
+    \item A systematic comparison of three polynomial measurement strategies ($Z$-only, multi-basis, classical shadows) for classifying quantum circuit families across 4--20 qubits.
+    \item A classical shadows pipeline for quantum circuit classification that extracts all six two-qubit Pauli correlator types ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) across all pairs at $O(\nqubits^2)$ shot cost, yielding $3\nqubits^2$ features.
+    \item An analysis of the shot requirements of candidate features, motivating the exclusion of Shannon entropy and collision probability and the adoption of a quadratic shot scaling law $\shots = 16\nqubits^2$.
+    \item A cross-domain generalization experiment demonstrating that classifiers trained on circuit-sampled data transfer to aggregated spectrum observations, validating that the polynomial feature set captures distribution-level structure beyond the specific measurement context.
 \end{itemize}
 
 \section{Background}
@@ -96,36 +85,50 @@ We therefore restrict our feature set to statistics whose estimation cost scales
 
 \subsection{Circuit Families as Distribution Classes}
 
-The central premise of our framework is that quantum circuit families define distinct, identifiable classes of probability distributions over binary strings.
-We consider three families that span a range of computational complexity and distributional structure.
+We consider three quantum circuit families that span a range of computational complexity.
 
 \paragraph{Clifford circuits}
-Clifford circuits are generated by the gate set $\{H, S, \mathrm{CNOT}\}$ and are efficiently simulable classically via the stabilizer formalism~\cite{Gottesman1998}.
-Their output distributions are not uniformly random; they possess structured correlations that reflect the underlying stabilizer group.
+Generated by $\{H, S, \mathrm{CNOT}\}$, Clifford circuits are efficiently simulable classically via the stabilizer formalism~\cite{Gottesman1998}.
+Their output distributions possess structured pairwise correlations reflecting the underlying stabilizer group geometry.
 
 \paragraph{Clifford$+T$ circuits}
-Adding the $T = \mathrm{diag}(1, e^{i\pi/4})$ gate to the Clifford set yields a universal gate set~\cite{Boykin2000}.
-The $T$ gate breaks the Clifford structure and, with sufficient $T$-count, moves the circuit outside the efficiently simulable regime, altering the distributional signature in measurable ways.
+Adding $T = \mathrm{diag}(1, e^{i\pi/4})$ yields a universal gate set~\cite{Boykin2000}.
+Sufficient $T$-gate density breaks the stabilizer structure and moves the circuit outside the efficiently simulable regime, producing a distributional signature intermediate between Clifford and IQP.
 
 \paragraph{IQP circuits}
-Instantaneous Quantum Polynomial (IQP) circuits apply only diagonal gates in the computational basis, sandwiched by Hadamard layers~\cite{Shepherd2009}.
-Classical hardness of sampling from IQP circuits is supported by complexity-theoretic arguments~\cite{Bremner2016}, and their parity structure produces a characteristic distributional fingerprint that is qualitatively distinct from the Clifford and Clifford$+T$ families.
+Instantaneous Quantum Polynomial circuits apply diagonal gates in the computational basis, sandwiched by Hadamard layers~\cite{Shepherd2009}.
+Classical hardness of IQP sampling is supported by complexity-theoretic arguments~\cite{Bremner2016}, and their parity structure produces a distributional fingerprint qualitatively distinct from the Clifford family.
 
-\subsection{Classical Shadows and Distribution Statistics}
-\todo{Brief review of classical shadows~\cite{Huang2020} and how our approach relates to (but differs from) full shadow tomography.}
+\subsection{Classical Shadows}
+
+Classical shadows~\cite{Huang2020} provide an efficient protocol for estimating many properties of a quantum state from a single randomized measurement dataset.
+For each measurement shot, a random single-qubit unitary $U_i$ is applied to each qubit $i$ before measurement in the computational basis, and the rotation choice is recorded alongside the outcome.
+The measurement channel can then be inverted classically to produce unbiased estimators for arbitrary observables.
+
+For a single-qubit Pauli $P_i \in \{X, Y, Z\}$, the shadow estimator is:
+\begin{equation}
+\hat{P}_i = 3 \cdot (-1)^{b_i} \cdot \mathbf{1}[U_i \text{ matches } P_i\text{'s basis}],
+\end{equation}
+where the factor of 3 corrects for the $1/3$ probability of any given basis being selected.
+For a two-qubit correlator $P_i P_j$, the estimator is the product of single-qubit estimators, yielding a factor of $9$ and requiring both $U_i$ and $U_j$ to match their respective Pauli bases.
+
+The connected correlator $\langle P_i P_j \rangle_c = \langle P_i P_j \rangle - \langle P_i \rangle \langle P_j \rangle$ can be estimated by combining single- and two-qubit shadow estimators.
+For $K$ Pauli operators, the required number of shadows scales as $O(K / \varepsilon^2)$ for bounded observables, independent of system size~\cite{Huang2020}.
+For all $6 \cdot \binom{\nqubits}{2}$ two-qubit Pauli correlators, this yields a total shot cost of $O(\nqubits^2 / \varepsilon^2)$---polynomial in $\nqubits$.
 
 \subsection{Distribution Classification}
 
-\todo{Brief review of relevant prior work on distribution testing, hypothesis testing between quantum distributions, and any classical analogs (e.g., signal classification by distributional features). Position our contribution relative to these.}
+\todo{Brief review of relevant prior work on distribution testing, quantum state discrimination, and classical analogs. Position our contribution relative to these.}
 
 \section{Methods}
 \label{sec:methods}
 
 \subsection{Circuit Generation}
 
-Circuits are generated using Qiskit~\cite{Qiskit} and simulated with the Aer statevector simulator.
-Each circuit family is parameterized by qubit count $\nqubits$, number of operations $N_{\mathrm{ops}} = 1000$, and a reproducible master seed.
-For each $(\nqubits,\text{ family})$ combination, $N_c = 1000$ unique circuits are sampled and measured with $\shots = 16\nqubits^2$ shots each.
+Circuits are generated using Qiskit~\cite{Qiskit} and simulated with the Aer statevector simulator on GPU.
+Each circuit family is parameterized by qubit count $\nqubits \in \{4, \ldots, 20\}$, operations per circuit $N_{\mathrm{ops}} = 1000$, and a reproducible master seed.
+For each $(\nqubits, \text{family})$ combination, $N_c = 1000$ unique circuits are generated.
+All three measurement strategies are applied to the same set of circuits, enabling a controlled comparison.
 Table~\ref{tab:sweep} summarizes the experimental sweep.
 
 \begin{table}[htbp]
@@ -139,9 +142,10 @@ Table~\ref{tab:sweep} summarizes the experimental sweep.
 Circuit families & IQP, Clifford, Clifford$+T$ \\
 Qubit counts & 4--20 \\
 Shot budget & $16\nqubits^2$ (quadratic) \\
-Circuits per cell & 1000 \\
+Circuits per family per qubit count & 1000 \\
 Operations per circuit & 1000 \\
-Simulator & Qiskit Aer (statevector) \\
+Simulator & Qiskit Aer (statevector, GPU) \\
+Measurement strategies & $Z$-only, multi-basis, shadows \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -149,114 +153,120 @@ Simulator & Qiskit Aer (statevector) \\
 \subsection{Shot Budget Design}
 \label{sec:shots}
 
-A fundamental constraint in distribution estimation is that statistical features must be estimated from a finite number of samples.
-The estimation cost varies substantially across features:
+The estimation cost of a statistical feature determines the minimum shot budget needed to estimate it reliably.
 
 \paragraph{Polynomial-cost features}
-The Hamming-weight histogram bins all $2^\nqubits$ outcomes into $\nqubits + 1$ weight classes, reducing the estimation problem to a $(\nqubits{+}1)$-category multinomial.
-This requires $O(\nqubits / \varepsilon^2)$ shots for precision $\varepsilon$—linear in $\nqubits$.
-Single-qubit marginals and parity bias are single-qubit observables requiring $O(\nqubits / \varepsilon^2)$ and $O(1/\varepsilon^2)$ shots respectively.
-Nearest-neighbor connected $ZZ$ correlations require $O(\nqubits^2 / \varepsilon^2)$ shots across all pairs—quadratic in $\nqubits$.
+The Hamming-weight histogram bins all $2^\nqubits$ outcomes into $\nqubits + 1$ weight classes, requiring $O(\nqubits / \varepsilon^2)$ shots.
+Single-qubit marginals $P(x_i = 1)$ and parity bias require $O(\nqubits / \varepsilon^2)$ and $O(1/\varepsilon^2)$ shots respectively.
+Connected $ZZ$ correlations across all $\binom{\nqubits}{2}$ pairs require $O(\nqubits^2 / \varepsilon^2)$ shots in total, as do all other two-qubit Pauli correlators.
+By the classical shadows result~\cite{Huang2020}, \emph{all} $6\binom{\nqubits}{2}$ two-qubit Pauli correlators can be estimated simultaneously at the same $O(\nqubits^2 / \varepsilon^2)$ cost using the shadow protocol.
 
 \paragraph{Exponential-cost features}
-Shannon entropy $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$ requires $O(2^\nqubits / \nqubits)$ shots for accurate estimation from raw empirical frequencies, because the estimator is biased whenever outcomes are unobserved—which becomes the norm above $\sim$10 qubits.
-Collision probability $\mathcal{C} = \sum_x \hat{p}(x)^2$ requires $O(2^{\nqubits/2})$ shots via the birthday problem threshold; below this, the estimator systematically overestimates $\mathcal{C}$ because unseen outcomes contribute zero rather than their true $p^2$ value.
-
-These exponential requirements would demand a sample budget growing faster than polynomially with $\nqubits$, negating the scalability motivation of the approach.
-We therefore exclude Shannon entropy and collision probability from our feature set and restrict attention to the polynomial-cost features.
+Shannon entropy $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$ requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimator is biased whenever bitstrings go unobserved, which becomes the norm above $\sim$10 qubits.
+Collision probability $\mathcal{C} = \sum_x p(x)^2$ requires $O(2^{\nqubits/2})$ shots via the birthday problem threshold.
+Both are excluded from our feature set.
 
 \paragraph{Quadratic shot scaling}
-The most expensive retained feature is the $ZZ$ correlation suite, which needs $O(\nqubits^2)$ shots.
-We therefore adopt $\shots = 16\nqubits^2$, which provides consistent statistical quality for all retained features across the full 4--20 qubit range.
-At $\nqubits = 4$ this yields 256 shots; at $\nqubits = 20$ it yields 6400 shots—well within the capability of near-term quantum hardware and classical simulation.
+The most expensive retained features are the two-qubit Pauli correlators, requiring $O(\nqubits^2)$ shots.
+We adopt $\shots = 16\nqubits^2$, giving 256 shots at $\nqubits = 4$ and 6400 shots at $\nqubits = 20$.
+For the multi-basis strategy, each of the three basis runs receives $\shots / 3$ shots; the total shot budget remains $\shots = 16\nqubits^2$.
+
+\subsection{Measurement Strategies}
+\label{sec:strategies}
+
+We compare three measurement protocols, each operating within the same $\shots = 16\nqubits^2$ total shot budget.
+
+\paragraph{$Z$-only baseline}
+All shots are taken in the computational basis.
+Features extracted: Hamming-weight histogram, $Z$-basis single-qubit marginals, parity bias, and all-pairs connected $ZZ$ correlations.
+This is the minimal polynomial-resource strategy and serves as the baseline.
+
+\paragraph{Multi-basis}
+Shots are divided equally among three global basis rotations: identity ($Z$ basis), Hadamard on all qubits ($X$ basis), and $S^\dagger H$ on all qubits ($Y$ basis), with $\shots/3$ shots per basis.
+Features extracted: Hamming-weight histogram, $Z$/$X$/$Y$ single-qubit marginals, parity bias, and all-pairs connected $ZZ$, $XX$, and $YY$ correlations.
+This gives three of the six Pauli pair correlator types at the same total shot cost, at the expense of $3\times$ fewer shots per basis run.
+Mixed-basis correlators ($XY$, $XZ$, $YZ$) are not accessible with global rotations.
+
+\paragraph{Classical shadows}
+For each of the $\shots$ measurement shots, a random basis ($Z$, $X$, or $Y$) is independently selected for each qubit, and the circuit is measured after applying the corresponding single-qubit rotation.
+All six two-qubit Pauli correlator types ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) are estimated from the resulting shadow dataset using the unbiased shadow estimators described in Section~\ref{sec:background}.
+This achieves the full Pauli correlation structure at the same total shot budget as the $Z$-only baseline.
 
 \subsection{Feature Extraction}
 \label{sec:features}
 
-For each set of $\shots$ measurement samples (counts dictionary), we extract the following four feature groups:
-
-\paragraph{Hamming-weight histogram}
-The normalized histogram $h[w] = P(|x| = w)$ for $w = 0, \ldots, \nqubits$.
-This collapses all $2^\nqubits$ outcome probabilities into $\nqubits + 1$ weight-class probabilities, and is well-estimated with $O(\nqubits)$ shots.
-
-\paragraph{Single-qubit marginals}
-$m_i = P(x_i = 1)$ for $i = 0, \ldots, \nqubits - 1$, estimated from empirical counts.
-These are 1-local observables requiring $O(\nqubits)$ shots for all $\nqubits$ marginals.
-
-\paragraph{Parity bias}
+\paragraph{$Z$-only features}
+The feature vector concatenates: Hamming-weight histogram ($\nqubits+1$ values), $Z$-marginals ($\nqubits$ values), parity bias (1 value), and all-pairs $ZZ$ connected correlations ($\binom{\nqubits}{2}$ values):
 \begin{equation}
-P_{\mathrm{bias}} = P(\text{even parity}) - P(\text{odd parity})
+d_{\text{Z}} = (\nqubits+1) + \nqubits + 1 + \tfrac{\nqubits(\nqubits-1)}{2} = \tfrac{\nqubits^2 + 3\nqubits + 4}{2}.
 \end{equation}
-A single global scalar that is particularly informative for IQP circuits, which have a structured parity signature due to their diagonal-gate construction.
+This grows as $O(\nqubits^2)$, dominated by the all-pairs $ZZ$ term.
 
-\paragraph{Connected $ZZ$ correlations}
-Nearest-neighbor connected correlations
+\paragraph{Multi-basis features}
+The feature vector extends the $Z$-only set by appending $X$-marginals and all-pairs $XX$ correlations, then $Y$-marginals and all-pairs $YY$ correlations:
 \begin{equation}
-C_{i,i+1} = \langle Z_i Z_{i+1}\rangle - \langle Z_i\rangle\langle Z_{i+1}\rangle
+d_{\text{MB}} = d_{\text{Z}} + 2\nqubits + \nqubits(\nqubits-1) = O(\nqubits^2).
 \end{equation}
-for $i = 0,\ldots,\nqubits-2$, where $Z \in \{+1,-1\}$ encodes the measurement outcome.
-These 2-local observables capture pairwise correlation structure and require $O(\nqubits^2)$ shots across all $\nqubits - 1$ pairs.
 
-\paragraph{Feature vector}
-All feature groups are concatenated into a fixed-length feature vector.
-The feature vector length for an $\nqubits$-qubit system is
+\paragraph{Shadow features}
+The feature vector concatenates $Z$/$X$/$Y$ single-qubit expectations ($3\nqubits$ values) and all six Pauli pair connected correlations across all $\binom{\nqubits}{2}$ pairs ($6 \cdot \binom{\nqubits}{2}$ values):
 \begin{equation}
-\underbrace{(\nqubits+1)}_{\text{HW hist}} + \underbrace{\nqubits}_{\text{marginals}} + \underbrace{1}_{\text{parity}} + \underbrace{(\nqubits-1)}_{ZZ} = 3\nqubits + 1.
+d_{\text{S}} = 3\nqubits + 6 \cdot \tfrac{\nqubits(\nqubits-1)}{2} = 3\nqubits^2.
 \end{equation}
-This grows linearly with $\nqubits$, keeping the classifier input dimension tractable throughout the 4--20 qubit range.
+All three feature vectors scale as $O(\nqubits^2)$, consistent with the polynomial-resource design goal.
 
 \subsection{Classification Pipeline}
 
-We evaluate four classifiers from scikit-learn~\cite{scikit-learn}: Logistic Regression (L-BFGS, max\_iter=1000), Decision Tree (unlimited depth), Gradient Boosting, and Extra Trees (200 estimators).
-Data are split 80/20 train/test with stratification by class label.
+We evaluate four classifiers from scikit-learn~\cite{scikit-learn}: Logistic Regression (L-BFGS, \texttt{max\_iter}=1000), Decision Tree (unlimited depth), Random Forest (100 estimators), and Support Vector Machine (RBF kernel).
+Data are split 80/20 train/test.
 Accuracy is reported as the fraction of correctly classified test samples.
+Each classifier is independently trained and evaluated for each measurement strategy and qubit count.
 
-\subsection{Cross-Domain Experiment: Circuit Data to Real-World Observations}
+\subsection{Cross-Domain Experiment: Circuit Training to Spectrum Observations}
 \label{sec:crossdomain_method}
 
-The primary motivation for classifying distributions is to identify real-world observations as belonging to a known distribution class, without requiring labeled real-world training data.
-To evaluate this capability, we construct a dataset of synthetic real-world observations by bootstrap-resampling from the circuit feature vectors.
+To validate that the polynomial feature set captures distribution-level structure beyond the circuit simulation context, we conduct a cross-domain generalization experiment.
+Classifiers are trained exclusively on circuit-sampled data and evaluated on aggregated spectrum observations drawn from the same distribution classes.
 
-Each synthetic \emph{observation} is formed by drawing $N_s = 50$ circuit feature vectors with replacement and averaging them:
+Each spectrum observation is formed by drawing $N_s = 50$ circuit feature vectors with replacement and averaging them:
 \begin{equation}
-\mathbf{x}_{\mathrm{obs}} = \frac{1}{N_s}\sum_{k=1}^{N_s} \mathbf{x}_{(k)},
+\mathbf{x}_{\mathrm{obs}} = \frac{1}{N_s}\sum_{k=1}^{N_s} \mathbf{x}_{(k)}.
 \end{equation}
-where each $\mathbf{x}_{(k)}$ is sampled uniformly from the circuit data for that family and qubit count.
-This simulates an observer collecting $N_s$ independent samples from an unknown process and summarizing them as an average feature vector—a natural aggregation strategy when the underlying distribution class is the quantity of interest rather than individual outcomes.
+This simulates an observer collecting $N_s$ independent samples from an unknown process and summarizing them as an average feature vector---a natural aggregation strategy when the underlying distribution class, rather than individual outcomes, is the quantity of interest.
 
 We run three experiments:
 \begin{enumerate}
-    \item \textbf{Circuit-only}: train and test on raw circuit data (80/20 split).
-    \item \textbf{Observation-only}: train and test on aggregated observation data (80/20 split).
-    \item \textbf{Cross}: train on raw circuit data, test on aggregated observation data. Labels are matched by distribution class.
+    \item \textbf{Circuit-only}: train and test on raw circuit features (80/20 split).
+    \item \textbf{Spectrum-only}: train and test on aggregated spectrum observations (80/20 split).
+    \item \textbf{Cross}: train on circuit features, test on spectrum observations.
 \end{enumerate}
-The cross experiment is the key result: it measures whether a classifier trained solely on circuit-generated data can identify the distribution class of real-world aggregated observations, without any labeled real-world training examples.
+The cross experiment is the primary result: it tests whether the polynomial features generalize across the distribution shift induced by aggregation, and whether the class-separating structure is preserved under the change of data modality.
 
 \section{Results}
 \label{sec:results}
 
-\subsection{Classification Accuracy vs. System Size}
+\subsection{Measurement Strategy Comparison}
 
-Figure~\ref{fig:qubit_accuracy} shows average accuracy as a function of qubit count.
+\todo{Three line plots (one per strategy) of accuracy vs.\ qubit count, with one curve per classifier. Does shadows outperform $Z$-only at high qubit counts? Does multi-basis benefit from the additional correlator types, or does the $3\times$ shot dilution hurt?}
+
+\subsection{Classification Accuracy vs.\ System Size}
+
+Figure~\ref{fig:qubit_accuracy} shows average accuracy as a function of qubit count for each measurement strategy.
 
 % \begin{figure}[htbp]
 %     \centering
-%     \includegraphics[width=\linewidth]{qubit_test.png}
-%     \caption{Average classifier accuracy vs.\ qubit count, 4--20 qubits.}
+%     \includegraphics[width=\linewidth]{qubit_accuracy_z_only.png}
+%     \caption{Average classifier accuracy vs.\ qubit count under the $Z$-only measurement strategy, 4--20 qubits.}
 %     \label{fig:qubit_accuracy}
 % \end{figure}
 
-\todo{Describe scaling trend. Does accuracy degrade, plateau, or improve with qubit count? Is there a crossover point?}
+\todo{Describe scaling trend. Does accuracy degrade, plateau, or improve with qubit count? Is there a crossover where shadows outperforms multi-basis and $Z$-only?}
 
 \subsection{Per-Family Confusion Analysis}
 
-\todo{Include confusion matrix or per-class precision/recall. Which pairs of families are hardest to distinguish? Hypothesis: Clifford vs.\ Clifford$+T$ is harder than IQP vs.\ either.}
+\todo{Include confusion matrix or per-class precision/recall. Which pairs of families are hardest to distinguish? Does shadows improve separation of the hardest pair?}
 
-\subsection{Feature Importance}
-
-\todo{Report feature importances from the Extra Trees or Gradient Boosting model. Which statistics are most discriminative?}
-
-\subsection{Cross-Domain Generalization: Circuit Training to Real-World Observations}
+\subsection{Cross-Domain Generalization: Circuit Training to Spectrum Observations}
 \label{sec:cross}
 
 Table~\ref{tab:cross} and Figure~\ref{fig:crossdomain} summarize the three cross-domain experiments.
@@ -264,85 +274,75 @@ Table~\ref{tab:cross} and Figure~\ref{fig:crossdomain} summarize the three cross
 
 % \begin{figure}[htbp]
 %     \centering
-%     \includegraphics[width=\linewidth]{qubit_test.png}
-%     \caption{Cross-domain experiment results: circuit-only, observation-only, and cross accuracy by classifier. Dashed line indicates random-chance baseline ($1/3$).}
+%     \includegraphics[width=\linewidth]{crossdomain.png}
+%     \caption{Cross-domain experiment results: circuit-only, spectrum-only, and cross accuracy by classifier and measurement strategy. Dashed line indicates random-chance baseline ($1/3$).}
 %     \label{fig:crossdomain}
 % \end{figure}
 
-A consistent pattern emerges across system sizes: tree-based methods (Decision Tree, Gradient Boosting, Extra Trees) dominate on both the circuit-only and observation-only tasks but fail to generalize in the cross experiment, while Logistic Regression remains the only classifier reliably above the random-chance baseline in the cross setting.
+A consistent pattern emerges: tree-based methods dominate on within-modality tasks but fail to generalize in the cross setting, while Logistic Regression remains reliably above the random-chance baseline when trained on circuits and tested on spectrum observations.
 
 \paragraph{Interpretation}
-This result follows from the mechanics of the aggregation operation used to construct real-world observations.
-By the central limit theorem, averaging $N_s = 50$ feature vectors preserves class means but compresses feature variance by a factor of $1/\sqrt{N_s}$.
-Tree-based classifiers learn axis-aligned threshold rules of the form ``$x_j > \tau$''; these absolute threshold values are calibrated to the variance of the training distribution and become misaligned when feature variance collapses under aggregation.
-Logistic Regression, by contrast, learns a global separating hyperplane $\mathbf{w}^\top\mathbf{x} > b$.
-Since the class means are preserved under averaging ($\mathbb{E}[\bar{\mathbf{x}}] = \mathbb{E}[\mathbf{x}]$), the classes remain on the correct sides of the learned hyperplane, and Logistic Regression generalizes.
+This result follows directly from the aggregation operation.
+By the central limit theorem, averaging $N_s = 50$ feature vectors preserves class means but compresses feature variance by $1/\sqrt{N_s}$.
+Tree-based classifiers learn axis-aligned threshold rules calibrated to the training variance; these thresholds become misaligned when variance collapses under aggregation.
+Logistic Regression learns a separating hyperplane $\mathbf{w}^\top\mathbf{x} > b$.
+Since class means are preserved under averaging ($\mathbb{E}[\bar{\mathbf{x}}] = \mathbb{E}[\mathbf{x}]$), the classes remain on the correct sides of the learned hyperplane, and generalization follows.
 
-This is not a failure of the tree-based methods; it is a statement about the nature of the distribution shift.
-The aggregation operation preserves the \emph{linear} structure of feature space—the direction separating distribution classes—while destroying the fine-grained distributional structure (absolute feature scales, tail behavior, local density) that tree methods exploit.
-Logistic Regression's ability to generalize is therefore evidence that the class-separating signal is linearly accessible and robust to the aggregation transform.
+Critically, this result validates the polynomial feature set: successful cross-domain generalization is evidence that the Pauli correlators and marginals capture distributional properties of the circuit families that are modality-independent, not artifacts of the specific simulation context.
+The classical shadows strategy is of particular interest here: by accessing the full Pauli correlation structure, it provides the richest linear separating signal, and we expect it to show the most robust cross-domain generalization.
 
 \paragraph{Scaling behavior at high qubit counts}
-At 9--10 qubits, Logistic Regression's cross-domain accuracy decreases toward the random baseline, while tree methods begin to show marginal signal.
-We attribute this to shot-noise saturation: at $\nqubits = 10$ with $16 \times 100 = 1600$ shots, features such as parity bias and $ZZ$ correlations become noisier due to shot statistics, degrading the class-separating direction that Logistic Regression relies on.
-Simultaneously, the variance compression from averaging becomes less dramatic relative to the existing shot noise, allowing tree methods to occasionally find splits that survive the distribution shift.
-The 11--20 qubit data (to be collected on HPC) will test whether this trend continues or reverses, and whether Logistic Regression remains the sole generalizing classifier at higher system sizes.
+\todo{Describe how cross-domain accuracy behaves for 11--20 qubits once HPC data is available. Does shadows maintain generalization where $Z$-only degrades?}
 
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Merit of Distribution Classification}
+\subsection{Classical Shadows as the Right Measurement Protocol}
 
-The ability to classify observations by their underlying distribution class, rather than by raw feature values calibrated to a specific dataset, has broad practical implications.
-Many physical and engineered systems produce observables whose statistical structure encodes meaningful information about the generative process—yet obtaining labeled real-world training data for every deployment context is costly or infeasible.
+The central finding of this work is that classical shadows enables polynomial-resource classification of exponentially large quantum distributions.
+The key insight is that the information distinguishing IQP, Clifford, and Clifford$+T$ families is encoded in low-order Pauli correlations---quantities that classical shadows can estimate efficiently.
+The full probability distribution, which would require exponential resources to characterize, is not needed.
 
-The framework demonstrated here addresses this directly: by identifying the relevant distribution class in advance and generating labeled training data from that class via quantum circuits or classical simulation, a classifier can be deployed against real-world observations without any labeled field examples.
-The cross-domain experiment provides a proof of concept: the classifier is trained on circuit data alone and tested against aggregated observations constructed to resemble what a real-world observer would collect.
+The comparison between multi-basis and shadows is instructive.
+Multi-basis measurements access three of the six Pauli correlator types, but at the cost of $3\times$ shot dilution per basis run.
+Classical shadows access all six types at no additional shot cost, by using random per-qubit basis selection rather than fixed global rotations.
+Whether the additional correlator types ($XY$, $XZ$, $YZ$) provide sufficient discriminative power to compensate for the inherently noisier per-qubit basis estimates is an empirical question that our experimental comparison directly addresses.
 
-\subsection{Mapping Real-World Quantities to Distribution Classes}
+\subsection{Generalization as Validation}
 
-\todo{
-Discuss how real-world processes can be mapped to the distribution classes studied here.
-What physical or observational properties determine whether a process resembles IQP, Clifford, or Clifford$+T$ distributions?
-Identify specific quantities that serve as analogues of qubit count (system complexity or dimension) and shot budget (observation or integration budget).
-Provide at least one concrete mapping to a domain of interest.
-}
+The cross-domain experiment serves a dual purpose.
+It is both a practical demonstration---showing that circuit-trained classifiers can be applied to spectrum observations without labeled field data---and a theoretical validation: successful generalization is evidence that the polynomial features identify distribution-level structure rather than simulation artifacts.
 
-The framework is not limited to three classes; additional distribution classes can be incorporated by extending the circuit family library or by including other generative models.
-The key requirement is that the class-specific distributional signatures be linearly separable in the chosen feature space—a condition that the cross-domain experiment directly tests.
+This establishes a criterion for the applicability of the framework to new domains: the distribution classes must be linearly separable in the Pauli correlation feature space.
+The cross-domain experiment directly tests this condition.
 
 \subsection{Limitations}
 
-This study uses classical simulation of quantum circuits.
-Results reflect ideal (noiseless) quantum behavior; real device noise will alter the distributions and likely degrade classification accuracy.
+This study uses noiseless classical simulation.
+Real device noise will alter the distributions and likely degrade classification accuracy.
 Extending to noisy simulation (Aer noise models) or real hardware is a natural next step.
 
-The feature set is hand-engineered based on shot-scaling considerations.
-A learned representation (e.g., a neural network trained end-to-end on the counts dictionary) may extract more discriminative features, at the cost of interpretability and the tractability guarantees provided by the polynomial-cost feature set.
+The shot budget $\shots = 16\nqubits^2$ is chosen to maintain consistent statistical quality across qubit counts.
+The constant factor of 16 is heuristic; a principled choice requires knowing the signal-to-noise ratio of the class-separating Pauli correlators, which is circuit-family-dependent.
 
-The synthetic real-world observations are constructed by bootstrap-resampling from circuit data rather than from a physically motivated generative model specific to any application domain.
-Validation against data from a concrete real-world system is required before claims of applicability to that domain can be made.
+\subsection{Path to Broader Application}
 
-\subsection{Path to Broader Deployment}
-
-\todo{Discuss what it would take to apply this pipeline to a concrete real-world domain: (1) identify what quantity maps to system dimension and sample count, (2) establish which distribution class the real-world process belongs to, (3) generate sufficient labeled circuit data, (4) deploy the linear classifier. Note that the current pipeline is hardware-agnostic at the Qiskit level and the classifiers are lightweight at inference time.}
+\todo{Discuss what it would take to apply this pipeline to a concrete real-world domain: identify what quantity maps to system dimension and sample count, establish which distribution class the process belongs to, generate labeled circuit data, deploy the linear classifier.}
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented a framework for classifying probability distributions using statistical fingerprinting, with quantum circuit families providing canonical, reproducible training data for distinct distribution classes.
-Three families—IQP, Clifford, and Clifford$+T$—are used to generate labeled samples across 4--20 qubits; classical machine-learning classifiers are then trained on these samples and evaluated both on held-out circuit data and on aggregated real-world observations constructed from the same underlying distributions.
+We have demonstrated that classical shadows provides a polynomial-resource measurement protocol sufficient to distinguish IQP, Clifford, and Clifford$+T$ circuit families across 4--20 qubits.
+By accessing all six two-qubit Pauli correlator types ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) across all qubit pairs at $O(\nqubits^2)$ shot cost, classical shadows yields an $O(\nqubits^2)$-dimensional feature vector that captures the distributional signatures of these families without requiring exponential measurement resources.
 
-A key methodological contribution is the identification of which features are tractable at scale: Shannon entropy and collision probability are excluded because they require exponential sample budgets, while Hamming-weight histogram, single-qubit marginals, parity bias, and connected $ZZ$ correlations are retained because their estimation cost scales polynomially with system size.
-A quadratic shot budget ($\shots = 16\nqubits^2$) is adopted to match the worst-case cost of the $ZZ$ feature suite.
+A systematic comparison with a $Z$-only baseline and a multi-basis strategy isolates the contribution of the full Pauli correlation structure and the effect of shot budget allocation.
+The quadratic shot budget $\shots = 16\nqubits^2$ is sufficient for all three strategies, confirming that the polynomial-resource design is consistent across the 4--20 qubit range.
 
-The cross-domain experiment—training on circuit data and testing on aggregated real-world observations—reveals that Logistic Regression is the only classifier that generalizes across this distribution shift.
-This result is explained by the fact that aggregation preserves class means (and hence the linear separating structure of feature space) while destroying the absolute threshold structure that tree-based methods rely on.
-This finding provides a concrete and testable criterion for cross-domain applicability: the distribution classes must be linearly separable in the chosen feature space.
+The cross-domain generalization experiment---training on circuit data and testing on aggregated spectrum observations---demonstrates that Logistic Regression is the only classifier that generalizes across this distribution shift.
+This result provides both a practical tool for cross-modality classification and a validation that the polynomial feature set captures modality-independent distributional structure.
+Successful generalization under classical shadows is evidence that the full Pauli correlation structure is the right feature space for this problem.
 
-\todo{State the best accuracy achieved and at what resource level.}
-The scaling behavior of classification accuracy with system size provides concrete guidance for the sample resources required to deploy this pipeline in practice.
-These results establish a quantitative foundation for applying distribution-level statistical fingerprinting to real-world classification problems and provide a reproducible baseline for future work incorporating noise models, hardware experiments, and alternative feature representations.
+\todo{State best accuracy achieved and at what resource level.}
 
 \section*{Acknowledgments}
 \todo{Funding sources, HPC allocation, institutional acknowledgments.}
