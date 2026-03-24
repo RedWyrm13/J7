@@ -44,12 +44,11 @@ rgore@odu.edu
 \maketitle
 
 \begin{abstract}
-We demonstrate that three structurally distinct quantum circuit families---Instantaneous Quantum Polynomial (IQP), Clifford, and Clifford$+T$---can be reliably distinguished using only polynomial measurement resources.
-The central methodological contribution is the application of classical shadows%~\cite{Huang2020}
+We demonstrate that three structurally distinct quantum circuit families: Instantaneous Quantum Polynomial (IQP), Clifford, and Clifford$+T$, can be reliably distinguished using only polynomial measurement resources.
+The central methodological contribution is the application of classical shadows
 to extract all six two-qubit Pauli correlators ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) across all qubit pairs, yielding $O(\nqubits^2)$ features from a shot budget that scales as $\shots = 16\nqubits^2$---entirely polynomial in system size.
 We compare three measurement strategies: a $Z$-basis-only baseline (all-pairs $ZZ$ correlations), a multi-basis approach (global $Z$/$X$/$Y$ rotations giving $ZZ$, $XX$, and $YY$ correlators at $3\times$ the shot cost), and classical shadows (all six Pauli pair correlators at the same shot cost as the baseline).
 Four classical classifiers are evaluated across 4--20 qubits with $N_c = 1000$ circuits per family.
-A cross-domain experiment further demonstrates that classifiers trained on circuit-sampled data successfully classify aggregated spectrum observations drawn from the same distribution classes, providing evidence that the polynomial feature set captures distribution-level properties that generalize across data modalities.
 \todo{Summarize key accuracy result and scaling trend.}
 \end{abstract}
 
@@ -84,7 +83,6 @@ resolve this: by applying a random single-qubit Clifford rotation to each qubit 
     \item A systematic comparison of three polynomial measurement strategies ($Z$-only, multi-basis, classical shadows) for classifying quantum circuit families across 4--20 qubits.
     \item A classical shadows pipeline for quantum circuit classification that extracts all six two-qubit Pauli correlator types ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) across all pairs at $O(\nqubits^2)$ shot cost, yielding $3\nqubits^2$ features.
     \item An analysis of the shot requirements of candidate features, motivating the exclusion of Shannon entropy and collision probability and the adoption of a quadratic shot scaling law $\shots = 16\nqubits^2$.
-    \item A cross-domain generalization experiment demonstrating that classifiers trained on circuit-sampled data transfer to aggregated spectrum observations, validating that the polynomial feature set captures distribution-level structure beyond the specific measurement context.
 \end{itemize}
 
 \section{Background}
@@ -133,6 +131,20 @@ For all $6 \cdot \binom{\nqubits}{2}$ two-qubit Pauli correlators, this yields a
 \label{sec:methods}
 
 \subsection{Circuit Generation}
+
+We use the Qiskit SDK \cite{qiskit2024} for all of our research. Using Qiskit, we craft random circuits 
+for each of the three previously mentioend circuit families, Clifford, Clifford$+T$, and IQP circuits.
+For the first two groups, we define a value $N_c$, which is the number of gates in a given circuit. We
+then apply $N_c$ randomly selected gates from the appropriate circuit family to act on randomly selected 
+qubits. For the Clifford family of circuits, each gate has an equal chance of being applied. For the 
+Clifford$+T$ family, the gates have chances of being applied as outlined in Table\ref{tab:cliffordT_gate_distros}.
+We emphasized the T gate count in Clifford$+T$ to help ensure it is distinguished from the Clifford family.
+The qubit(s) each gate acts on is selected randomly with no preference to any particular qubit, except 
+in the case of two qubit gates, where the control and target must be different.
+
+Instantaneous Quantum Polynomial (IQP) circuits are created simiiarly. The only difference, beside the 
+gate set used, is that the operator $H^{\bigotimes n}$ is applied and the beginning and end of the circuit
+where n is the number of qubits.
 
 Circuits are generated using Qiskit%~\cite{Qiskit}
 and simulated with the Aer statevector simulator on GPU.
@@ -234,26 +246,6 @@ Data are split 80/20 train/test.
 Accuracy is reported as the fraction of correctly classified test samples.
 Each classifier is independently trained and evaluated for each measurement strategy and qubit count.
 
-\subsection{Cross-Domain Experiment: Circuit Training to Spectrum Observations}
-\label{sec:crossdomain_method}
-
-To validate that the polynomial feature set captures distribution-level structure beyond the circuit simulation context, we conduct a cross-domain generalization experiment.
-Classifiers are trained exclusively on circuit-sampled data and evaluated on aggregated spectrum observations drawn from the same distribution classes.
-
-Each spectrum observation is formed by drawing $N_s = 50$ circuit feature vectors with replacement and averaging them:
-\begin{equation}
-\mathbf{x}_{\mathrm{obs}} = \frac{1}{N_s}\sum_{k=1}^{N_s} \mathbf{x}_{(k)}.
-\end{equation}
-This simulates an observer collecting $N_s$ independent samples from an unknown process and summarizing them as an average feature vector---a natural aggregation strategy when the underlying distribution class, rather than individual outcomes, is the quantity of interest.
-
-We run three experiments:
-\begin{enumerate}
-    \item \textbf{Circuit-only}: train and test on raw circuit features (80/20 split).
-    \item \textbf{Spectrum-only}: train and test on aggregated spectrum observations (80/20 split).
-    \item \textbf{Cross}: train on circuit features, test on spectrum observations.
-\end{enumerate}
-The cross experiment is the primary result: it tests whether the polynomial features generalize across the distribution shift induced by aggregation, and whether the class-separating structure is preserved under the change of data modality.
-
 \section{Results}
 \label{sec:results}
 
@@ -278,34 +270,6 @@ Figure~\ref{fig:qubit_accuracy} shows average accuracy as a function of qubit co
 
 \todo{Include confusion matrix or per-class precision/recall. Which pairs of families are hardest to distinguish? Does shadows improve separation of the hardest pair?}
 
-\subsection{Cross-Domain Generalization: Circuit Training to Spectrum Observations}
-\label{sec:cross}
-
-Table~\ref{tab:cross} and Figure~\ref{fig:crossdomain} summarize the three cross-domain experiments.
-\todo{Fill in numerical results once data is available.}
-
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\linewidth]{crossdomain.png}
-%     \caption{Cross-domain experiment results: circuit-only, spectrum-only, and cross accuracy by classifier and measurement strategy. Dashed line indicates random-chance baseline ($1/3$).}
-%     \label{fig:crossdomain}
-% \end{figure}
-
-A consistent pattern emerges: tree-based methods dominate on within-modality tasks but fail to generalize in the cross setting, while Logistic Regression remains reliably above the random-chance baseline when trained on circuits and tested on spectrum observations.
-
-\paragraph{Interpretation}
-This result follows directly from the aggregation operation.
-By the central limit theorem, averaging $N_s = 50$ feature vectors preserves class means but compresses feature variance by $1/\sqrt{N_s}$.
-Tree-based classifiers learn axis-aligned threshold rules calibrated to the training variance; these thresholds become misaligned when variance collapses under aggregation.
-Logistic Regression learns a separating hyperplane $\mathbf{w}^\top\mathbf{x} > b$.
-Since class means are preserved under averaging ($\mathbb{E}[\bar{\mathbf{x}}] = \mathbb{E}[\mathbf{x}]$), the classes remain on the correct sides of the learned hyperplane, and generalization follows.
-
-Critically, this result validates the polynomial feature set: successful cross-domain generalization is evidence that the Pauli correlators and marginals capture distributional properties of the circuit families that are modality-independent, not artifacts of the specific simulation context.
-The classical shadows strategy is of particular interest here: by accessing the full Pauli correlation structure, it provides the richest linear separating signal, and we expect it to show the most robust cross-domain generalization.
-
-\paragraph{Scaling behavior at high qubit counts}
-\todo{Describe how cross-domain accuracy behaves for 11--20 qubits once HPC data is available. Does shadows maintain generalization where $Z$-only degrades?}
-
 \section{Discussion}
 \label{sec:discussion}
 
@@ -319,14 +283,6 @@ The comparison between multi-basis and shadows is instructive.
 Multi-basis measurements access three of the six Pauli correlator types, but at the cost of $3\times$ shot dilution per basis run.
 Classical shadows access all six types at no additional shot cost, by using random per-qubit basis selection rather than fixed global rotations.
 Whether the additional correlator types ($XY$, $XZ$, $YZ$) provide sufficient discriminative power to compensate for the inherently noisier per-qubit basis estimates is an empirical question that our experimental comparison directly addresses.
-
-\subsection{Generalization as Validation}
-
-The cross-domain experiment serves a dual purpose.
-It is both a practical demonstration---showing that circuit-trained classifiers can be applied to spectrum observations without labeled field data---and a theoretical validation: successful generalization is evidence that the polynomial features identify distribution-level structure rather than simulation artifacts.
-
-This establishes a criterion for the applicability of the framework to new domains: the distribution classes must be linearly separable in the Pauli correlation feature space.
-The cross-domain experiment directly tests this condition.
 
 \subsection{Limitations}
 
@@ -349,10 +305,6 @@ By accessing all six two-qubit Pauli correlator types ($ZZ$, $XX$, $YY$, $XY$, $
 
 A systematic comparison with a $Z$-only baseline and a multi-basis strategy isolates the contribution of the full Pauli correlation structure and the effect of shot budget allocation.
 The quadratic shot budget $\shots = 16\nqubits^2$ is sufficient for all three strategies, confirming that the polynomial-resource design is consistent across the 4--20 qubit range.
-
-The cross-domain generalization experiment---training on circuit data and testing on aggregated spectrum observations---demonstrates that Logistic Regression is the only classifier that generalizes across this distribution shift.
-This result provides both a practical tool for cross-modality classification and a validation that the polynomial feature set captures modality-independent distributional structure.
-Successful generalization under classical shadows is evidence that the full Pauli correlation structure is the right feature space for this problem.
 
 \todo{State best accuracy achieved and at what resource level.}
 
