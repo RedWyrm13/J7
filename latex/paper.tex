@@ -9,6 +9,7 @@
 \usepackage{cite}
 \usepackage{xcolor}
 \usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{placeins}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 
@@ -123,6 +124,26 @@ The connected correlator $\langle P_i P_j \rangle_c = \langle P_i P_j \rangle - 
 For $K$ Pauli operators, the required number of shadows scales as $O(K / \varepsilon^2)$ for bounded observables, independent of system size.%~\cite{Huang2020}
 For all $6 \cdot \binom{\nqubits}{2}$ two-qubit Pauli correlators, this yields a total shot cost of $O(\nqubits^2 / \varepsilon^2)$---polynomial in $\nqubits$.
 
+\FloatBarrier
+\begin{figure*}[!ht]
+\centering
+\subfloat[Clifford]{\includegraphics[width=0.25\textwidth,height=4cm,keepaspectratio]{images/clifford.png}%
+\label{fig:clifford}}
+\hfil
+\subfloat[Clifford$+T$]{\includegraphics[width=0.25\textwidth,height=4cm,keepaspectratio]{images/cliffordT.png}%
+\label{fig:cliffordT}}
+\hfil
+\subfloat[IQP]{\includegraphics[width=0.35\textwidth,height=4cm,keepaspectratio]{images/IQP.png}%
+\label{fig:iqp}}
+\caption{We illustrate an example Clifford, Clifford$+T$, and IQP circuit for the reader with four
+qubits and $N_c$ = 10. (a) The Clifford circuit is comprised of gates from the clifford gate 
+as defined above. (b) We observe a disproportionate amount of T gates for the Clifford+T example. This is done to 
+ensure distinctness from the Clifford circuit family. (c) We show an example IQP circuit. It is 
+clear that $N_c$ for IQP circuits refers to the number of operations between the Hadamard gates.}
+\label{fig:circuit_families}
+\end{figure*}
+\FloatBarrier
+
 \subsection{Distribution Classification}
 
 \todo{Brief review of relevant prior work on distribution testing, quantum state discrimination, and classical analogs. Position our contribution relative to these.}
@@ -141,6 +162,21 @@ Clifford$+T$ family, the gates have chances of being applied as outlined in Tabl
 We emphasized the T gate count in Clifford$+T$ to help ensure it is distinguished from the Clifford family.
 The qubit(s) each gate acts on is selected randomly with no preference to any particular qubit, except 
 in the case of two qubit gates, where the control and target must be different.
+
+\begin{table}[htbp]
+\centering
+\label{tab:cliffordT_gate_distros}
+\caption{Clifford$+T$ gate selection probabilities. All other families used equal probabilities.}
+\begin{tabular}{|c|c|}\hline
+\textbf{Gate} & \textbf{Probability} \\ \hline
+ S & 0.2 \\ \hline
+ CNOT & 0.2 \\ \hline
+ H & 0.2 \\ \hline
+ T & 0.4 \\ \hline
+
+\end{tabular}
+
+\end{table}
 
 Instantaneous Quantum Polynomial (IQP) circuits are created simiiarly. The only difference, beside the 
 gate set used, is that the operator $H^{\bigotimes n}$ is applied and the beginning and end of the circuit
