@@ -154,12 +154,11 @@ clear that $N_c$ for IQP circuits refers to the number of operations between the
 \subsection{Circuit Generation}
 
 We use the Qiskit SDK \cite{qiskit2024} for all of our research. Using Qiskit, we craft random circuits 
-for each of the three previously mentioend circuit families, Clifford, Clifford$+T$, and IQP circuits.
+for each of the three previously mentioned circuit families, Clifford, Clifford$+T$, and IQP circuits.
 For the first two groups, we define a value $N_c$, which is the number of gates in a given circuit. We
 then apply $N_c$ randomly selected gates from the appropriate circuit family to act on randomly selected 
-qubits. For the Clifford family of circuits, each gate has an equal chance of being applied. For the 
-Clifford$+T$ family, the gates have chances of being applied as outlined in Table\ref{tab:cliffordT_gate_distros}.
-We emphasized the T gate count in Clifford$+T$ to help ensure it is distinguished from the Clifford family.
+qubits. For the Clifford family of circuits, each gate has an equal chance of being selected. For the 
+Clifford$+T$ family, the gates have chances of being selected as outlined in Table\ref{tab:cliffordT_gate_distros}.
 The qubit(s) each gate acts on is selected randomly with no preference to any particular qubit, except 
 in the case of two qubit gates, where the control and target must be different.
 
@@ -179,15 +178,9 @@ in the case of two qubit gates, where the control and target must be different.
 \end{table}
 
 Instantaneous Quantum Polynomial (IQP) circuits are created simiiarly. The only difference, beside the 
-gate set used, is that the operator $H^{\bigotimes n}$ is applied and the beginning and end of the circuit
-where n is the number of qubits.
-
-Circuits are generated using Qiskit%~\cite{Qiskit}
-and simulated with the Aer statevector simulator on GPU.
-Each circuit family is parameterized by qubit count $\nqubits \in \{4, \ldots, 20\}$, operations per circuit $N_{\mathrm{ops}} = 1000$, and a reproducible master seed.
-For each $(\nqubits, \text{family})$ combination, $N_c = 1000$ unique circuits are generated.
-All three measurement strategies are applied to the same set of circuits, enabling a controlled comparison.
-Table~\ref{tab:sweep} summarizes the experimental sweep.
+gate set used, is that the operator $H^{\bigotimes n}$ is applied at the beginning and end of the circuit, as 
+shown in Figure~\ref{fig:circuit_families}, where n is the number of qubits. We scale the number of qubits from 4 up to 20 qubits. At each qubit count, we generate 1000 circuits of each 
+type.
 
 \begin{table}[htbp]
 \centering
@@ -216,19 +209,25 @@ The estimation cost of a statistical feature determines the minimum shot budget 
 \paragraph{Polynomial-cost features}
 The Hamming-weight histogram bins all $2^\nqubits$ outcomes into $\nqubits + 1$ weight classes, requiring $O(\nqubits / \varepsilon^2)$ shots.
 Single-qubit marginals $P(x_i = 1)$ and parity bias require $O(\nqubits / \varepsilon^2)$ and $O(1/\varepsilon^2)$ shots respectively.
-Connected $ZZ$ correlations across all $\binom{\nqubits}{2}$ pairs require $O(\nqubits^2 / \varepsilon^2)$ shots in total, as do all other two-qubit Pauli correlators.
+Connected two-qubit Pauli correlations across all $\binom{\nqubits}{2}$ pairs require $O(\nqubits^2 / \varepsilon^2)$ shots in total for any single correlator type (e.g., $ZZ$, $XX$, $YY$).
 By the classical shadows result%~\cite{Huang2020}
-, \emph{all} $6\binom{\nqubits}{2}$ two-qubit Pauli correlators can be estimated simultaneously at the same $O(\nqubits^2 / \varepsilon^2)$ cost using the shadow protocol.
+, \emph{all} $6\binom{\nqubits}{2}$ two-qubit Pauli correlators ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) can be estimated simultaneously at the same $O(\nqubits^2 / \varepsilon^2)$ cost using the shadow protocol.
 
-\paragraph{Exponential-cost features}
-Shannon entropy $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$ requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimator is biased whenever bitstrings go unobserved, which becomes the norm above $\sim$10 qubits.
-Collision probability $\mathcal{C} = \sum_x p(x)^2$ requires $O(2^{\nqubits/2})$ shots via the birthday problem threshold.
-Both are excluded from our feature set.
+\paragraph{Excluded exponential-cost features}
+The purpose of this work is to classify quantum circuit families using only polynomial measurement resources.
+If exponential resources were available, full quantum state tomography could exactly reconstruct the output distribution, rendering classification trivial.
+In that vein, several prominent statistical measures are excluded from our feature set due to their exponential shot requirements:
+Shannon entropy $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$, which requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimator is biased whenever bitstrings go unobserved;
+collision probability $\mathcal{C} = \sum_x p(x)^2$, which requires $O(2^{\nqubits/2})$ shots via the birthday problem threshold;
+R\'{e}nyi entropies of order $\alpha \neq 1$, which share the same exponential sampling barrier;
+and total variation distance to uniformity, which requires observing a representative fraction of the $2^\nqubits$ outcomes.
+All such features are incompatible with the polynomial-resource constraint central to this work and are therefore disregarded.
 
 \paragraph{Quadratic shot scaling}
 The most expensive retained features are the two-qubit Pauli correlators, requiring $O(\nqubits^2)$ shots.
-We adopt $\shots = 16\nqubits^2$, giving 256 shots at $\nqubits = 4$ and 6400 shots at $\nqubits = 20$.
-For the multi-basis strategy, each of the three basis runs receives $\shots / 3$ shots; the total shot budget remains $\shots = 16\nqubits^2$.
+We adopt a quadratic shot scaling law $\shots = \lambda \nqubits^2$, where $\shots$ is the total shot budget, $\nqubits$ is the number of qubits, and $\lambda$ is a constant prefactor controlling the statistical quality of the estimators.
+We arbitrarily set $\lambda = 16$, giving 256 shots at $\nqubits = 4$ and 6400 shots at $\nqubits = 20$.
+For the multi-basis strategy, each of the three basis runs receives $\shots / 3$ shots; the total shot budget remains $\shots = \lambda\nqubits^2$.
 
 \subsection{Measurement Strategies}
 \label{sec:strategies}
