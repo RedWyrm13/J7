@@ -17,6 +17,7 @@ def build_iqp_circuit(num_qubits, num_ops, seed=None):
 
     qc = QuantumCircuit(num_qubits)
     apply_hadamards(qc)
+    qc.barrier()
 
     gates = ["T", "RZ", "CZ"]
 
@@ -34,6 +35,6 @@ def build_iqp_circuit(num_qubits, num_ops, seed=None):
         else:  # "CZ"
             control = randint_excluding(rng, 0, num_qubits - 1, target)
             qc.cz(control, target)
-
+    qc.barrier()
     apply_hadamards(qc)
     return qc
