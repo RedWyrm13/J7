@@ -1,0 +1,10 @@
+qubit_range: [4, 21]          # range(4, 21) → qubits 4..20 inclusive
+labels: ['iqp', 'clifford', 'clifford_t']
+
+# shots = shots_base * n_qubits^2  (must match circuit_configuration.yaml)
+shots_base: 16
+
+n_circuits: 1000             # used as n_sessions in spectrum generation
+resamples_per_circuit: 1
+master_seed: 42
+snapshots_per_session: 50
