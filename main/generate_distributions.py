@@ -169,7 +169,7 @@ if __name__ == "__main__":
     os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 
     slurm_gpus = int(os.environ.get("SLURM_GPUS_ON_NODE", "0"))
-    n_workers  = min(2, slurm_gpus) if slurm_gpus > 0 else 0
+    n_workers  = min(4, slurm_gpus) if slurm_gpus > 0 else 0
 
     cluster = None
     if n_workers > 0:

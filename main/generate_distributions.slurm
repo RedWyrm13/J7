@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --job-name=J7_Data
-#SBATCH --output=J7_Data.log
+#SBATCH --job-name=J7_Data_mb
+#SBATCH --output=multi_basis.log
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=amacieju@odu.edu
 #SBATCH --partition=gpu
