@@ -20,7 +20,7 @@ master_seed: 42
 #              gives ZZ + XX + YY all-pairs
 # shadows:     random per-qubit basis each shot,        → data/quantum_shadows/
 #              gives all 6 Pauli pair correlators
-measurement_modes: ['z_only', 'multi_basis', 'shadows']
+measurement_modes: ['multi_basis']
 
 # ── Test config (uncomment to sanity-check before HPC launch) ────────────────
 # qubit_range: [4, 6]

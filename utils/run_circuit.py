@@ -58,7 +58,7 @@ def run_multi_basis(base_circuit, sim, shots_per_basis):
         _append_basis_rotations(base_circuit, [BASIS_X] * n),
         _append_basis_rotations(base_circuit, [BASIS_Y] * n),
     ]
-    transpiled = transpile(circuits, backend=sim)
+    transpiled = transpile(circuits, backend=sim, num_processes=1)
     results = sim.run(transpiled, shots=shots_per_basis).result()
     return (
         results.get_counts(0),
