@@ -124,7 +124,7 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
                 )
                 featdict = {}
 
-            elif mode == "quantum_nn":
+            elif mode == "NN":
                 counts = run_sampler(transpiled, sim=sim, shots=cfg.shots_per_datapoint)
                 featdict = summarize_counts_dict(counts)
                 hw = np.array(featdict["hamming_weight"]["hist"])
