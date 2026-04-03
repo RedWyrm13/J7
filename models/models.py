@@ -115,6 +115,7 @@ def main():
         "Z-only":      Path("../data/quantum"),
         "Multi-basis": Path("../data/quantum_mb"),
         "Shadows":     Path("../data/quantum_shadows"),
+        "NN":          Path("../data/quantum_nn"),
     }
 
     for mode_label, folder in measurement_modes.items():
@@ -128,6 +129,11 @@ def main():
         if not qubits_dict:
             print(f"No data loaded for {mode_label}.")
             continue
+
+        print(f"\n=== {mode_label} — best accuracy per model ===")
+        for model_name in next(iter(qubits_dict.values())).keys():
+            best = max(qubits_dict[q][model_name] for q in qubits_dict)
+            print(f"  {model_name}: {best:.4f}")
 
         safe_label = mode_label.lower().replace("-", "_").replace(" ", "_")
         plot_qubits_dict(

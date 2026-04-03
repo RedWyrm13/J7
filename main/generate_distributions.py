@@ -5,6 +5,7 @@ from utils.run_circuit import build_and_transpile, run_sampler, run_multi_basis,
 from utils.circuit_statistics import (
     summarize_counts_dict, flatten_feature_dict,
     summarize_multi_basis, summarize_shadows,
+    extract_nearest_neighbor_zz,
 )
 from utils.utils import make_metadata, cfgCircuit, sample_circuit_seed, make_filename, save_data
 import numpy as np
@@ -121,6 +122,16 @@ def generate_distributions(cfg: cfgCircuit = cfgCircuit()):
                     n_qubits=num_qubits,
                     pairs=cfg.zz_pairs,
                 )
+                featdict = {}
+
+            elif mode == "quantum_nn":
+                counts = run_sampler(transpiled, sim=sim, shots=cfg.shots_per_datapoint)
+                featdict = summarize_counts_dict(counts)
+                hw = np.array(featdict["hamming_weight"]["hist"])
+                marg = np.array(featdict["qubit_marginals"])
+                pb = np.array([featdict["parity_bias"]])
+                nn_zz = extract_nearest_neighbor_zz(counts, num_qubits)
+                feature_vec = np.concatenate([hw, marg, pb, nn_zz])
                 featdict = {}
 
             else:

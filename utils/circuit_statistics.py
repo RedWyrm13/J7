@@ -256,6 +256,20 @@ def connected_zz_correlations(
     return corr
 
 
+def extract_nearest_neighbor_zz(
+    counts: Counts,
+    n_qubits: int,
+    reverse_bits: bool = True,
+) -> np.ndarray:
+    """
+    Connected ZZ correlations for adjacent qubit pairs only:
+      (0,1), (1,2), ..., (n-2, n-1)
+    Returns a feature vector of length n-1.
+    """
+    nn_pairs = [(i, i + 1) for i in range(n_qubits - 1)]
+    return connected_zz_correlations(counts, nn_pairs, n_qubits, reverse_bits=reverse_bits)
+
+
 # ---------------------------
 # Public API: dict + flattener
 # ---------------------------

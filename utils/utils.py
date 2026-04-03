@@ -54,6 +54,7 @@ _MODE_FOLDER = {
     "z_only":      "../data/quantum",
     "multi_basis": "../data/quantum_mb",
     "shadows":     "../data/quantum_shadows",
+    "quantum_nn":  "../data/quantum_nn",
 }
 
 def make_filename(cfg: cfgCircuit, file_extension: str = ".npz") -> str:
