@@ -281,6 +281,36 @@ Data are split 80/20 train/test.
 Accuracy is reported as the fraction of correctly classified test samples.
 Each classifier is independently trained and evaluated for each measurement strategy and qubit count.
 
+\paragraph{Logistic Regression}
+Logistic Regression models the log-odds of class membership as a linear function of the input features.
+Given feature vector $\mathbf{x}$, the probability assigned to class $k$ is
+$P(y=k \mid \mathbf{x}) = \mathrm{softmax}(\mathbf{W}\mathbf{x} + \mathbf{b})_k$,
+and parameters $\mathbf{W}, \mathbf{b}$ are fit by minimizing cross-entropy via L-BFGS.
+The decision boundary is a hyperplane in feature space, making the model fast to train and easy to interpret, but limited to linearly separable classes.
+
+\paragraph{Decision Tree}
+A Decision Tree recursively partitions the feature space by selecting, at each node, the feature threshold that maximises the reduction in Gini impurity among the training samples reaching that node.
+Predictions for a new sample are made by routing it through the learned splits to a leaf, where the majority class label is returned.
+With unlimited depth, the tree can perfectly partition any finite training set, capturing highly non-linear boundaries at the cost of a tendency to overfit.
+Unlike Logistic Regression, the decision boundary is piecewise axis-aligned rather than a single hyperplane.
+
+\paragraph{Random Forest}
+A Random Forest is an ensemble of decision trees, each trained on an independently drawn bootstrap sample of the training data.
+At every split, each tree considers only a random subset of features, decorrelating the trees and reducing variance relative to a single deep tree.
+The final prediction is the majority vote across all 100 trees.
+Random Forest therefore inherits the non-linear expressivity of individual trees while substantially improving generalisation, at the cost of reduced interpretability compared to a single tree.
+
+\paragraph{Support Vector Machine}
+A Support Vector Machine (SVM) finds the maximum-margin separating hyperplane in a (possibly kernel-lifted) feature space.
+We use the Radial Basis Function (RBF) kernel $K(\mathbf{x}, \mathbf{x}') = \exp(-\gamma\|\mathbf{x}-\mathbf{x}'\|^2)$, which implicitly maps inputs into an infinite-dimensional space, allowing highly non-linear decision boundaries.
+Only the support vectors --- the training samples closest to the margin --- determine the boundary, making SVMs effective in high-dimensional settings where the number of features is large relative to the number of samples.
+
+\paragraph{Key differences}
+The four classifiers span two primary axes of variation.
+First, \emph{linearity}: Logistic Regression assumes a linear boundary, while the other three can represent non-linear separations.
+Second, \emph{variance--bias trade-off}: a single Decision Tree has low bias but high variance; Random Forest reduces variance through ensemble averaging; SVMs control both through the margin objective and the choice of kernel bandwidth.
+Evaluating all four allows us to assess whether the circuit family discrimination task is linearly separable in the chosen feature space, or whether the non-linear structure of the classifiers is necessary at larger qubit counts.
+
 \section{Results}
 \label{sec:results}
 
