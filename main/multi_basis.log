@@ -1,0 +1,207 @@
+Using LocalCUDACluster with 4 GPU workers.
+Dask dashboard: http://127.0.0.1:8787/status
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits5_ops1000_shotsPerDatapoint400_numCircuits1000_resamplesPerCircuit1_masterSeed45.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits4_ops1000_shotsPerDatapoint256_numCircuits1000_resamplesPerCircuit1_masterSeed42.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits4_ops1000_shotsPerDatapoint256_numCircuits1000_resamplesPerCircuit1_masterSeed44.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits4_ops1000_shotsPerDatapoint256_numCircuits1000_resamplesPerCircuit1_masterSeed43.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits6_ops1000_shotsPerDatapoint576_numCircuits1000_resamplesPerCircuit1_masterSeed48.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits5_ops1000_shotsPerDatapoint400_numCircuits1000_resamplesPerCircuit1_masterSeed46.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits6_ops1000_shotsPerDatapoint576_numCircuits1000_resamplesPerCircuit1_masterSeed49.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits5_ops1000_shotsPerDatapoint400_numCircuits1000_resamplesPerCircuit1_masterSeed47.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits7_ops1000_shotsPerDatapoint784_numCircuits1000_resamplesPerCircuit1_masterSeed51.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits7_ops1000_shotsPerDatapoint784_numCircuits1000_resamplesPerCircuit1_masterSeed52.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits6_ops1000_shotsPerDatapoint576_numCircuits1000_resamplesPerCircuit1_masterSeed50.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits7_ops1000_shotsPerDatapoint784_numCircuits1000_resamplesPerCircuit1_masterSeed53.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits8_ops1000_shotsPerDatapoint1024_numCircuits1000_resamplesPerCircuit1_masterSeed54.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits8_ops1000_shotsPerDatapoint1024_numCircuits1000_resamplesPerCircuit1_masterSeed55.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits8_ops1000_shotsPerDatapoint1024_numCircuits1000_resamplesPerCircuit1_masterSeed56.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits9_ops1000_shotsPerDatapoint1296_numCircuits1000_resamplesPerCircuit1_masterSeed57.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits9_ops1000_shotsPerDatapoint1296_numCircuits1000_resamplesPerCircuit1_masterSeed59.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits10_ops1000_shotsPerDatapoint1600_numCircuits1000_resamplesPerCircuit1_masterSeed60.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits9_ops1000_shotsPerDatapoint1296_numCircuits1000_resamplesPerCircuit1_masterSeed58.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits10_ops1000_shotsPerDatapoint1600_numCircuits1000_resamplesPerCircuit1_masterSeed61.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits11_ops1000_shotsPerDatapoint1936_numCircuits1000_resamplesPerCircuit1_masterSeed63.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits10_ops1000_shotsPerDatapoint1600_numCircuits1000_resamplesPerCircuit1_masterSeed62.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits11_ops1000_shotsPerDatapoint1936_numCircuits1000_resamplesPerCircuit1_masterSeed64.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits11_ops1000_shotsPerDatapoint1936_numCircuits1000_resamplesPerCircuit1_masterSeed65.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits12_ops1000_shotsPerDatapoint2304_numCircuits1000_resamplesPerCircuit1_masterSeed66.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits12_ops1000_shotsPerDatapoint2304_numCircuits1000_resamplesPerCircuit1_masterSeed68.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits12_ops1000_shotsPerDatapoint2304_numCircuits1000_resamplesPerCircuit1_masterSeed67.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits13_ops1000_shotsPerDatapoint2704_numCircuits1000_resamplesPerCircuit1_masterSeed69.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits13_ops1000_shotsPerDatapoint2704_numCircuits1000_resamplesPerCircuit1_masterSeed71.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits13_ops1000_shotsPerDatapoint2704_numCircuits1000_resamplesPerCircuit1_masterSeed70.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits14_ops1000_shotsPerDatapoint3136_numCircuits1000_resamplesPerCircuit1_masterSeed72.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits14_ops1000_shotsPerDatapoint3136_numCircuits1000_resamplesPerCircuit1_masterSeed73.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits14_ops1000_shotsPerDatapoint3136_numCircuits1000_resamplesPerCircuit1_masterSeed74.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits15_ops1000_shotsPerDatapoint3600_numCircuits1000_resamplesPerCircuit1_masterSeed75.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits15_ops1000_shotsPerDatapoint3600_numCircuits1000_resamplesPerCircuit1_masterSeed76.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits15_ops1000_shotsPerDatapoint3600_numCircuits1000_resamplesPerCircuit1_masterSeed77.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits16_ops1000_shotsPerDatapoint4096_numCircuits1000_resamplesPerCircuit1_masterSeed78.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits16_ops1000_shotsPerDatapoint4096_numCircuits1000_resamplesPerCircuit1_masterSeed79.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits16_ops1000_shotsPerDatapoint4096_numCircuits1000_resamplesPerCircuit1_masterSeed80.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed81.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed82.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed83.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed84.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed85.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed86.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits19_ops1000_shotsPerDatapoint5776_numCircuits1000_resamplesPerCircuit1_masterSeed87.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits19_ops1000_shotsPerDatapoint5776_numCircuits1000_resamplesPerCircuit1_masterSeed88.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits19_ops1000_shotsPerDatapoint5776_numCircuits1000_resamplesPerCircuit1_masterSeed89.npz
+DONE: ../data/quantum_mb/circuitFamily_iqp_qubits20_ops1000_shotsPerDatapoint6400_numCircuits1000_resamplesPerCircuit1_masterSeed90.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_qubits20_ops1000_shotsPerDatapoint6400_numCircuits1000_resamplesPerCircuit1_masterSeed91.npz
+DONE: ../data/quantum_mb/circuitFamily_clifford_t_qubits20_ops1000_shotsPerDatapoint6400_numCircuits1000_resamplesPerCircuit1_masterSeed92.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits4_ops1000_shotsPerDatapoint256_numCircuits1000_resamplesPerCircuit1_masterSeed44.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits6_ops1000_shotsPerDatapoint576_numCircuits1000_resamplesPerCircuit1_masterSeed48.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits7_ops1000_shotsPerDatapoint784_numCircuits1000_resamplesPerCircuit1_masterSeed52.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits8_ops1000_shotsPerDatapoint1024_numCircuits1000_resamplesPerCircuit1_masterSeed54.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits9_ops1000_shotsPerDatapoint1296_numCircuits1000_resamplesPerCircuit1_masterSeed59.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits10_ops1000_shotsPerDatapoint1600_numCircuits1000_resamplesPerCircuit1_masterSeed62.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits12_ops1000_shotsPerDatapoint2304_numCircuits1000_resamplesPerCircuit1_masterSeed66.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits13_ops1000_shotsPerDatapoint2704_numCircuits1000_resamplesPerCircuit1_masterSeed71.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits14_ops1000_shotsPerDatapoint3136_numCircuits1000_resamplesPerCircuit1_masterSeed74.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits16_ops1000_shotsPerDatapoint4096_numCircuits1000_resamplesPerCircuit1_masterSeed78.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed82.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed86.npz
+CUDA_VISIBLE_DEVICES = 0,1,2,3
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits20_ops1000_shotsPerDatapoint6400_numCircuits1000_resamplesPerCircuit1_masterSeed90.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits4_ops1000_shotsPerDatapoint256_numCircuits1000_resamplesPerCircuit1_masterSeed42.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits5_ops1000_shotsPerDatapoint400_numCircuits1000_resamplesPerCircuit1_masterSeed46.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits7_ops1000_shotsPerDatapoint784_numCircuits1000_resamplesPerCircuit1_masterSeed51.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits8_ops1000_shotsPerDatapoint1024_numCircuits1000_resamplesPerCircuit1_masterSeed55.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits9_ops1000_shotsPerDatapoint1296_numCircuits1000_resamplesPerCircuit1_masterSeed58.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits11_ops1000_shotsPerDatapoint1936_numCircuits1000_resamplesPerCircuit1_masterSeed63.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits12_ops1000_shotsPerDatapoint2304_numCircuits1000_resamplesPerCircuit1_masterSeed68.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits13_ops1000_shotsPerDatapoint2704_numCircuits1000_resamplesPerCircuit1_masterSeed70.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits15_ops1000_shotsPerDatapoint3600_numCircuits1000_resamplesPerCircuit1_masterSeed75.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits16_ops1000_shotsPerDatapoint4096_numCircuits1000_resamplesPerCircuit1_masterSeed79.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed83.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits19_ops1000_shotsPerDatapoint5776_numCircuits1000_resamplesPerCircuit1_masterSeed87.npz
+CUDA_VISIBLE_DEVICES = 2,3,0,1
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits20_ops1000_shotsPerDatapoint6400_numCircuits1000_resamplesPerCircuit1_masterSeed91.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits5_ops1000_shotsPerDatapoint400_numCircuits1000_resamplesPerCircuit1_masterSeed45.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits6_ops1000_shotsPerDatapoint576_numCircuits1000_resamplesPerCircuit1_masterSeed49.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits6_ops1000_shotsPerDatapoint576_numCircuits1000_resamplesPerCircuit1_masterSeed50.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits8_ops1000_shotsPerDatapoint1024_numCircuits1000_resamplesPerCircuit1_masterSeed56.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits10_ops1000_shotsPerDatapoint1600_numCircuits1000_resamplesPerCircuit1_masterSeed60.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits11_ops1000_shotsPerDatapoint1936_numCircuits1000_resamplesPerCircuit1_masterSeed64.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits12_ops1000_shotsPerDatapoint2304_numCircuits1000_resamplesPerCircuit1_masterSeed67.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits14_ops1000_shotsPerDatapoint3136_numCircuits1000_resamplesPerCircuit1_masterSeed72.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits15_ops1000_shotsPerDatapoint3600_numCircuits1000_resamplesPerCircuit1_masterSeed76.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits16_ops1000_shotsPerDatapoint4096_numCircuits1000_resamplesPerCircuit1_masterSeed80.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed84.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits19_ops1000_shotsPerDatapoint5776_numCircuits1000_resamplesPerCircuit1_masterSeed88.npz
+CUDA_VISIBLE_DEVICES = 1,2,3,0
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits20_ops1000_shotsPerDatapoint6400_numCircuits1000_resamplesPerCircuit1_masterSeed92.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits4_ops1000_shotsPerDatapoint256_numCircuits1000_resamplesPerCircuit1_masterSeed43.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits5_ops1000_shotsPerDatapoint400_numCircuits1000_resamplesPerCircuit1_masterSeed47.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits7_ops1000_shotsPerDatapoint784_numCircuits1000_resamplesPerCircuit1_masterSeed53.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits9_ops1000_shotsPerDatapoint1296_numCircuits1000_resamplesPerCircuit1_masterSeed57.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits10_ops1000_shotsPerDatapoint1600_numCircuits1000_resamplesPerCircuit1_masterSeed61.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits11_ops1000_shotsPerDatapoint1936_numCircuits1000_resamplesPerCircuit1_masterSeed65.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits13_ops1000_shotsPerDatapoint2704_numCircuits1000_resamplesPerCircuit1_masterSeed69.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits14_ops1000_shotsPerDatapoint3136_numCircuits1000_resamplesPerCircuit1_masterSeed73.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits15_ops1000_shotsPerDatapoint3600_numCircuits1000_resamplesPerCircuit1_masterSeed77.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_iqp_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed81.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed85.npz
+CUDA_VISIBLE_DEVICES = 3,0,1,2
+Aer device = GPU
+../data/quantum_mb/circuitFamily_clifford_t_qubits19_ops1000_shotsPerDatapoint5776_numCircuits1000_resamplesPerCircuit1_masterSeed89.npz
+Total time: 11270.53s

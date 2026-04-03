@@ -503,6 +503,4 @@ DONE: ../data/quantum_shadows/circuitFamily_clifford_qubits17_ops1000_shotsPerDa
 DONE: ../data/quantum_shadows/circuitFamily_clifford_t_qubits17_ops1000_shotsPerDatapoint4624_numCircuits1000_resamplesPerCircuit1_masterSeed185.npz
 DONE: ../data/quantum_shadows/circuitFamily_iqp_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed186.npz
 DONE: ../data/quantum_shadows/circuitFamily_clifford_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed187.npz
-Using LocalCUDACluster with 2 GPU workers.
-Dask dashboard: http://127.0.0.1:8787/status
-[2026-03-30T11:22:50.745] error: *** JOB 5535010 ON d2-w4140a-05 CANCELLED AT 2026-03-30T11:22:50 DUE to SIGNAL Terminated ***
+                                                                                                                                                                                                                       DONE: ../data/quantum_shadows/circuitFamily_clifford_t_qubits18_ops1000_shotsPerDatapoint5184_numCircuits1000_resamplesPerCircuit1_masterSeed188.npz
