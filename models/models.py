@@ -50,12 +50,6 @@ def initialize_models():
     
     return models
 
-# Evaluates model accuracy
-def eval_model(model, X_train, y_train, X_test, y_test):
-    model.fit(X_train, y_train)
-    accuracy = model.score(X_test, y_test)
-    return accuracy
-
 def prepare_data(filename, folder):
     X_list = []
     y_list = []
@@ -67,8 +61,22 @@ def prepare_data(filename, folder):
 
     X = np.concatenate(X_list, axis=0)
     y = np.concatenate(y_list, axis=0)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-    return X_train, y_train, X_test, y_test
+    return X, y
+
+
+# Evaluates model accuracy over n_splits repeated random train/test splits.
+# Returns (mean_accuracy, std_accuracy).
+def eval_model(model, X, y, n_splits=10):
+    rng = np.random.default_rng(42)
+    seeds = rng.integers(0, 100_000, size=n_splits)
+    scores = []
+    for seed in seeds:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=int(seed)
+        )
+        model.fit(X_train, y_train)
+        scores.append(model.score(X_test, y_test))
+    return float(np.mean(scores)), float(np.std(scores))
 
 
 def plot_qubits_dict(qubits_dict, filename=None, title=None):
@@ -76,18 +84,70 @@ def plot_qubits_dict(qubits_dict, filename=None, title=None):
     model_names = list(next(iter(qubits_dict.values())).keys())
 
     for model_name in model_names:
-        y_axis = [qubits_dict[qubit][model_name] for qubit in x_axis]
-        plt.plot(x_axis, y_axis, marker='o', label=model_name)
+        means = [qubits_dict[q][model_name][0] for q in x_axis]
+        stds  = [qubits_dict[q][model_name][1] for q in x_axis]
+        plt.errorbar(x_axis, means, yerr=stds, marker='o', capsize=3,
+                     linewidth=1.5, label=model_name)
 
+    plt.axhline(y=1/3, color="gray", linestyle="--", linewidth=0.8,
+                alpha=0.6, label="Chance (0.33)")
     plt.xlabel("Number of Qubits")
-    plt.ylabel("Average Accuracy")
+    plt.ylabel("Accuracy")
     plt.title(title or "Average Model Accuracy vs Number of Qubits")
     plt.legend()
 
     if filename is None:
         plt.show()
     else:
-        plt.savefig(filename)
+        plt.savefig(filename, dpi=150, bbox_inches="tight")
+        plt.close()
+
+
+def plot_combined(all_strategies, filename=None, title=None):
+    """
+    all_strategies: dict of {strategy_label: qubits_dict}
+    where qubits_dict: {qubit_count: {model_name: (mean, std)}}
+    Produces a 2x2 figure — one subplot per classifier, all strategies overlaid with error bars.
+    """
+    first_qd = next(iter(all_strategies.values()))
+    model_names = list(next(iter(first_qd.values())).keys())
+
+    strategy_styles = {
+        "Z-only":      {"color": "tab:blue",   "marker": "o"},
+        "Multi-basis": {"color": "tab:orange",  "marker": "s"},
+        "Shadows":     {"color": "tab:green",   "marker": "^"},
+        "NN":          {"color": "tab:red",     "marker": "D"},
+    }
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8), sharex=True, sharey=True)
+    axes_flat = axes.flatten()
+
+    for idx, model_name in enumerate(model_names):
+        ax = axes_flat[idx]
+        for label, qubits_dict in all_strategies.items():
+            x_axis = sorted(qubits_dict.keys())
+            means = [qubits_dict[q][model_name][0] for q in x_axis]
+            stds  = [qubits_dict[q][model_name][1] for q in x_axis]
+            style = strategy_styles.get(label, {})
+            ax.errorbar(x_axis, means, yerr=stds,
+                        marker=style.get("marker", "o"),
+                        color=style.get("color"),
+                        capsize=3, linewidth=1.5, label=label)
+        ax.axhline(y=1/3, color="gray", linestyle="--", linewidth=0.8,
+                   alpha=0.6, label="Chance (0.33)")
+        ax.set_title(model_name)
+        ax.set_xlabel("Number of Qubits")
+        ax.set_ylabel("Accuracy")
+        ax.set_ylim(0, 1.05)
+        ax.legend(fontsize=8)
+
+    fig.suptitle(title or "Classifier Accuracy vs Qubit Count by Measurement Strategy")
+    plt.tight_layout()
+
+    if filename is None:
+        plt.show()
+    else:
+        plt.savefig(filename, dpi=150, bbox_inches="tight")
         plt.close()
 
 
@@ -97,10 +157,10 @@ def _build_qubits_dict(folder, models, shots_base, qubits):
         shots = shots_base * qubit ** 2
         filename = make_filename(num_qubits=qubit, shots_per_datapoint=shots)
         try:
-            X_train, y_train, X_test, y_test = prepare_data(filename=filename, folder=folder)
+            X, y = prepare_data(filename=filename, folder=folder)
             results = {}
             for model_name, model in models.items():
-                results[model_name] = eval_model(model, X_train, y_train, X_test, y_test)
+                results[model_name] = eval_model(model, X, y)
             qubits_dict[qubit] = results
         except Exception as e:
             print(f"Skipping qubits={qubit} in {folder}: {e}")
@@ -132,15 +192,16 @@ def main():
 
         print(f"\n=== {mode_label} — best accuracy per model ===")
         for model_name in next(iter(qubits_dict.values())).keys():
-            best = max(qubits_dict[q][model_name] for q in qubits_dict)
-            print(f"  {model_name}: {best:.4f}")
+            best_mean, best_std = max(qubits_dict[q][model_name] for q in qubits_dict)
+            print(f"  {model_name}: {best_mean:.4f} ± {best_std:.4f}")
 
         safe_label = mode_label.lower().replace("-", "_").replace(" ", "_")
         plot_qubits_dict(
             qubits_dict=qubits_dict,
-            filename=f"qubit_accuracy_{safe_label}.png",
+            filename=f"../latex/images/qubit_accuracy_{safe_label}.png",
             title=f"Model Accuracy vs Qubit Count ({mode_label})",
         )
+        print(f"Plot saved to ../latex/images/qubit_accuracy_{safe_label}.png")
             
 if __name__ == '__main__':
     main()
