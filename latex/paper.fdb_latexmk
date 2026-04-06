@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex paper"] 1774467645.72018 "paper.aux" "paper.bbl" "paper" 1774467841.74854 0
-  "./references.bib" 1774382862.29261 1952 67ac9ff9ace9d5658624701379da1429 ""
+["bibtex paper"] 1775496692.46348 "paper.aux" "paper.bbl" "paper" 1775496693.61842 0
+  "./references.bib" 1775243425.77105 2321 ce46636afd9ad6b4821def41ba56a206 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "paper.aux" 1774467841.38276 7921 59a80baf48e5e96c7928ca1268b5be63 "pdflatex"
+  "paper.aux" 1775496693.25727 10759 16d59a64b4107f1e55dd02ae2dd6cde8 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1774467840.84941 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1774467841.74875 0
+["pdflatex"] 1775496692.58196 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1775496693.61868 0
   "/etc/texmf/web2c/texmf.cnf" 1758121306.85586 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1774467840.64174 22513 269f2dfef08854e11e0ceeb4fdb1fbbe ""
+  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1775496691.34124 35972 8ad78af4eb12274a2ab4a4e2cb1eed1a ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -129,7 +129,6 @@
   "/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty" 1665067230 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1716410060 29785 9f93ab201fe5dd053afcc6c1bcf7d266 ""
   "/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1279039959 678 4792914a8f45be57bb98413425e4c7af ""
-  "/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty" 1137110565 4087 636308456f60d2b31cbf97867db5708d ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd" 1137110629 985 1ed784d7bfe47179f3550d2303b073f8 ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd" 1137110629 961 15056f4a61917ceed3a44e4ac11fcc52 ""
   "/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty" 1576624809 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
@@ -144,10 +143,13 @@
   "images/IQP.png" 1774463712.11986 20727 bcbfd303e125deb0e11855816b1994ee ""
   "images/clifford.png" 1774463416.60145 16275 e23c6c3ad8081835b91756156a83af72 ""
   "images/cliffordT.png" 1774464604.03216 13481 7037381b27ff07dc3d57125906c3dd8d ""
-  "paper.aux" 1774467841.38276 7921 59a80baf48e5e96c7928ca1268b5be63 "pdflatex"
-  "paper.bbl" 1774467645.91614 1892 5ed23c8bc2efcaaa267eeafc5722c4a8 "bibtex paper"
-  "paper.out" 1774467841.38376 3384 0988ed8f08ad2e44e17df449b2bb584f "pdflatex"
-  "paper.tex" 1774467840.64174 22513 269f2dfef08854e11e0ceeb4fdb1fbbe ""
+  "images/qubit_accuracy_multi_basis.png" 1775242002.78339 54786 d2dcefd9021d99cabe364048c0dd28fc ""
+  "images/qubit_accuracy_shadows.png" 1775242002.78605 60774 a24f793d20225d805bb4e2b034e83e30 ""
+  "images/qubit_accuracy_z_only.png" 1775242002.7798 54396 43b1f30fef2863f46b9b211a97ec2c80 ""
+  "paper.aux" 1775496693.25727 10759 16d59a64b4107f1e55dd02ae2dd6cde8 "pdflatex"
+  "paper.bbl" 1775496692.57126 2130 bb04e66c119d86351a73a43c7df5620c "bibtex paper"
+  "paper.out" 1775496693.25827 3518 85ad5b279551961dc34db025e764505b "pdflatex"
+  "paper.tex" 1775496691.34124 35972 8ad78af4eb12274a2ab4a4e2cb1eed1a ""
   (generated)
   "paper.aux"
   "paper.log"

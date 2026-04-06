@@ -8,49 +8,56 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: references.bib
+Warning--I didn't find a database entry for "Canonne2020"
+Warning--I didn't find a database entry for "Barnett2009"
+Warning--I didn't find a database entry for "Audenaert2007"
+Warning--I didn't find a database entry for "AaronsonChen2017"
+Warning--I didn't find a database entry for "BarakEtAl2021"
+Warning--I didn't find a database entry for "HangleiterEtAl2019"
 -- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 4 entries,
+You've used 5 entries,
             4087 wiz_defined-function locations,
-            845 strings with 8276 characters,
-and the built_in function-call counts, 3102 in all, are:
-= -- 233
-> -- 104
-< -- 15
-+ -- 52
-- -- 23
-* -- 159
-:= -- 461
-add.period$ -- 8
-call.type$ -- 4
-change.case$ -- 4
+            862 strings with 8614 characters,
+and the built_in function-call counts, 3795 in all, are:
+= -- 302
+> -- 117
+< -- 18
++ -- 58
+- -- 26
+* -- 190
+:= -- 571
+add.period$ -- 10
+call.type$ -- 5
+change.case$ -- 5
 chr.to.int$ -- 24
-cite$ -- 4
-duplicate$ -- 231
-empty$ -- 238
-format.name$ -- 27
-if$ -- 708
+cite$ -- 5
+duplicate$ -- 291
+empty$ -- 287
+format.name$ -- 31
+if$ -- 873
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 50
-newline$ -- 35
-num.names$ -- 4
-pop$ -- 125
+int.to.str$ -- 5
+missing$ -- 60
+newline$ -- 38
+num.names$ -- 5
+pop$ -- 144
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 238
+skip$ -- 300
 stack$ -- 0
-substring$ -- 76
-swap$ -- 181
-text.length$ -- 7
+substring$ -- 89
+swap$ -- 229
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 4
+type$ -- 5
 warning$ -- 0
-while$ -- 10
-width$ -- 5
-write$ -- 60
+while$ -- 12
+width$ -- 6
+write$ -- 71
+(There were 6 warnings)
