@@ -24,7 +24,7 @@
 \author{
 \IEEEauthorblockN{Andrew Maciejunes}
 \IEEEauthorblockA{
-Virginia Modeling, Analysis and Simulation Center\\
+Virginia Modeling, Analysis, and Simulation Center\\
 Old Dominion University\\
 Norfolk, VA, USA\\
 amacieju@odu.edu
@@ -37,6 +37,22 @@ Old Dominion University\\
 Norfolk, VA, USA\\
 rgore@odu.edu
 }
+\and
+\IEEEauthorblockN{Sachin Shetty}
+\IEEEauthorblockA{
+    Center for Secure and Intelligent Critical Systems \\
+    Old Dominion University \\
+    Norfolk, VA, USA \\
+    sshetty@odu.edu
+}
+\and
+\IEEEauthorblockN{Barry Ezell}
+\IEEEauthorblockA{
+    Virginia Modeling, Analysis, and Simulation Center \\
+    Old Dominion University \\
+    Norfolk, VA, USA \\
+    bezell@odu.edu
+}
 }
 
 \begin{document}
@@ -44,11 +60,12 @@ rgore@odu.edu
 \maketitle
 
 \begin{abstract}
-We compare four polynomial-resource measurement strategies---$Z$-basis-only, nearest-neighbor $ZZ$ (NN), multi-basis ($Z$, $X$, $Y$), and classical shadows---for classifying three quantum circuit families: IQP, Clifford, and Clifford$+T$.
-Contrary to the initial hypothesis, $Z$-only measurements outperform multi-basis and classical shadows across all qubit counts and all four classifiers evaluated, and the $O(\nqubits)$-feature NN strategy matches $Z$-only to within $0.02$ in Random Forest accuracy.
+We compare four polynomial-resource measurement strategies, (I) $Z$-basis-only, (II) nearest-neighbor $ZZ$ (NN), (III) multi-basis ($Z$, $X$, $Y$), and (IV) classical shadows, for classifying three quantum circuit families: IQP, Clifford, and Clifford$+T$.
+We find $Z$-only measurements outperform multi-basis and classical shadows across all qubit counts and all four classifiers evaluated, and the $O(\nqubits)$-feature NN strategy matches $Z$-only to within $0.02$ in Random Forest accuracy.
 The best result is a Random Forest accuracy of $0.91$ at 4--5 qubits under $Z$-only ($0.89$ for NN, $0.85$ for multi-basis, $0.67$ for shadows).
 All four strategies collapse to near-chance accuracy ($\approx 0.33$) above approximately 12 qubits under the quadratic shot budget $\shots = 16\nqubits^2$.
 These findings indicate that the discriminative signal between these circuit families is concentrated in local, nearest-neighbor $Z$-basis correlations, consistent with the diagonal gate structure of IQP circuits, and that additional Pauli correlator types or long-range correlations carry no compensating discriminative power for this task.
+These results establish that a quadratic shot budget is insufficient for reliable classification above approximately 12 qubits, but do not rule out the existence of a subquadratic or otherwise more efficient polynomial-resource strategy; whether any polynomial measurement protocol can classify these families at large qubit counts remains an open question.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -59,7 +76,7 @@ classical shadows, quantum circuit families, IQP circuits, Clifford circuits, po
 \label{sec:intro}
 
 
-A fundamental question in quantum information is whether the output distributions of quantum circuits, distributions that cannot be efficiently represented classically, can be meaningfully characterized using only polynomially many measurements. 
+A fundamental question in quantum information is whether the output distributions of quantum circuits, distributions that cannot be efficiently represented classically, can be meaningfully characterized using only polynomially many measurements \cite{montanaro2013survey}. 
 Quantum state tomography, originally proposed by Vogel and Risken (1989) \cite{vogel1989determination} and first demonstrated experimentally by Smithey et al. (1993) \cite{smithey1993measurement}, provides a complete reconstruction of the quantum state but at prohibitive cost. 
 Haah et al. (2016) \cite{haah2016sample} rigorously established this cost with a lower bound of $\Omega(d^2/\delta)$ copies, where d is the Hilbert space dimension and $\delta$ is the desired precision. 
 Since $d = 2^n$ for an n-qubit system, full tomography requires exponentially many measurements in the number of qubits, rendering it infeasible for systems of practical interest. 
@@ -67,7 +84,7 @@ This exponential barrier motivates the search for protocols that extract meaning
 
 Quantum circuit families provide a principled testbed for this question.
 IQP, Clifford, and Clifford$+T$ circuits produce distributions with qualitatively different statistical signatures, rooted in their distinct computational complexity properties.
-Clifford circuits are classically simulable; IQP sampling is believed to be classically hard under plausible complexity-theoretic conjectures~\cite{bremner2016average}; Clifford$+T$ circuits interpolate between the two.
+Clifford circuits are classically simulable; IQP sampling is believed to be classically hard under plausible complexity-theoretic conjectures~\cite{bremner2016average}; Clifford$+T$ circuits, a universal gate set \cite{boykin1999universal, bravyi2005universal}, interpolate between the two.
 If these families can be distinguished with polynomially many measurements, it suggests that their distributional signatures are encoded in low-order statistics that a polynomial measurement protocol can access.
 
 The key methodological challenge is choosing the right measurement protocol.
@@ -77,12 +94,12 @@ Classical shadows resolve this. By applying a random single-qubit Clifford rotat
 two-qubit Pauli correlators can be estimated from a single unified protocol with sample complexity 
 $O(\log n^2) = O(\log n)$ to predict all pairwise correlators simultaneously, significantly more efficient 
 than the $O(n^2)$ shots required to estimate each correlator type independently.
-In this work, all three measurement strategies share the same $O(\nqubits^2)$ shot budget to ensure a fair experimental comparison; under this budget classical shadows accesses all six Pauli correlator types simultaneously, while $Z$-only and multi-basis access fewer.
+In this work, all four measurement strategies share the same $O(\nqubits^2)$ shot budget to ensure a fair experimental comparison; under this budget classical shadows accesses all six Pauli correlator types simultaneously, while $Z$-only, NN, and multi-basis access fewer.
 \paragraph*{Contributions}
 \begin{itemize}
     \item An empirical comparison of four measurement strategies ($Z$-only, nearest-neighbor $ZZ$, multi-basis, and classical shadows) for classifying IQP, Clifford, and Clifford$+T$ circuit families, showing that $Z$-only and NN outperform multi-basis and shadows and inverting the hypothesis that richer Pauli correlation structure would benefit classification.
     \item Evidence that the discriminative signal is concentrated in local, nearest-neighbor $ZZ$ correlations: an $O(\nqubits)$-feature NN strategy matches the $O(\nqubits^2)$-feature $Z$-only strategy to within $0.02$ in Random Forest accuracy, consistent with the diagonal computational-basis structure of IQP circuits.
-    \item Characterization of a scaling collapse near 12 qubits at which all polynomial strategies degrade to near-chance performance under the quadratic shot budget $\shots = 16\nqubits^2$, establishing a practical limit for this feature set and shot scaling law.
+    \item Characterization of a scaling collapse near 12 qubits at which all implemented polynomial strategies degrade to near-chance performance under the quadratic shot budget, establishing a practical limit for this feature set and shot scaling law.
 \end{itemize}
 
 \section{Background}
@@ -92,23 +109,22 @@ In this work, all three measurement strategies share the same $O(\nqubits^2)$ sh
 
 We consider three quantum circuit families that span a range of computational complexity.
 
-\paragraph{Clifford circuits}
-Generated by $\{H, S, \mathrm{CNOT}\}$, Clifford circuits are efficiently simulable classically via the stabilizer formalism.%~\cite{Gottesman1998}
+\paragraph{Clifford Circuits}
+Generated by $\{H, S, \mathrm{CNOT}\}$, Clifford circuits are efficiently simulable classically via the stabilizer formalism ~\cite{gottesman1997stabilizer}.
 Their output distributions possess structured pairwise correlations reflecting the underlying stabilizer group geometry.
 
-\paragraph{Clifford$+T$ circuits}
-Adding $T = \mathrm{diag}(1, e^{i\pi/4})$ yields a universal gate set.%~\cite{Boykin2000}
+\paragraph{Clifford$+T$ Circuits}
+Adding $T = \mathrm{diag}(1, e^{i\pi/4})$ yields a universal gate set ~\cite{boykin1999universal}.
 Sufficient $T$-gate density breaks the stabilizer structure and moves the circuit outside the efficiently simulable regime, producing a distributional signature intermediate between Clifford and IQP.
 
-\paragraph{IQP circuits}
-Instantaneous Quantum Polynomial circuits apply diagonal gates in the computational basis, sandwiched by Hadamard layers.%~\cite{Shepherd2009}
-Classical hardness of IQP sampling is supported by complexity-theoretic arguments%~\cite{Bremner2016}
-, and their parity structure produces a distributional fingerprint qualitatively distinct from the Clifford family.
+\paragraph{Instantaneous Quantum Polynomial Circuits}
+IQP circuits apply diagonal gates in the computational (Z) basis, sandwiched by Hadamard layers ~\cite{shepherd2008instantaneous}.
+Classical hardness of IQP sampling is supported by complexity-theoretic arguments ~\cite{bremner2016average}, and their 
+parity structure produces a distributional fingerprint qualitatively distinct from the Clifford family.
 
 \subsection{Classical Shadows}
 
-Classical shadows%~\cite{Huang2020}
-provide an efficient protocol for estimating many properties of a quantum state from a single randomized measurement dataset.
+Classical shadows~\cite{huang2020predicting} provide an efficient protocol for estimating many properties of a quantum state from a single randomized measurement dataset.
 For each measurement shot, a random single-qubit unitary $U_i$ is applied to each qubit $i$ before measurement in the computational basis, and the rotation choice is recorded alongside the outcome.
 The measurement channel can then be inverted classically to produce unbiased estimators for arbitrary observables.
 
@@ -120,7 +136,7 @@ where the factor of 3 corrects for the $1/3$ probability of any given basis bein
 For a two-qubit correlator $P_i P_j$, the estimator is the product of single-qubit estimators, yielding a factor of $9$ and requiring both $U_i$ and $U_j$ to match their respective Pauli bases.
 
 The connected correlator $\langle P_i P_j \rangle_c = \langle P_i P_j \rangle - \langle P_i \rangle \langle P_j \rangle$ can be estimated by combining single- and two-qubit shadow estimators.
-For $K$ Pauli operators, the required number of shadows scales as $O(K / \varepsilon^2)$ for bounded observables, independent of system size.%~\cite{Huang2020}
+For $K$ Pauli operators, the required number of shadows scales as $O(K / \varepsilon^2)$ for bounded observables, independent of system size~\cite{huang2020predicting}.
 For all $6 \cdot \binom{\nqubits}{2}$ two-qubit Pauli correlators, this yields a total shot cost of $O(\nqubits^2 / \varepsilon^2)$---polynomial in $\nqubits$.
 
 \begin{figure*}[!t]
@@ -133,7 +149,7 @@ For all $6 \cdot \binom{\nqubits}{2}$ two-qubit Pauli correlators, this yields a
 \hfil
 \subfloat[IQP]{\includegraphics[width=0.35\textwidth,height=4cm,keepaspectratio]{images/IQP.png}%
 \label{fig:iqp}}
-\caption{We illustrate an example Clifford, Clifford$+T$, and IQP circuit for the reader with four
+\caption{We illustrate an example Clifford, Clifford$+T$, and IQP circuits for the reader with four
 qubits and $N_c$ = 10. (a) The Clifford circuit is comprised of gates from the clifford gate 
 as defined above. (b) We observe a disproportionate amount of T gates for the Clifford+T example. This is done to 
 ensure distinctness from the Clifford circuit family. (c) We show an example IQP circuit. It is 
@@ -152,7 +168,7 @@ More directly related is the body of work on circuit fingerprinting and spoofing
 Aaronson and Chen~\cite{AaronsonChen2017} propose linear cross-entropy benchmarking as a statistical test for quantum supremacy claims, exploiting the anticorrelation between a classical simulator's probability assignments and typical bitstring frequencies.
 Barak et al.~\cite{BarakEtAl2021} show that low-degree polynomial estimators cannot efficiently distinguish random quantum circuit outputs from uniform noise at large system size, establishing hardness results for feature-based discrimination.
 Hangleiter et al.~\cite{HangleiterEtAl2019} study anticoncentration and show that IQP and random circuit families exhibit qualitatively different concentration behavior, a property reflected in Hamming-weight statistics.
-The present work complements these results by providing a systematic empirical comparison of $Z$-only, multi-basis, and classical shadows measurement strategies for circuit family classification, and is, to our knowledge, the first study to directly benchmark all three strategies against each other on the IQP, Clifford, and Clifford$+T$ families across a range of qubit counts.
+The present work complements these results by providing a systematic empirical comparison of four measurement strategies --- $Z$-only, nearest-neighbor $ZZ$, multi-basis, and classical shadows --- for circuit family classification, and is, to our knowledge, the first study to directly benchmark all four strategies against each other on the IQP, Clifford, and Clifford$+T$ families across a range of qubit counts.
 
 \section{Methods}
 \label{sec:methods}
@@ -160,11 +176,11 @@ The present work complements these results by providing a systematic empirical c
 \subsection{Circuit Generation}
 
 We use the Qiskit SDK \cite{qiskit2024} for all of our research. Using Qiskit, we craft random circuits 
-for each of the three previously mentioned circuit families, Clifford, Clifford$+T$, and IQP circuits.
+for each of the three previously mentioned circuit families, Clifford, Clifford$+T$, and IQP.
 For the first two groups, we define a value $N_c$, which is the number of gates in a given circuit. We
 then apply $N_c$ randomly selected gates from the appropriate circuit family to act on randomly selected 
 qubits. For the Clifford family of circuits, each gate has an equal chance of being selected. For the 
-Clifford$+T$ family, the gates have chances of being selected as outlined in Table\ref{tab:cliffordT_gate_distros}.
+Clifford$+T$ family, the gates have chances of being selected as outlined in Table~\ref{tab:cliffordT_gate_distros}.
 The qubit(s) each gate acts on is selected randomly with no preference to any particular qubit, except 
 in the case of two qubit gates, where the control and target must be different.
 
@@ -183,15 +199,17 @@ in the case of two qubit gates, where the control and target must be different.
 
 \end{table}
 
-Instantaneous Quantum Polynomial (IQP) circuits are created simiiarly. The only difference, beside the 
+IQP circuits are created similarly. The only difference, beside the 
 gate set used, is that the operator $H^{\bigotimes n}$ is applied at the beginning and end of the circuit, as 
 shown in Figure~\ref{fig:circuit_families}, where n is the number of qubits. We scale the number of qubits from 4 up to 20 qubits. At each qubit count, we generate 1000 circuits of each 
-type.
+type. IQP circuits are defined by with any combination of z - diagonal gates. In this work, we specifically use $\{T, RZ, \mathrm{CZ}\}$. The rotation angle for the RZ gate is determined randomly 
+for each instance of the gate in each circuit.
 
 \begin{table}[htbp]
 \centering
 \caption{Experimental parameter sweep.}
 \label{tab:sweep}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{ll}
 \toprule
 \textbf{Parameter} & \textbf{Values} \\
@@ -202,9 +220,10 @@ Shot budget & $16\nqubits^2$ (quadratic) \\
 Circuits per family per qubit count & 1000 \\
 Operations per circuit & 1000 \\
 Simulator & Qiskit Aer (statevector, GPU) \\
-Measurement strategies & $Z$-only, multi-basis, shadows, nearest-neighbor $ZZ$ \\
+Measurement strategies & $Z$-only, NN, multi-basis, shadows \\
+Train/test splits & 10 repeated random 80/20 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \subsection{Shot Budget Design}
@@ -220,14 +239,25 @@ By the classical shadows result%~\cite{Huang2020}
 , \emph{all} $6\binom{\nqubits}{2}$ two-qubit Pauli correlators ($ZZ$, $XX$, $YY$, $XY$, $XZ$, $YZ$) can be estimated simultaneously at the same $O(\nqubits^2 / \varepsilon^2)$ cost using the shadow protocol.
 
 \paragraph{Excluded exponential-cost features}
-The purpose of this work is to classify quantum circuit families using only polynomial measurement resources.
-If exponential resources were available, full quantum state tomography could exactly reconstruct the output distribution, rendering classification trivial.
-In that vein, several prominent statistical measures are excluded from our feature set due to their exponential shot requirements:
-Shannon entropy $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$, which requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimator is biased whenever bitstrings go unobserved;
-collision probability $\mathcal{C} = \sum_x p(x)^2$, which requires $O(2^{\nqubits/2})$ shots via the birthday problem threshold;
-R\'{e}nyi entropies of order $\alpha \neq 1$, which share the same exponential sampling barrier;
-and total variation distance to uniformity, which requires observing a representative fraction of the $2^\nqubits$ outcomes.
-All such features are incompatible with the polynomial-resource constraint central to this work and are therefore disregarded.
+The purpose of this work is to classify quantum circuit families using only
+polynomial measurement resources.
+If exponential resources were available, full quantum state tomography could exactly
+reconstruct the output distribution, rendering classification trivial.
+In that vein, several prominent statistical measures are excluded from our feature set
+due to their exponential shot requirements.
+Shannon entropy~\cite{bromiley2004shannon} $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$
+requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimator
+is biased whenever bitstrings go unobserved.
+Collision probability $\mathcal{C} = \sum_x p(x)^2$ requires $\Theta(2^{\nqubits/2})$
+shots~\cite{Canonne2020}.
+R\'{e}nyi entropies of order $\alpha \neq 1$ require at minimum
+$\Theta(2^{\nqubits/2})$ shots for integer $\alpha > 1$ and up to
+$\Theta(2^\nqubits)$ shots for non-integer $\alpha > 1$ or $\alpha < 1$~\cite{Archarya2017estimating},
+all exponential in the number of qubits $\nqubits$.
+Total variation distance to uniformity requires observing a representative fraction
+of the $2^\nqubits$ outcomes, also at exponential cost.
+All such features are incompatible with the polynomial-resource constraint central
+to this work and are therefore disregarded.
 
 \paragraph{Quadratic shot scaling}
 The most expensive retained features are the two-qubit Pauli correlators, requiring $O(\nqubits^2)$ shots.
@@ -238,7 +268,7 @@ For the multi-basis strategy, each of the three basis runs receives $\shots / 3$
 \subsection{Measurement Strategies}
 \label{sec:strategies}
 
-We compare three measurement protocols, each operating within the same $\shots = 16\nqubits^2$ total shot budget.
+We compare four measurement protocols, each operating within the same $\shots = 16\nqubits^2$ total shot budget.
 
 \paragraph{$Z$-only baseline}
 All shots are taken in the computational basis.
@@ -295,8 +325,7 @@ This feature vector scales as $O(\nqubits)$, linear in the number of qubits, in 
 
 We evaluate four classifiers from scikit-learn%~\cite{scikit-learn}
 : Logistic Regression (L-BFGS, \texttt{max\_iter}=1000), Decision Tree (unlimited depth), Random Forest (100 estimators), and Support Vector Machine (RBF kernel).
-Data are split 80/20 train/test.
-Accuracy is reported as the fraction of correctly classified test samples.
+For each qubit count and strategy, accuracy is estimated over 10 repeated random 80/20 train/test splits; the mean is reported and the standard deviation is shown as error bars in all figures.
 Each classifier is independently trained and evaluated for each measurement strategy and qubit count.
 
 \paragraph{Logistic Regression}
@@ -321,7 +350,7 @@ Random Forest therefore inherits the non-linear expressivity of individual trees
 \paragraph{Support Vector Machine}
 A Support Vector Machine (SVM) finds the maximum-margin separating hyperplane in a (possibly kernel-lifted) feature space.
 We use the Radial Basis Function (RBF) kernel $K(\mathbf{x}, \mathbf{x}') = \exp(-\gamma\|\mathbf{x}-\mathbf{x}'\|^2)$, which implicitly maps inputs into an infinite-dimensional space, allowing highly non-linear decision boundaries.
-Only the support vectors --- the training samples closest to the margin --- determine the boundary, making SVMs effective in high-dimensional settings where the number of features is large relative to the number of samples.
+Only the support vectors, the training samples closest to the margin, determine the boundary, making SVMs effective in high-dimensional settings where the number of features is large relative to the number of samples.
 
 \paragraph{Key differences}
 The four classifiers span two primary axes of variation.
@@ -334,12 +363,26 @@ Evaluating all four allows us to assess whether the circuit family discriminatio
 
 \subsection{Measurement Strategy Comparison}
 
-Figures~\ref{fig:acc_z_only}--\ref{fig:acc_nn} show classifier accuracy as a function of qubit count for each measurement strategy.
-Error bars show the standard deviation over 10 repeated random 80/20 train/test splits.
-$Z$-only achieves the highest peak accuracies: Random Forest $0.91$, Decision Tree $0.80$, SVM $0.52$, Logistic Regression $0.39$.
-Nearest-neighbor $ZZ$ (NN) performs nearly as well despite using only $O(\nqubits)$ features: Random Forest $0.89$, Decision Tree $0.78$, SVM $0.56$, Logistic Regression $0.36$.
-Multi-basis achieves lower peaks: Random Forest $0.85$, Decision Tree $0.70$, SVM $0.49$, Logistic Regression $0.36$.
-Classical shadows performs worst overall: Random Forest $0.67$, Decision Tree $0.50$, SVM $0.52$, Logistic Regression $0.39$.
+Figures~\ref{fig:acc_z_only}--\ref{fig:acc_nn} show classifier accuracy as a function 
+of qubit count for each measurement strategy. Error bars show the standard deviation 
+over 10 repeated random 80/20 train/test splits. Table~\ref{tab:peak_accuracies} 
+summarizes the peak accuracy achieved by each classifier under each measurement strategy.
+
+\begin{table*}[t]
+\centering
+\caption{Peak classifier accuracy by measurement strategy.}
+\label{tab:peak_accuracies}
+\begin{tabular}{lcccc}
+\toprule
+Strategy & Random Forest & Decision Tree & SVM & Logistic Regression \\
+\midrule
+$Z$-only          & \textbf{0.91} & \textbf{0.80} & 0.52          & 0.39 \\
+NN ($ZZ$)         & 0.89          & 0.78          & \textbf{0.56} & 0.36 \\
+Multi-basis       & 0.85          & 0.70          & 0.49          & 0.36 \\
+Classical shadows & 0.67          & 0.50          & 0.52          & 0.39 \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 The ordering $Z$-only $\approx$ NN $>$ multi-basis $>$ shadows is consistent across all classifiers and all qubit counts where any strategy achieves above-chance accuracy.
 The near-equivalence of $Z$-only and NN is a key finding: reducing the $ZZ$ feature set from all $\binom{\nqubits}{2}$ pairs to only the $\nqubits - 1$ adjacent pairs costs less than $0.02$ in Random Forest accuracy, indicating that the discriminative signal is concentrated in local, nearest-neighbor correlations.
@@ -385,15 +428,15 @@ Notably, the NN strategy uses only $O(\nqubits)$ features, so each nearest-neigh
 
 Logistic Regression is flat at approximately $0.36$--$0.39$ across all four strategies and all qubit counts, performing at or near the three-class chance level throughout.
 This indicates that the class boundary separating IQP, Clifford, and Clifford$+T$ circuits is nonlinear in the Pauli correlator feature space: a single hyperplane cannot separate the three families regardless of how many correlator types are included in the feature vector.
-The strong performance of Random Forest and Decision Tree relative to Logistic Regression and SVM confirms that the discriminative structure is captured by axis-aligned partitions in feature space rather than by a linear functional of the features.
+The strong performance of Random Forest and Decision Tree relative to Logistic Regression and SVM confirms that the discriminative structure is captured by axis-aligned partitions in feature space rather than by a linear function of the features.
 SVM with the RBF kernel performs between the linear and tree-based methods, indicating that the kernel-induced feature mapping captures some but not all of the relevant nonlinear structure.
 
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Why Z-Only Outperforms Shadow-Based Strategies}
+\subsection{Why Z-Only and NN Outperform Multi-Basis and Shadows}
 
-The central finding --- that $Z$-only outperforms both multi-basis and classical shadows --- is explained by the structure of IQP circuits.
+The central finding: $Z$-only outperforms both multi-basis and classical shadows --- is explained by the structure of IQP circuits.
 IQP circuits are defined by diagonal gates in the computational basis sandwiched between Hadamard layers; their distinguishing statistical signatures therefore appear most prominently in $Z$-basis correlations.
 The all-pairs connected $ZZ$ correlations captured by the $Z$-only strategy directly probe the diagonal interaction structure of the IQP family, giving classifiers a maximally informative feature set for this specific discrimination task.
 
@@ -402,13 +445,12 @@ The shadow protocol compensates by simultaneously estimating five additional cor
 The result is that shadows pays a statistical cost relative to $Z$-only without receiving a compensating accuracy benefit.
 Multi-basis measurements sit between the two: $ZZ$ correlators receive $\shots/3$ shots rather than $\shots$, and the additional $XX$ and $YY$ correlators are similarly uninformative, yielding performance intermediate between $Z$-only and shadows.
 
-\subsection{Nearest-Neighbor $ZZ$ and the Locality of the Discriminative Signal}
+\subsection{Nearest-Neighbor \texorpdfstring{$ZZ$}{ZZ} and the Locality of the Discriminative Signal}
 
 The near-equivalence of $Z$-only and NN is the most surprising finding of this comparison.
 $Z$-only computes all $\binom{\nqubits}{2}$ pairwise $ZZ$ correlations ($O(\nqubits^2)$ features), while NN retains only the $\nqubits - 1$ adjacent-pair correlations ($O(\nqubits)$ features), yet the Random Forest accuracy gap is less than $0.02$ across the full qubit range.
 This indicates that the discriminative signal distinguishing IQP, Clifford, and Clifford$+T$ families is predominantly carried by local, nearest-neighbor $ZZ$ correlations; the long-range pairs included in the $Z$-only feature set contribute negligible additional classification power under this shot budget.
 
-This finding is consistent with the circuit structure of IQP circuits, where diagonal interaction gates act on adjacent or low-weight qubit subsets in typical random circuit constructions.
 The locality of the signal also has a practical implication: under the same shot budget $\shots = 16\nqubits^2$, each NN correlator estimate is derived from far more shots than each all-pairs correlator estimate in the $Z$-only strategy, since the budget is spread over only $\nqubits - 1$ pairs rather than $\binom{\nqubits}{2}$.
 The fact that NN still does not outperform $Z$-only suggests that the marginal long-range correlations in the $Z$-only feature set, though individually weak, provide a net benefit that offsets their higher estimator variance.
 
@@ -434,6 +476,9 @@ Extending to noisy simulation via Aer noise models, or to real hardware, is a na
 The shot budget prefactor $\lambda = 16$ is heuristic.
 A principled choice requires knowing the signal-to-noise ratio of the class-separating correlators, which depends on circuit family, qubit count, and gate depth, and is not known a priori.
 
+The scaling collapse above 12 qubits establishes that a quadratic shot budget $\shots = 16\nqubits^2$ is insufficient for reliable classification at large qubit counts, but this result does not rule out the existence of a more efficient polynomial-resource strategy.
+A subquadratic shot budget, a different feature representation, or an adaptive measurement protocol could in principle recover discriminative power at larger system sizes; this work makes no claim about the fundamental hardness of the classification task, only about the specific strategies evaluated here.
+
 Classical shadows results are unavailable for 19--20 qubits due to incomplete HPC simulation runs.
 The missing data points fall in the regime where all strategies already operate at near-chance accuracy; the scaling collapse characterization is therefore not materially affected by this gap.
 
@@ -455,14 +500,16 @@ Extending to Aer noise models or real hardware would establish whether the $Z$-o
 \paragraph{Shot budget scaling}
 The collapse to chance accuracy above approximately 12 qubits is tied to the fixed prefactor $\lambda = 16$.
 Increasing $\lambda$ would shift the collapse threshold to larger qubit counts; a principled choice of $\lambda$ requires understanding the signal-to-noise ratio of the class-separating correlators as a function of system size, which remains an open problem.
-
+Another approach is to increase the exponent of n such that the shot scaling is no longer quadratic, but perhaps cubic or quartic. As all of the 
+features grow quadratically, this could ensure an appropriate (polynomial) number of shots are used to accurately observe features.
 \section{Conclusion}
 \label{sec:conclusion}
 
-We compared four polynomial-resource measurement strategies --- $Z$-basis-only, nearest-neighbor $ZZ$, multi-basis ($Z$, $X$, $Y$), and classical shadows --- for classifying IQP, Clifford, and Clifford$+T$ circuit families across 4--20 qubits under a quadratic shot budget $\shots = 16\nqubits^2$.
+We compared four polynomial-resource measurement strategies: $Z$-basis-only, nearest-neighbor $ZZ$, multi-basis ($Z$, $X$, $Y$), and classical shadows for classifying IQP, Clifford, and Clifford$+T$ circuit families across 4--20 qubits under a quadratic shot budget $\shots = 16\nqubits^2$.
 
-Contrary to our initial hypothesis, $Z$-only measurements outperform both multi-basis and classical shadows across all qubit counts and all four classifiers evaluated.
-The best result is a Random Forest accuracy of $0.92$ at 4--5 qubits under $Z$-only, compared to $0.87$ for multi-basis and $0.65$ for classical shadows.
+Contrary to our initial hypothesis, $Z$-only measurements outperform multi-basis and classical shadows across all qubit counts and all four classifiers evaluated, and the $O(\nqubits)$-feature nearest-neighbor $ZZ$ (NN) strategy matches $Z$-only to within $0.02$ in Random Forest accuracy.
+Peak Random Forest accuracies are $0.91$ ($Z$-only), $0.89$ (NN), $0.85$ (multi-basis), and $0.67$ (classical shadows).
+The near-equivalence of $Z$-only and NN is the most striking finding: reducing the feature set from all $\binom{\nqubits}{2}$ pairwise correlators to only the $\nqubits - 1$ adjacent-pair correlators costs less than $0.02$ in accuracy, indicating that the discriminative signal is spatially local.
 This result is explained by the structure of IQP circuits: their distinguishing statistical signatures are concentrated in $Z$-basis correlations, so the additional Pauli correlator types accessed by multi-basis and shadow measurements carry no compensating discriminative power for this task --- while diluting the $ZZ$ correlator shot budget.
 
 All strategies collapse to near-chance accuracy ($\approx 0.33$) above approximately 12--14 qubits under the quadratic shot budget.
@@ -477,8 +524,7 @@ These findings establish that the relevant distributional distinction between IQ
 The authors thank the Virginia Modeling, Analysis and Simulation Center (VMASC), the 
 Center for Secure and Intelligent Critical Systems (CSICS), and Old Dominion University for institutional support. 
 This research was supported by the Research Computing clusters at Old Dominion University.
-The Wahab cluster is supported in part by National Science Foundation's grant CNS-1828593, "MRI Acquisition: 
-A Reconfigurable Computing Infrastructure Enabling Interdisciplinary and Collaborative Research in Hampton Roads
+The Wahab cluster is supported in part by National Science Foundation grant CNS-1828593, ``MRI Acquisition: A Reconfigurable Computing Infrastructure Enabling Interdisciplinary and Collaborative Research in Hampton Roads.''
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

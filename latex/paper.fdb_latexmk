@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex paper"] 1775496692.46348 "paper.aux" "paper.bbl" "paper" 1775496693.61842 0
-  "./references.bib" 1775243425.77105 2321 ce46636afd9ad6b4821def41ba56a206 ""
+["bibtex paper"] 1775666415.87667 "paper.aux" "paper.bbl" "paper" 1775667458.51732 0
+  "./references.bib" 1775663914.57303 7217 c0e1ef88ef4a67cf7b74746a17e061cf ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "paper.aux" 1775496693.25727 10759 16d59a64b4107f1e55dd02ae2dd6cde8 "pdflatex"
+  "paper.aux" 1775667458.17755 13166 f8073866ba04a5e5bbf82061f553bd61 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1775496692.58196 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1775496693.61868 0
+["pdflatex"] 1775667457.38076 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1775667458.51772 0
   "/etc/texmf/web2c/texmf.cnf" 1758121306.85586 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1775496691.34124 35972 8ad78af4eb12274a2ab4a4e2cb1eed1a ""
+  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1775667457.18735 42643 436bcfb377c7331631996015ee4383bc ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -143,13 +143,14 @@
   "images/IQP.png" 1774463712.11986 20727 bcbfd303e125deb0e11855816b1994ee ""
   "images/clifford.png" 1774463416.60145 16275 e23c6c3ad8081835b91756156a83af72 ""
   "images/cliffordT.png" 1774464604.03216 13481 7037381b27ff07dc3d57125906c3dd8d ""
-  "images/qubit_accuracy_multi_basis.png" 1775242002.78339 54786 d2dcefd9021d99cabe364048c0dd28fc ""
-  "images/qubit_accuracy_shadows.png" 1775242002.78605 60774 a24f793d20225d805bb4e2b034e83e30 ""
-  "images/qubit_accuracy_z_only.png" 1775242002.7798 54396 43b1f30fef2863f46b9b211a97ec2c80 ""
-  "paper.aux" 1775496693.25727 10759 16d59a64b4107f1e55dd02ae2dd6cde8 "pdflatex"
-  "paper.bbl" 1775496692.57126 2130 bb04e66c119d86351a73a43c7df5620c "bibtex paper"
-  "paper.out" 1775496693.25827 3518 85ad5b279551961dc34db025e764505b "pdflatex"
-  "paper.tex" 1775496691.34124 35972 8ad78af4eb12274a2ab4a4e2cb1eed1a ""
+  "images/qubit_accuracy_multi_basis.png" 1775509999.78044 85242 d14305f4d46b79513337064f23083842 ""
+  "images/qubit_accuracy_nn.png" 1775511271.41233 88346 965c28b72709c565a05f28aac75f0dd9 ""
+  "images/qubit_accuracy_shadows.png" 1775511076.29774 97203 ae442a7f4f714e8adbb4a2b93b8da07b ""
+  "images/qubit_accuracy_z_only.png" 1775508979.30191 89542 d066b72b9958ea766bdb21c3dccb7e9c ""
+  "paper.aux" 1775667458.17755 13166 f8073866ba04a5e5bbf82061f553bd61 "pdflatex"
+  "paper.bbl" 1775666416.06532 4876 7bb9e12e931c661fb4a283bfca5f24c0 "bibtex paper"
+  "paper.out" 1775667458.17755 3964 994fabd4624fafa7c37a3edb10fa75f2 "pdflatex"
+  "paper.tex" 1775667457.18735 42643 436bcfb377c7331631996015ee4383bc ""
   (generated)
   "paper.aux"
   "paper.log"

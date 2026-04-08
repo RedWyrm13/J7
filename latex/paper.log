@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  6 APR 2026 13:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  8 APR 2026 12:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -398,24 +398,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -440,16 +440,16 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 42.
+Package hyperref Info: Link coloring OFF on input line 58.
  (./paper.out) (./paper.out)
 \@outlinefile=\write3
 \openout3 = `paper.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 47.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 63.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 47.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 63.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -460,80 +460,83 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ]
-<images/clifford.png, id=124, 313.6518pt x 218.7372pt>
+
+<images/clifford.png, id=140, 313.6518pt x 218.7372pt>
 File: images/clifford.png Graphic file (type png)
 <use images/clifford.png>
-Package pdftex.def Info: images/clifford.png  used on input line 129.
+Package pdftex.def Info: images/clifford.png  used on input line 145.
 (pdftex.def)             Requested size: 129.00008pt x 89.96318pt.
-<images/cliffordT.png, id=126, 313.6518pt x 218.7372pt>
+<images/cliffordT.png, id=142, 313.6518pt x 218.7372pt>
 File: images/cliffordT.png Graphic file (type png)
 <use images/cliffordT.png>
-Package pdftex.def Info: images/cliffordT.png  used on input line 132.
+Package pdftex.def Info: images/cliffordT.png  used on input line 148.
 (pdftex.def)             Requested size: 129.00008pt x 89.96318pt.
-<images/IQP.png, id=127, 453.3738pt x 218.7372pt>
+<images/IQP.png, id=143, 453.3738pt x 218.7372pt>
 File: images/IQP.png Graphic file (type png)
 <use images/IQP.png>
-Package pdftex.def Info: images/IQP.png  used on input line 135.
+Package pdftex.def Info: images/IQP.png  used on input line 151.
 (pdftex.def)             Requested size: 180.60608pt x 87.13618pt.
-
-
-LaTeX Warning: Citation `Canonne2020' on page 2 undefined on input line 147.
-
-
-LaTeX Warning: Citation `Barnett2009' on page 2 undefined on input line 148.
-
-
-LaTeX Warning: Citation `Audenaert2007' on page 2 undefined on input line 148.
-
-
-
-
-LaTeX Warning: Citation `AaronsonChen2017' on page 2 undefined on input line 152.
-
-
-LaTeX Warning: Citation `BarakEtAl2021' on page 2 undefined on input line 153.
-
-
-LaTeX Warning: Citation `HangleiterEtAl2019' on page 2 undefined on input line 154.
-
 
 
 [2]
 
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [3 <./images/clifford.png> <./images/cliffordT.png> <./images/IQP.png>]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 285.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 327.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
-<images/qubit_accuracy_z_only.png, id=170, 462.528pt x 346.896pt>
+[4]
+Underfull \hbox (badness 1748) in paragraph at lines 387--390
+\OT1/ptm/m/n/10 any strat-egy achieves above-chance ac-cu-racy. The near-
+ []
+
+<images/qubit_accuracy_z_only.png, id=226, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_z_only.png Graphic file (type png)
 <use images/qubit_accuracy_z_only.png>
-Package pdftex.def Info: images/qubit_accuracy_z_only.png  used on input line 336.
-(pdftex.def)             Requested size: 252.0pt x 189.00427pt.
-<images/qubit_accuracy_multi_basis.png, id=171, 462.528pt x 346.896pt>
+Package pdftex.def Info: images/qubit_accuracy_z_only.png  used on input line 393.
+(pdftex.def)             Requested size: 252.0pt x 201.01208pt.
+<images/qubit_accuracy_nn.png, id=227, 409.53pt x 326.6604pt>
+File: images/qubit_accuracy_nn.png Graphic file (type png)
+<use images/qubit_accuracy_nn.png>
+Package pdftex.def Info: images/qubit_accuracy_nn.png  used on input line 400.
+(pdftex.def)             Requested size: 252.0pt x 201.01208pt.
+<images/qubit_accuracy_multi_basis.png, id=228, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_multi_basis.png Graphic file (type png)
 <use images/qubit_accuracy_multi_basis.png>
-Package pdftex.def Info: images/qubit_accuracy_multi_basis.png  used on input line 343.
-(pdftex.def)             Requested size: 252.0pt x 189.00427pt.
-<images/qubit_accuracy_shadows.png, id=172, 462.528pt x 346.896pt>
+Package pdftex.def Info: images/qubit_accuracy_multi_basis.png  used on input line 407.
+(pdftex.def)             Requested size: 252.0pt x 201.01208pt.
+<images/qubit_accuracy_shadows.png, id=229, 415.7934pt x 326.6604pt>
 File: images/qubit_accuracy_shadows.png Graphic file (type png)
 <use images/qubit_accuracy_shadows.png>
-Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 350.
-(pdftex.def)             Requested size: 252.0pt x 189.00427pt.
-
-
-[4]
+Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 414.
+(pdftex.def)             Requested size: 252.0pt x 197.98154pt.
 
 
 
-[5 <./images/qubit_accuracy_z_only.png> <./images/qubit_accuracy_multi_basis.png> <./images/qubit_accuracy_shadows.png>]
+
+[5 <./images/qubit_accuracy_z_only.png> <./images/qubit_accuracy_nn.png> <./images/qubit_accuracy_multi_basis.png>]
 
 
 
-[6] (./paper.bbl)
+[6 <./images/qubit_accuracy_shadows.png>]
+
+
+
+[7] (./paper.bbl
+
+
+Underfull \hbox (badness 4518) in paragraph at lines 66--67
+[]\OT1/ptm/m/n/8 B. Barak, C.-N. Chou, and X. Gao, ``Spoof-ing lin-ear cross-
+ []
+
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -547,35 +550,27 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-
-
-[7
-
-] (./paper.aux)
+[8] (./paper.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 85AD5B279551961DC34DB025E764505B;3518.
+(rerunfilecheck)             Checksum: 994FABD4624FAFA7C37A3EDB10FA75F2;3964.
  ) 
 Here is how much of TeX's memory you used:
- 12668 strings out of 473197
- 200914 string characters out of 5718605
- 623863 words of memory out of 5000000
- 35674 multiletter control sequences out of 15000+600000
- 602763 words of font info for 123 fonts, out of 8000000 for 9000
+ 12708 strings out of 473197
+ 201834 string characters out of 5718605
+ 625121 words of memory out of 5000000
+ 35694 multiletter control sequences out of 15000+600000
+ 601656 words of font info for 122 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,694b,465s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,695b,527s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (7 pages, 434429 bytes).
+Output written on paper.pdf (8 pages, 578004 bytes).
 PDF statistics:
- 327 PDF objects out of 1000 (max. 8388607)
- 257 compressed objects within 3 object streams
- 71 named destinations out of 1000 (max. 500000)
- 215 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 381 PDF objects out of 1000 (max. 8388607)
+ 307 compressed objects within 4 object streams
+ 92 named destinations out of 1000 (max. 500000)
+ 228 words of extra memory for PDF output out of 10000 (max. 10000000)
 
