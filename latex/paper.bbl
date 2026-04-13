@@ -50,6 +50,12 @@ D.~Shepherd and M.~J. Bremner, ``Instantaneous quantum computation,'' \emph{arXi
 \bibitem{huang2020predicting}
 H.-Y. Huang, R.~Kueng, and J.~Preskill, ``Predicting many properties of a quantum system from very few measurements,'' \emph{Nature Physics}, vol.~16, no.~10, pp. 1050--1057, 2020.
 
+\bibitem{hadfield2022measurements}
+C.~Hadfield, S.~Bravyi, R.~Raymond, and A.~Mezzacapo, ``Measurements of quantum hamiltonians with locally-biased classical shadows,'' \emph{Communications in Mathematical Physics}, vol. 391, no.~3, pp. 951--967, 2022.
+
+\bibitem{hillmich2021decision}
+S.~Hillmich, C.~Hadfield, R.~Raymond, A.~Mezzacapo, and R.~Wille, ``Decision diagrams for quantum measurements with shallow circuits,'' in \emph{2021 IEEE International Conference on Quantum Computing and Engineering (QCE)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2021, pp. 24--34.
+
 \bibitem{Canonne2020}
 C.~L. Canonne, ``A survey on distribution testing: Your data is big. but is it blue?'' \emph{Theory of Computing}, vol.~9, pp. 1--100, 2020.
 

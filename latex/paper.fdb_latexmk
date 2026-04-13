@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex paper"] 1775666415.87667 "paper.aux" "paper.bbl" "paper" 1775667458.51732 0
-  "./references.bib" 1775663914.57303 7217 c0e1ef88ef4a67cf7b74746a17e061cf ""
+["bibtex paper"] 1776096091.2963 "paper.aux" "paper.bbl" "paper" 1776096093.37782 0
+  "./references.bib" 1776095740.50178 8311 cbbc6cdc73e1ecc70ea3a4647db03d9e ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "paper.aux" 1775667458.17755 13166 f8073866ba04a5e5bbf82061f553bd61 "pdflatex"
+  "paper.aux" 1776096092.79314 14867 45009128ef338cdfae5dab6e729daa31 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1775667457.38076 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1775667458.51772 0
+["pdflatex"] 1776096091.56787 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1776096093.3783 0
   "/etc/texmf/web2c/texmf.cnf" 1758121306.85586 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1775667457.18735 42643 436bcfb377c7331631996015ee4383bc ""
+  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1776096086.78674 57132 681cb3eb9be0f519d0ee51daadf104a4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -61,9 +61,12 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1248133631 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1248133631 32442 c975af247b6702f7ca0c299af3616b80 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb" 1248133631 30457 bc0868ebece724ed7c3d37e3d9bff7bd ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb" 1248133631 31764 459c573c03a4949a528c2cc7f557e217 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb" 1136849748 45758 19968a0990191524e34e1994d4a31cb6 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb" 1136849748 44729 811d6c62865936705a31c797a1d5dada ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb" 1136849748 44656 0cbca70e0534538582128f6b54593cca ""
@@ -91,6 +94,7 @@
   "/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty" 1576624663 7008 f92eaa0a3872ed622bbf538217cd2ab7 ""
   "/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty" 1251330371 3249 15763257e50278eef5db1952ccde229c ""
   "/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithmic.sty" 1251330371 9318 793e9d5a71e74e730d97f6bf5d7e2bca ""
+  "/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty" 1591045760 12594 0d51ac3a545aaaa555021326ff22a6cc ""
   "/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty" 1359763108 5949 3f3fd50a8cc94c3d4cbf4fc66cd3df1c ""
   "/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty" 1359763108 13829 94730e64147574077f8ecfea9bb69af4 ""
   "/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd" 1359763108 961 6518c6525a34feb5e8250ffa91731cff ""
@@ -147,10 +151,10 @@
   "images/qubit_accuracy_nn.png" 1775511271.41233 88346 965c28b72709c565a05f28aac75f0dd9 ""
   "images/qubit_accuracy_shadows.png" 1775511076.29774 97203 ae442a7f4f714e8adbb4a2b93b8da07b ""
   "images/qubit_accuracy_z_only.png" 1775508979.30191 89542 d066b72b9958ea766bdb21c3dccb7e9c ""
-  "paper.aux" 1775667458.17755 13166 f8073866ba04a5e5bbf82061f553bd61 "pdflatex"
-  "paper.bbl" 1775666416.06532 4876 7bb9e12e931c661fb4a283bfca5f24c0 "bibtex paper"
-  "paper.out" 1775667458.17755 3964 994fabd4624fafa7c37a3edb10fa75f2 "pdflatex"
-  "paper.tex" 1775667457.18735 42643 436bcfb377c7331631996015ee4383bc ""
+  "paper.aux" 1776096092.79314 14867 45009128ef338cdfae5dab6e729daa31 "pdflatex"
+  "paper.bbl" 1776096091.562 5450 01ee71feb967d6e89a2c23d798f9010c "bibtex paper"
+  "paper.out" 1776096092.79514 5040 24425196866a97c29b9cdbb3e1fecfce "pdflatex"
+  "paper.tex" 1776096086.78674 57132 681cb3eb9be0f519d0ee51daadf104a4 ""
   (generated)
   "paper.aux"
   "paper.log"
