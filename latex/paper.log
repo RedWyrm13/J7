@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  13 APR 2026 12:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  13 APR 2026 13:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -411,24 +411,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -453,16 +453,16 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 64.
+Package hyperref Info: Link coloring OFF on input line 65.
  (./paper.out) (./paper.out)
 \@outlinefile=\write3
 \openout3 = `paper.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 69.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 70.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 69.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 70.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -477,17 +477,17 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <images/clifford.png, id=158, 313.6518pt x 218.7372pt>
 File: images/clifford.png Graphic file (type png)
 <use images/clifford.png>
-Package pdftex.def Info: images/clifford.png  used on input line 158.
+Package pdftex.def Info: images/clifford.png  used on input line 159.
 (pdftex.def)             Requested size: 129.00008pt x 89.96318pt.
 <images/cliffordT.png, id=160, 313.6518pt x 218.7372pt>
 File: images/cliffordT.png Graphic file (type png)
 <use images/cliffordT.png>
-Package pdftex.def Info: images/cliffordT.png  used on input line 161.
+Package pdftex.def Info: images/cliffordT.png  used on input line 162.
 (pdftex.def)             Requested size: 129.00008pt x 89.96318pt.
 <images/IQP.png, id=161, 453.3738pt x 218.7372pt>
 File: images/IQP.png Graphic file (type png)
 <use images/IQP.png>
-Package pdftex.def Info: images/IQP.png  used on input line 164.
+Package pdftex.def Info: images/IQP.png  used on input line 165.
 (pdftex.def)             Requested size: 180.60608pt x 87.13618pt.
 
 
@@ -497,37 +497,40 @@ Package pdftex.def Info: images/IQP.png  used on input line 164.
 
 [3 <./images/clifford.png> <./images/cliffordT.png> <./images/IQP.png>]
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 336.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 337.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
 [4]
-Underfull \hbox (badness 1748) in paragraph at lines 396--399
+Underfull \hbox (badness 1748) in paragraph at lines 397--400
 \OT1/ptm/m/n/10 any strat-egy achieves above-chance ac-cu-racy. The near-
  []
 
-<images/qubit_accuracy_z_only.png, id=251, 409.53pt x 326.6604pt>
+<images/qubit_accuracy_z_only.png, id=250, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_z_only.png Graphic file (type png)
 <use images/qubit_accuracy_z_only.png>
-Package pdftex.def Info: images/qubit_accuracy_z_only.png  used on input line 402.
+Package pdftex.def Info: images/qubit_accuracy_z_only.png  used on input line 403.
 (pdftex.def)             Requested size: 252.0pt x 201.01208pt.
-<images/qubit_accuracy_nn.png, id=252, 409.53pt x 326.6604pt>
+<images/qubit_accuracy_nn.png, id=251, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_nn.png Graphic file (type png)
 <use images/qubit_accuracy_nn.png>
-Package pdftex.def Info: images/qubit_accuracy_nn.png  used on input line 409.
+Package pdftex.def Info: images/qubit_accuracy_nn.png  used on input line 410.
 (pdftex.def)             Requested size: 252.0pt x 201.01208pt.
-<images/qubit_accuracy_multi_basis.png, id=253, 409.53pt x 326.6604pt>
+<images/qubit_accuracy_multi_basis.png, id=252, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_multi_basis.png Graphic file (type png)
 <use images/qubit_accuracy_multi_basis.png>
-Package pdftex.def Info: images/qubit_accuracy_multi_basis.png  used on input line 416.
+Package pdftex.def Info: images/qubit_accuracy_multi_basis.png  used on input line 417.
 (pdftex.def)             Requested size: 252.0pt x 201.01208pt.
-<images/qubit_accuracy_shadows.png, id=254, 415.7934pt x 326.6604pt>
+<images/qubit_accuracy_shadows.png, id=253, 415.7934pt x 326.6604pt>
 File: images/qubit_accuracy_shadows.png Graphic file (type png)
 <use images/qubit_accuracy_shadows.png>
-Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 423.
+Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 424.
 (pdftex.def)             Requested size: 252.0pt x 197.98154pt.
 
+
+
+Underfull \vbox (badness 1377) has occurred while \output is active []
 
 
 
@@ -536,31 +539,31 @@ Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 4
 
 
 [6 <./images/qubit_accuracy_multi_basis.png> <./images/qubit_accuracy_shadows.png>]
-Underfull \hbox (badness 7667) in paragraph at lines 477--478
+Underfull \hbox (badness 7667) in paragraph at lines 478--479
 []\OT1/ptm/m/n/10 We work in the Heisen-berg pic-ture, so that
  []
 
 
-Overfull \hbox (28.9568pt too wide) detected at line 486
+Overfull \hbox (28.9568pt too wide) detected at line 487
 []\OT1/cmr/m/n/10 [[][]\OML/cmm/m/it/10 B[]\OT1/cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^T \OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 p\OT1/cmr/m/n/10 )[] + \OML/cmm/m/it/10 e[] \OMS/cmsy/m/n/10 ^^T \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 e[]:
  []
 
 
 
 
-Overfull \hbox (7.68419pt too wide) detected at line 519
+Overfull \hbox (7.68419pt too wide) detected at line 520
 \U/msb/m/n/10 E[]\OT1/cmr/m/n/10 [\OMS/cmsy/m/n/10 h\OML/cmm/m/it/10 Z[]Z[]\OMS/cmsy/m/n/10 i[]\OT1/cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^U \OML/cmm/m/it/10 [] \OMS/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 1 + (1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 []\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^A \OML/cmm/m/it/10 ^^V[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^V[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 []\OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 ^^V[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 : \U/msa/m/n/10 ^^C
  []
 
 
-Underfull \hbox (badness 2293) in paragraph at lines 523--524
+Underfull \hbox (badness 2293) in paragraph at lines 524--525
 \OT1/ptm/m/it/10 fol-lows from a fi-nite Pauli con-ju-ga-tion cal-cu-la-tion for
  []
 
 
 
 [7]
-Underfull \hbox (badness 3557) in paragraph at lines 535--537
+Underfull \hbox (badness 3557) in paragraph at lines 536--538
 \OT1/ptm/m/it/10 Under the ran-dom single-qubit Pauli shadow pro-to-col
  []
 
@@ -604,13 +607,13 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Here is how much of TeX's memory you used:
  12862 strings out of 473197
  204415 string characters out of 5718605
- 627127 words of memory out of 5000000
+ 628190 words of memory out of 5000000
  35826 multiletter control sequences out of 15000+600000
  602763 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,1132b,592s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,1132b,590s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (10 pages, 628455 bytes).
+Output written on paper.pdf (10 pages, 628520 bytes).
 PDF statistics:
  471 PDF objects out of 1000 (max. 8388607)
  389 compressed objects within 4 object streams

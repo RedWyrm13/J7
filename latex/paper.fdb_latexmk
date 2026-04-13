@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex paper"] 1776096091.2963 "paper.aux" "paper.bbl" "paper" 1776096093.37782 0
-  "./references.bib" 1776095740.50178 8311 cbbc6cdc73e1ecc70ea3a4647db03d9e ""
+["bibtex paper"] 1776099965.61733 "paper.aux" "paper.bbl" "paper" 1776099967.52398 0
+  "./references.bib" 1776096141.50866 8311 cbbc6cdc73e1ecc70ea3a4647db03d9e ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "paper.aux" 1776096092.79314 14867 45009128ef338cdfae5dab6e729daa31 "pdflatex"
+  "paper.aux" 1776099966.99959 14867 cfaaa66d2bba7352fe2a23a55b56f17d "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1776096091.56787 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1776096093.3783 0
+["pdflatex"] 1776099965.7954 "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" "paper.pdf" "paper" 1776099967.52439 0
   "/etc/texmf/web2c/texmf.cnf" 1758121306.85586 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1776096086.78674 57132 681cb3eb9be0f519d0ee51daadf104a4 ""
+  "/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex" 1776099963.60974 57201 1d743f8275c04ca678f7cd94dda38ebe ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -151,10 +151,10 @@
   "images/qubit_accuracy_nn.png" 1775511271.41233 88346 965c28b72709c565a05f28aac75f0dd9 ""
   "images/qubit_accuracy_shadows.png" 1775511076.29774 97203 ae442a7f4f714e8adbb4a2b93b8da07b ""
   "images/qubit_accuracy_z_only.png" 1775508979.30191 89542 d066b72b9958ea766bdb21c3dccb7e9c ""
-  "paper.aux" 1776096092.79314 14867 45009128ef338cdfae5dab6e729daa31 "pdflatex"
-  "paper.bbl" 1776096091.562 5450 01ee71feb967d6e89a2c23d798f9010c "bibtex paper"
-  "paper.out" 1776096092.79514 5040 24425196866a97c29b9cdbb3e1fecfce "pdflatex"
-  "paper.tex" 1776096086.78674 57132 681cb3eb9be0f519d0ee51daadf104a4 ""
+  "paper.aux" 1776099966.99959 14867 cfaaa66d2bba7352fe2a23a55b56f17d "pdflatex"
+  "paper.bbl" 1776099965.78765 5450 01ee71feb967d6e89a2c23d798f9010c "bibtex paper"
+  "paper.out" 1776099967.00059 5040 24425196866a97c29b9cdbb3e1fecfce "pdflatex"
+  "paper.tex" 1776099963.60974 57201 1d743f8275c04ca678f7cd94dda38ebe ""
   (generated)
   "paper.aux"
   "paper.log"
