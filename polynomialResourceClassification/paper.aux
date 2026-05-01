@@ -36,8 +36,6 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Distribution Classification}{2}{subsection.2.3}\protected@file@percent }
 \citation{qiskit2024}
 \citation{bromiley2004shannon}
-\citation{Canonne2020}
-\citation{Archarya2017estimating}
 \newlabel{fig:clifford}{{1a}{3}{Subfigure 1a}{subfigure.1.1}{}}
 \newlabel{sub@fig:clifford}{{(a)}{a}{Subfigure 1a\relax }{subfigure.1.1}{}}
 \newlabel{fig:cliffordT}{{1b}{3}{Subfigure 1b}{subfigure.1.2}{}}
@@ -60,6 +58,8 @@
 \newlabel{sec:shots}{{\mbox  {III-B}}{3}{Shot Budget Design}{subsection.3.2}{}}
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}0a}Polynomial-cost features}{3}{paragraph.3.2.0.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}0b}Excluded exponential-cost features}{3}{paragraph.3.2.0.2}\protected@file@percent }
+\citation{Canonne2020}
+\citation{Archarya2017estimating}
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}0c}Quadratic shot scaling}{4}{paragraph.3.2.0.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Measurement Strategies}{4}{subsection.3.3}\protected@file@percent }
 \newlabel{sec:strategies}{{\mbox  {III-C}}{4}{Measurement Strategies}{subsection.3.3}{}}
@@ -82,11 +82,11 @@
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Results}{5}{section.4}\protected@file@percent }
 \newlabel{sec:results}{{IV}{5}{Results}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Measurement Strategy Comparison}{5}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Scaling Collapse}{5}{subsection.4.2}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Classifier accuracy vs.\ qubit count under the $Z$-only measurement strategy (4--20 qubits). Error bars show std over 10 repeated train/test splits.}}{5}{figure.2}\protected@file@percent }
 \newlabel{fig:acc_z_only}{{2}{5}{Classifier accuracy vs.\ qubit count under the $Z$-only measurement strategy (4--20 qubits). Error bars show std over 10 repeated train/test splits}{figure.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Classifier accuracy vs.\ qubit count under the nearest-neighbor $ZZ$ measurement strategy (4--20 qubits). Error bars show std over 10 repeated train/test splits.}}{5}{figure.3}\protected@file@percent }
 \newlabel{fig:acc_nn}{{3}{5}{Classifier accuracy vs.\ qubit count under the nearest-neighbor $ZZ$ measurement strategy (4--20 qubits). Error bars show std over 10 repeated train/test splits}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Scaling Collapse}{5}{subsection.4.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Peak classifier accuracy by measurement strategy.}}{6}{table.3}\protected@file@percent }
 \newlabel{tab:peak_accuracies}{{III}{6}{Peak classifier accuracy by measurement strategy}{table.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Classifier accuracy vs.\ qubit count under the multi-basis measurement strategy (4--20 qubits). Error bars show std over 10 repeated train/test splits.}}{6}{figure.4}\protected@file@percent }
@@ -110,17 +110,16 @@
 \newlabel{sec:discussion}{{VI}{8}{Discussion}{section.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Why Z-Only and NN Outperform Multi-Basis and Shadows}{8}{subsection.6.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Nearest-Neighbor $ZZ$ and the Locality of the Discriminative Signal}{8}{subsection.6.2}\protected@file@percent }
+\citation{aaronson2011computational}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Why Logistic Regression Fails}{9}{subsection.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Scaling Collapse and Shot Budget}{9}{subsection.6.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Limitations}{9}{subsection.6.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {VII}Future Work}{9}{section.7}\protected@file@percent }
 \newlabel{sec:future}{{VII}{9}{Future Work}{section.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0a}Extended circuit families}{9}{paragraph.7.0.0.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0b}Noisy simulation and hardware}{9}{paragraph.7.0.0.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0c}Shot budget scaling}{9}{paragraph.7.0.0.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0d}Tightening the theoretical bounds}{9}{paragraph.7.0.0.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclusion}{9}{section.8}\protected@file@percent }
-\newlabel{sec:conclusion}{{VIII}{9}{Conclusion}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0a}Theoretical Backing for Identifying IQP}{9}{paragraph.7.0.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0b}Extended circuit families}{9}{paragraph.7.0.0.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0c}Noisy simulation and hardware}{9}{paragraph.7.0.0.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {VII-}0d}Shot budget scaling}{9}{paragraph.7.0.0.4}\protected@file@percent }
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{montanaro2013survey}{1}
@@ -145,5 +144,8 @@
 \bibcite{qiskit2024}{20}
 \bibcite{bromiley2004shannon}{21}
 \bibcite{Archarya2017estimating}{22}
+\bibcite{aaronson2011computational}{23}
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclusion}{10}{section.8}\protected@file@percent }
+\newlabel{sec:conclusion}{{VIII}{10}{Conclusion}{section.8}{}}
 \@writefile{toc}{\contentsline {section}{References}{10}{section*.3}\protected@file@percent }
 \gdef \@abspage@last{10}

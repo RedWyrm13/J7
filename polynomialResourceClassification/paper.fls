@@ -1,9 +1,9 @@
-PWD /home/amaciejunes/Desktop/projects/J7_Sampling/project/latex
+PWD /home/amaciejunes/Desktop/projects/J7_Sampling/project/polynomialResourceClassification
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex
+INPUT /home/amaciejunes/Desktop/projects/J7_Sampling/project/polynomialResourceClassification/paper.tex
 OUTPUT paper.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/ieeetran/IEEEtran.cls

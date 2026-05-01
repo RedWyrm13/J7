@@ -86,4 +86,7 @@ P.~Bromiley, N.~Thacker, and E.~Bouhova-Thacker, ``Shannon entropy, renyi entrop
 \bibitem{Archarya2017estimating}
 J.~Acharya, A.~Orlitsky, A.~T. Suresh, and H.~Tyagi, ``Estimating renyi entropy of discrete distributions,'' \emph{IEEE Transactions on Information Theory}, vol.~63, no.~1, pp. 38--56, 2017.
 
+\bibitem{aaronson2011computational}
+S.~Aaronson and A.~Arkhipov, ``The computational complexity of linear optics,'' in \emph{Proceedings of the forty-third annual ACM symposium on Theory of computing}, 2011, pp. 333--342.
+
 \end{thebibliography}

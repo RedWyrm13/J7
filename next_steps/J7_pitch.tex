@@ -1,0 +1,299 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+
+\titleformat{\section}{\normalfont\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt}{2pt}
+
+\title{
+    \vspace{-1.5em}
+    {\large \textbf{Concept Paper}} \\[0.3em]
+    {\LARGE \textbf{Quantum Circuit Classification as a}} \\
+    {\LARGE \textbf{Hardware Benchmarking Framework}} \\[0.3em]
+    {\normalsize for Joint Force Decision Support Applications} \\[0.5em]
+    \rule{\linewidth}{0.4pt}
+}
+
+\author{
+    Andrew Maciejunes \quad Ross Gore \quad Sachin Shetty \quad Barry Ezell \\
+    {\small Virginia Modeling, Analysis, and Simulation Center (VMASC)} \\
+    {\small Center for Secure and Intelligent Critical Systems (CSICS)} \\
+    {\small Old Dominion University, Norfolk, VA}
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\vspace{-1em}
+
+% -------------------------------------------------------
+\section{Problem Statement}
+% -------------------------------------------------------
+
+As the Department of Defense evaluates quantum computing
+for use in wargaming, simulation, and decision support
+applications, a fundamental verification problem emerges:
+\textit{how does a commander or analyst know whether a
+quantum device is actually performing non-classical
+computation, rather than behaving as an expensive
+classical simulator?}
+
+Existing benchmarking methods address gate-level noise
+(randomized benchmarking), aggregate scalar metrics
+(quantum volume), and entanglement verification
+(entanglement witnesses), but none directly answers the
+operational question: \textit{is this device operating in
+the correct computational complexity class for the task
+assigned to it?} A device with low gate error rates can
+still produce classically simulable outputs due to
+systematic miscalibration. A device that passes an
+entanglement witness can still fail to execute non-classical
+algorithms correctly. Neither method is sufficient for
+mission-critical validation.
+
+% -------------------------------------------------------
+\section{Proposed Approach}
+% -------------------------------------------------------
+
+We propose a \textbf{distribution-level quantum hardware
+benchmark} grounded in a peer-reviewed foundation
+established in our prior work~\cite{maciejunes2026}. The
+core insight is that quantum circuit families occupy
+distinct computational complexity classes, each producing
+statistically distinguishable output distributions:
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+    \item \textbf{Clifford circuits} -- classically
+    simulable via the stabilizer formalism \cite{gottesman1997stabilizer}; output
+    distributions are fully characterizable by classical
+    means.
+    \item \textbf{Clifford+T circuits} -- transitional
+    regime; T-gate density breaks classical simulability \cite{boykin1999universal},
+    producing distributions intermediate in complexity.
+    \item \textbf{IQP circuits} -- believed classically
+    hard to sample from \cite{bremner2016average}; output distributions are
+    concentrated in local, nearest-neighbor correlations
+    in the computational basis.
+\end{itemize}
+
+Our prior work demonstrated that these three families
+can be classified using only polynomial measurement
+resources---specifically, Z-basis pairwise correlations
+extracted from $s = 16n^2$ measurement shots---achieving
+a peak Random Forest accuracy of $0.91$ at 4--5 qubits.
+A formal theoretical framework establishes that this
+result is a provable consequence of the algebraic
+structure of IQP circuits, not an artifact of the
+experimental setup.
+
+\subsection{Hardware Validation Protocol}
+
+The proposed benchmarking protocol proceeds as follows.
+Given a target quantum device, we execute a suite of
+IQP, Clifford, and Clifford+T circuits of varying depth.
+We collect measurement shots from the device and extract
+the same polynomial feature set used in our classifier:
+Hamming-weight histograms, single-qubit marginals, and
+pairwise Z-basis correlations. Our pre-trained classifier
+then assigns each circuit's output distribution to one of
+the three complexity classes.
+
+\textbf{Interpretation:} If a device running IQP circuits
+is classified as Clifford-like, its output distribution
+has degraded to the classically simulable regime---the
+hardware is not performing the intended non-classical
+computation. If the classifier correctly identifies the
+circuit family, the device is producing outputs
+statistically consistent with the target complexity class.
+This provides a \textit{task-relevant, distribution-level
+certificate of computational capability} that complements
+existing gate-level diagnostics.
+
+\subsection{Integration with Existing Benchmarking Methods}
+
+The proposed method is designed to be \textbf{complementary},
+not competitive, with established protocols. Table~\ref{tab:comparison}
+summarizes how each method contributes to a complete
+benchmarking picture.
+
+\begin{table}[h!]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Benchmarking method comparison.}
+\label{tab:comparison}
+\begin{tabular}{p{2.0cm} p{2.5cm} p{2.0cm}}
+\toprule
+\textbf{Method} & \textbf{What It Certifies} & \textbf{Limitation} \\
+\midrule
+Randomized Benchmarking \cite{knill2008randomized} & Gate error rate & Not task-relevant \\ \hline
+Quantum Volume \cite{blume2020volumetric} & System-wide scalar & Single metric  \\ \hline
+Entanglement Witnesses \cite{amaro2020design} & Entanglement present & Only for select entangled states \\ \hline
+Cross-Entropy (XEB) \cite{aaronson2019classical} & Output fidelity & Exponential classical cost \\ \hline
+\textbf{Our Method} \cite{bremner2016average} & \textbf{Complexity class of output} & \textbf{Degrades above $\sim$12 qubits} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A complete hardware assessment pipeline would first apply
+randomized benchmarking to identify miscalibrated gates,
+then quantum volume to establish a system-wide capability
+scalar, and finally our distribution classifier to certify
+that the device is producing outputs in the intended
+computational complexity class. Each method diagnoses a
+different failure mode; together they provide defense-grade
+confidence in hardware readiness.
+
+\subsection{Deep Learning Extension}
+
+Our prior work established that tree-based classifiers
+(Random Forest, Decision Tree) outperform linear methods
+(Logistic Regression, SVM) on this task, confirming that
+the class boundaries are nonlinear in the feature space.
+The proposed effort will extend the classification pipeline
+to include deep learning architectures such as
+multilayer perceptrons and 1D convolutional networks
+operating on the raw correlator feature vectors. This
+extension serves two purposes: (1)~testing whether deep learning recovers
+discriminative structure at qubit counts where classical
+classifiers degrade, which is the primary open question
+identified in our prior work, and (2)~establishing a well rounded classification pipeline that can be deployed on
+operational hardware with the best possible accuracy.
+
+% -------------------------------------------------------
+\section{Current Limitations}
+\label{sec:limitations}
+% -------------------------------------------------------
+
+We present these limitations transparently, as each
+defines a concrete research direction for the proposed
+effort.
+
+\textbf{Scaling collapse at $\sim$12 qubits.} All four
+measurement strategies degrade to near-chance accuracy
+($\approx 0.33$) above approximately 12 qubits under the
+quadratic shot budget $s = 16n^2$. Operational quantum
+hardware of current interest (IBM, IonQ, Quantinuum)
+operates at 50--400+ qubits. The method as currently
+implemented does not scale to these regimes.
+
+\textbf{Known cause: The collapse is not a fundamental
+impossibility result.} It arises because the quadratic
+shot budget provides a constant $\approx 32$ shots per
+correlator regardless of qubit count, while the
+distributional differences between circuit families
+become increasingly subtle as system size grows. The
+knob is known; it has not yet been turned.
+
+\textbf{Noiseless simulation only.} All prior results
+use noiseless classical simulation (Qiskit Aer). Real
+device noise will alter output distributions in ways
+that may be family-dependent, potentially complicating
+classification. This is the most immediate gap between
+current results and operational applicability.
+
+\textbf{Linear non-separability.} The three circuit
+families are not linearly separable in the Pauli
+correlator feature space, as evidenced by near-chance
+logistic regression performance. Classification requires
+nonlinear methods, which adds inference complexity for
+resource-constrained operational deployment.
+
+% -------------------------------------------------------
+\section{Research Roadmap and Funding Priorities}
+% -------------------------------------------------------
+
+The following research thrusts directly address the
+limitations above and constitute the proposed effort.
+
+\textbf{Thrust 1: Superquadratic shot budget scaling.}
+Increasing the shot budget exponent from $s = \lambda n^2$
+to $s = \lambda n^3$ or $s = \lambda n^4$ would provide
+more shots per correlator as system size grows,
+potentially shifting the collapse threshold to
+operationally relevant qubit counts. The computational
+cost of additional shots scales polynomially and is
+well within reach of current cloud quantum hardware
+access models.
+
+\textbf{Thrust 2: Local feature selection.} Our prior
+work showed that nearest-neighbor ZZ correlations
+(O$(n)$ features) match all-pairs performance to within
+0.02 in Random Forest accuracy. A feature set that grows
+linearly rather than quadratically concentrates the shot
+budget on the most discriminative correlators.
+Systematically characterizing which feature subsets
+preserve discriminative power at large qubit counts is
+a tractable and high-payoff research direction.
+
+\textbf{Thrust 3: Deep learning on raw measurement data.}
+Classical classifiers operate on hand-engineered
+correlator features. A neural network operating directly
+on raw bitstring samples or shot-level data may identify
+distributional structure that survives to larger qubit
+counts without requiring explicit feature engineering.
+This is the primary motivation for the deep learning
+component and will be the first empirical test of
+whether the scaling collapse is a feature extraction
+problem or a fundamental information-theoretic limit.
+
+\textbf{Thrust 4: Noisy hardware experiments.} Execution
+on real quantum hardware (IBM Quantum, IonQ, or
+Quantinuum via existing DoD access agreements) will
+establish ground truth for how device noise affects
+classification accuracy across circuit families. This
+is the direct path from proof-of-concept to operational
+validation and is the highest-priority experimental
+next step.
+
+% -------------------------------------------------------
+\section{Summary}
+% -------------------------------------------------------
+
+We have established, through peer-reviewed work, that
+quantum circuit families can be classified using
+polynomial measurement resources, with a formal
+theoretical guarantee that the result is not an
+experimental artifact. We propose to extend this
+foundation into a hardware benchmarking framework that
+directly certifies whether a quantum device is operating
+in the intended computational complexity class---a
+capability that no existing benchmarking method provides.
+Current limitations are well-understood, their causes
+are identified, and the proposed research thrusts
+address each one concretely. This effort positions
+ODU/VMASC as a foundational contributor to DoD quantum
+hardware validation methodology, with direct relevance
+to J7's mandate to advance the operational effectiveness
+of the future joint force through rigorous capability
+assessment.
+
+\vspace{0.5em}
+\noindent\rule{\linewidth}{0.4pt}
+{\small
+\textbf{Point of Contact:} Andrew Maciejunes,
+\texttt{amacieju@odu.edu} \\
+\textbf{Institution:} Old Dominion University,
+Virginia Modeling, Analysis, and Simulation Center \\
+\textbf{Classification:} UNCLASSIFIED // FOR OFFICIAL USE
+}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

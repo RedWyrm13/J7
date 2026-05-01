@@ -74,6 +74,7 @@ All four strategies collapse to near-chance accuracy ($\approx 0.33$) above appr
 These findings indicate that the discriminative signal between these circuit families is concentrated in local, nearest-neighbor $Z$-basis correlations, consistent with the diagonal gate structure of IQP circuits, and that additional Pauli correlator types or long-range correlations carry no compensating discriminative power for this task.
 We provide a formal theoretical framework showing that circuits with high diagonal fraction in a given basis concentrate their correlator structure in that basis, and that any deviation from the dominant basis incurs a provably higher estimator variance.
 These results establish that a quadratic shot budget is insufficient for reliable classification above approximately 12 qubits, but do not rule out the existence of a subquadratic or otherwise more efficient polynomial-resource strategy; whether any polynomial measurement protocol can classify these families at large qubit counts remains an open question.
+These results motivate a formal open question: whether any BPP algorithm can reliably distinguish IQP-generated distributions from classically simulable families at large qubit counts 
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -257,7 +258,9 @@ reconstruct the output distribution, rendering classification trivial.
 In that vein, several prominent statistical measures are excluded from our feature set
 due to their exponential shot requirements.
 Shannon entropy~\cite{bromiley2004shannon} $H = -\sum_x \hat{p}(x)\log_2 \hat{p}(x)$
-requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimator
+requires $O(2^\nqubits / \nqubits)$ shots because the empirical frequency estimato
+
+r
 is biased whenever bitstrings go unobserved.
 Collision probability $\mathcal{C} = \sum_x p(x)^2$ requires $\Theta(2^{\nqubits/2})$
 shots~\cite{Canonne2020}.
@@ -619,6 +622,17 @@ The missing data points fall in the regime where all strategies already operate 
 
 Several directions follow naturally from this work.
 
+\paragraph{Theoretical Backing for Identifying IQP}
+While some obvious extensions of our work are described below, the most pressing question inspired by our work is the following. 
+"Does there exist a BPP algorithm that, given sample access to an unknown distribution, decides with bounded error whether that distribution could have been generated 
+by a polynomial-size IQP circuit, as opposed to another class of circuits?" The collapse to chance accuracy around the 12 qubit mark hints 
+that the answer may be no, but our approach is merely one algorithm among many possible polynomial-resource strategies, and the question of whether any 
+such strategy exists remains open. Also, the work by Aaronson and Arkhipov \cite{aaronson2011computational}, suggests that the answer may be no. We note, however, 
+that Aaronson and Arkhipov consider the harder problem of verifying a device is sampling from the full BosonSampling distribution against arbitrary alternatives. 
+Our question, "distinguishing IQP from specific classically simulable families," is more structured, and it remains open whether this additional structure 
+makes BPP verification possible or whether the underlying sampling hardness of IQP still precludes it.
+
+
 \paragraph{Extended circuit families}
 IQP circuits are defined by diagonal gates in the $Z$ basis; one can analogously define circuit families diagonal in the $X$ or $Y$ basis by conjugating the diagonal layer with $H^{\otimes \nqubits}$ or $(SH)^{\otimes \nqubits}$, respectively.
 These families would carry qualitatively different distributional signatures under $Z$-basis measurement and could serve as additional classification targets, extending the four-strategy comparison evaluated here.
@@ -634,9 +648,6 @@ The collapse to chance accuracy above approximately 12 qubits is tied to the fix
 Increasing $\lambda$ would shift the collapse threshold to larger qubit counts; a principled choice of $\lambda$ requires understanding the signal-to-noise ratio of the class-separating correlators as a function of system size, which remains an open problem.
 Another approach is to increase the exponent of $\nqubits$ such that the shot scaling is no longer quadratic, but perhaps cubic or quartic. As all of the 
 features grow quadratically, this could ensure an appropriate (polynomial) number of shots are used to accurately observe features.
-
-\paragraph{Tightening the theoretical bounds}
-The spreading probability lower bound $\mu \geq \frac{1}{3}$ in Proposition~\ref{prop:bridge} is derived by averaging over the gate set; a tighter gate-specific analysis, or an extension to adversarial gate placement, could sharpen the bound. Whether the variance optimality result in Corollary~\ref{cor:variance_optimality} can be extended to multi-basis strategies (not just shadows) is also an open question.
 
 \section{Conclusion}
 \label{sec:conclusion}

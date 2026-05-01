@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.9.17)  17 APR 2026 12:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.4.17)  1 MAY 2026 13:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex
-(/home/amaciejunes/Desktop/projects/J7_Sampling/project/latex/paper.tex
+**/home/amaciejunes/Desktop/projects/J7_Sampling/project/polynomialResourceClassification/paper.tex
+(/home/amaciejunes/Desktop/projects/J7_Sampling/project/polynomialResourceClassification/paper.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/share/texlive/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
@@ -477,17 +477,17 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <images/clifford.png, id=159, 313.6518pt x 218.7372pt>
 File: images/clifford.png Graphic file (type png)
 <use images/clifford.png>
-Package pdftex.def Info: images/clifford.png  used on input line 159.
+Package pdftex.def Info: images/clifford.png  used on input line 160.
 (pdftex.def)             Requested size: 129.00008pt x 89.96318pt.
 <images/cliffordT.png, id=161, 313.6518pt x 218.7372pt>
 File: images/cliffordT.png Graphic file (type png)
 <use images/cliffordT.png>
-Package pdftex.def Info: images/cliffordT.png  used on input line 162.
+Package pdftex.def Info: images/cliffordT.png  used on input line 163.
 (pdftex.def)             Requested size: 129.00008pt x 89.96318pt.
 <images/IQP.png, id=162, 453.3738pt x 218.7372pt>
 File: images/IQP.png Graphic file (type png)
 <use images/IQP.png>
-Package pdftex.def Info: images/IQP.png  used on input line 165.
+Package pdftex.def Info: images/IQP.png  used on input line 166.
 (pdftex.def)             Requested size: 180.60608pt x 87.13618pt.
 
 
@@ -497,40 +497,37 @@ Package pdftex.def Info: images/IQP.png  used on input line 165.
 
 [3 <./images/clifford.png> <./images/cliffordT.png> <./images/IQP.png>]
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 337.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 340.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
 [4]
-Underfull \hbox (badness 1748) in paragraph at lines 397--400
+Underfull \hbox (badness 1748) in paragraph at lines 400--403
 \OT1/ptm/m/n/10 any strat-egy achieves above-chance ac-cu-racy. The near-
  []
 
 <images/qubit_accuracy_z_only.png, id=252, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_z_only.png Graphic file (type png)
 <use images/qubit_accuracy_z_only.png>
-Package pdftex.def Info: images/qubit_accuracy_z_only.png  used on input line 403.
+Package pdftex.def Info: images/qubit_accuracy_z_only.png  used on input line 406.
 (pdftex.def)             Requested size: 252.0pt x 201.01208pt.
 <images/qubit_accuracy_nn.png, id=253, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_nn.png Graphic file (type png)
 <use images/qubit_accuracy_nn.png>
-Package pdftex.def Info: images/qubit_accuracy_nn.png  used on input line 410.
+Package pdftex.def Info: images/qubit_accuracy_nn.png  used on input line 413.
 (pdftex.def)             Requested size: 252.0pt x 201.01208pt.
 <images/qubit_accuracy_multi_basis.png, id=254, 409.53pt x 326.6604pt>
 File: images/qubit_accuracy_multi_basis.png Graphic file (type png)
 <use images/qubit_accuracy_multi_basis.png>
-Package pdftex.def Info: images/qubit_accuracy_multi_basis.png  used on input line 417.
+Package pdftex.def Info: images/qubit_accuracy_multi_basis.png  used on input line 420.
 (pdftex.def)             Requested size: 252.0pt x 201.01208pt.
 <images/qubit_accuracy_shadows.png, id=255, 415.7934pt x 326.6604pt>
 File: images/qubit_accuracy_shadows.png Graphic file (type png)
 <use images/qubit_accuracy_shadows.png>
-Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 424.
+Package pdftex.def Info: images/qubit_accuracy_shadows.png  used on input line 427.
 (pdftex.def)             Requested size: 252.0pt x 197.98154pt.
 
-
-
-Underfull \vbox (badness 1377) has occurred while \output is active []
 
 
 
@@ -539,31 +536,31 @@ Underfull \vbox (badness 1377) has occurred while \output is active []
 
 
 [6 <./images/qubit_accuracy_multi_basis.png> <./images/qubit_accuracy_shadows.png>]
-Underfull \hbox (badness 7667) in paragraph at lines 478--479
+Underfull \hbox (badness 7667) in paragraph at lines 481--482
 []\OT1/ptm/m/n/10 We work in the Heisen-berg pic-ture, so that
  []
 
 
-Overfull \hbox (28.9568pt too wide) detected at line 487
+Overfull \hbox (28.9568pt too wide) detected at line 490
 []\OT1/cmr/m/n/10 [[][]\OML/cmm/m/it/10 B[]\OT1/cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^T \OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 p\OT1/cmr/m/n/10 )[] + \OML/cmm/m/it/10 e[] \OMS/cmsy/m/n/10 ^^T \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 e[]:
  []
 
 
 
 
-Overfull \hbox (7.68419pt too wide) detected at line 520
+Overfull \hbox (7.68419pt too wide) detected at line 523
 \U/msb/m/n/10 E[]\OT1/cmr/m/n/10 [\OMS/cmsy/m/n/10 h\OML/cmm/m/it/10 Z[]Z[]\OMS/cmsy/m/n/10 i[]\OT1/cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^U \OML/cmm/m/it/10 [] \OMS/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 1 + (1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 []\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^A \OML/cmm/m/it/10 ^^V[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^V[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 []\OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 ^^V[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 : \U/msa/m/n/10 ^^C
  []
 
 
-Underfull \hbox (badness 2293) in paragraph at lines 524--525
+Underfull \hbox (badness 2293) in paragraph at lines 527--528
 \OT1/ptm/m/it/10 fol-lows from a fi-nite Pauli con-ju-ga-tion cal-cu-la-tion for
  []
 
 
 
 [7]
-Underfull \hbox (badness 3557) in paragraph at lines 536--538
+Underfull \hbox (badness 3557) in paragraph at lines 539--541
 \OT1/ptm/m/it/10 Under the ran-dom single-qubit Pauli shadow pro-to-col
  []
 
@@ -605,18 +602,18 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 24425196866A97C29B9CDBB3E1FECFCE;5040.
  ) 
 Here is how much of TeX's memory you used:
- 12864 strings out of 473197
- 204458 string characters out of 5718605
- 628231 words of memory out of 5000000
- 35827 multiletter control sequences out of 15000+600000
+ 12866 strings out of 473197
+ 204596 string characters out of 5718605
+ 627274 words of memory out of 5000000
+ 35828 multiletter control sequences out of 15000+600000
  602763 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,1132b,590s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,1159b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (10 pages, 629287 bytes).
+Output written on paper.pdf (10 pages, 630573 bytes).
 PDF statistics:
  473 PDF objects out of 1000 (max. 8388607)
  391 compressed objects within 4 object streams
- 110 named destinations out of 1000 (max. 500000)
+ 111 named destinations out of 1000 (max. 500000)
  260 words of extra memory for PDF output out of 10000 (max. 10000000)
 
